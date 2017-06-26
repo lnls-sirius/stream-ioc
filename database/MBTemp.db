@@ -1,30 +1,21 @@
-# MBTemp.db (record definition for MBTemp boards).
+# MBTemp.db
 
-# Developed for MBTemp version 2.1, communicating at 19200 bps through an RS-485 serial network.
+# Record definition for MBTemp boards. Developed for MBTemp version 2.1 and newer.
 
-# This file contains one record definition, which corresponds to a temperature measured by a MBTemp
-# board and has five parameters:
+# This file contains one record definition, which corresponds to a temperature measurement and has
+# five parameters:
 #
 # RECORD_NAME - Name of record.
 #
 # SCAN_RATE - Record scan rate (time interval between two consecutive temperature readings).
 #
-# MBTEMP_ADDRESS - MBTemp board serial address (from 1 to 31).
+# MBTEMP_ADDRESS - MBTemp serial address (from 1 to 31).
 #
-# CHANNEL - Channel in MBTemp board where the temperature sensor is connected to. In the PCB, J1
-# connector corresponds to channel 0, J2 connector to channel 1 and so on.
+# CHANNEL - Channel in MBTemp board where the temperature sensor is connected to (from 0 to 7).
 #
 # DESCRIPTION - EPICS record description.
 #
 # PORT - Name of the serial port configured in asynDriver.
-#
-# For each temperature, a line in the following format must be added to stStream-IOC.cmd:
-#
-# dbLoadRecords("database/MBTemp.db", "RECORD_NAME = MBTemp1:Channel0, SCAN_RATE = 5 second, MBTEMP_ADDRESS = 1, CHANNEL = 0, DESCRIPTION = MBTemp 1\, channel 0", PORT = serialPort1)
-#
-# The above command configures a temperature which is processed every 5 seconds through
-# "serialPort1" and is named "MBTemp1:Channel0". Its sensor is connected to the channel 0 of MBTemp
-# at serial address 1 and the temperature description is "MBTemp 1, channel 0".
 
 record(ai, "$(RECORD_NAME)") {
     field(PINI, "YES")
