@@ -10,7 +10,7 @@ In order to get this software running, you should have installed in your system 
 
 The repository should be cloned with the `--recursive` option:
 
-```bash
+```
 $ git clone --recursive https://github.com/lnls-sirius/stream-ioc.git
 ```
 
@@ -22,7 +22,7 @@ Here is a brief explanation of the directory structure:
 
 * **database** - Contains files with record definitions. Each of these files corresponds to a specific device.
 
-* **iocBoot** - Directory where the IOC initialization scripts reside. These files must be properly configured, as described at the "Executing the IOC" section. In the future, definition of control system nodes structure will lead to many specific initialization scripts. In this folder, a file named StreamDebug.log will be created at execution time. All the error messages reported by StreamDevice will be logged into this file.
+* **iocBoot** - Directory where the IOC initialization scripts reside. These files must be properly configured, as described at the "Executing the IOC" section. In the future, definition of control system nodes structure will lead to many specific initialization scripts. In this folder, a file named `StreamDebug.log` will be created at execution time. All the error messages reported by StreamDevice will be logged into this file.
 
 * **protocol** - Contains files with communication protocol definitions. Each file in this directory corresponds to a specific device.
 
@@ -30,16 +30,16 @@ Here is a brief explanation of the directory structure:
 
 ## Compiling
 
-This software is distributed in the form of source code. In order to compile it, first define at the configure/RELEASE file the system paths to EPICS base and asynDriver. By default, these configurations are:
+This software is distributed in the form of source code. In order to compile it, first define at the `configure/RELEASE` file the system paths to EPICS base and asynDriver. By default, these configurations are:
 
 ```
 EPICS_BASE = /opt/base-3.14.12.6
 ASYN = /opt/asyn4-31
 ```
 
-After editing configure/RELEASE, run these commands at the top directory:
+After editing `configure/RELEASE`, run these commands at the top directory:
 
-```bash
+```
 $ rm StreamDevice/GNUmakefile
 $ make
 ```
@@ -50,13 +50,13 @@ To run this application, execute one of the scripts located at iocBoot directory
 
 The first line of script file must be the correct path to the application executable. If the system CPU is an ARM core, the first line must be:
 
-```bash
+```
 #!../bin/linux-arm/streamApp
 ```
 
 Instead, if we are working in a 64-bit computer:
 
-```bash
+```
 #!../bin/linux-x86_64/streamApp
 ```
 
@@ -74,7 +74,7 @@ During IOC operation, the file `iocBoot/StreamDebug.log` is created. It will con
 
 In practical situations, Stream-IOC should be launched with procServ at system's startup. Example command for doing that:
 
-```bash
+```
 $ procServ --chdir <ioc_top_directory>/iocBoot 20200 ./<initialization_script_file_name>
 ```
 
