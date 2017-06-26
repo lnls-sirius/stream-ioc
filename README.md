@@ -1,15 +1,12 @@
-Stream-IOC
-==========
+# Stream-IOC
 
 This project is an EPICS IOC based on StreamDevice. All StreamDevice-based EPICS interfaces created by LNLS Controls Group for Sirius control system will be contained in this application.
 
 ## System requirements
-----------------------
 
 In order to get this software running, you should have installed in your system EPICS base (version 3.14.12.6 recommended) and asynDriver module (version 4-31 recommended). Stream-IOC is intended to run in a Linux environment.
 
 ## Directory structure
-----------------------
 
 The repository should be cloned with the `--recursive` option:
 
@@ -32,7 +29,6 @@ Here is a brief explanation of the directory structure:
 * **StreamDevice** - StreamDevice version 2.7.7 source code, as a Git submodule.
 
 ## Compiling
-------------
 
 This software is distributed in the form of source code. In order to compile it, first define at the configure/RELEASE file the system paths to EPICS base and asynDriver. By default, these configurations are:
 
@@ -49,7 +45,6 @@ $ make
 ```
 
 ## Executing the IOC
---------------------
 
 To run this application, execute one of the scripts located at iocBoot directory.
 
@@ -84,6 +79,5 @@ $ procServ --chdir <ioc_top_directory>/iocBoot 20200 ./<initialization_script_fi
 ```
 
 ## Uninstalling
----------------
 
 To remove this software from a computer, just delete its parent directory.
