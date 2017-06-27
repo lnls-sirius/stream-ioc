@@ -6,6 +6,12 @@ This project is an EPICS IOC based on StreamDevice. All StreamDevice-based EPICS
 
 In order to get this software running, you should have installed in your system EPICS base (version 3.14.12.6 recommended) and asynDriver module (version 4-31 recommended). Stream-IOC is intended to run in a Linux environment.
 
+## Supported devices
+
+Currently Stream-IOC provides EPICS interfaces for:
+
+* [MBTemp](https://wiki-sirius.lnls.br/mediawiki/index.php/CON:MBTemp)
+
 ## Directory structure
 
 The repository should be cloned with the `--recursive` option:
@@ -20,7 +26,7 @@ Here is a brief explanation of the directory structure:
 
 * **configure** - Directory with configuration files for compiling the EPICS IOC.
 
-* **database** - Contains files with record definitions. Each of these files corresponds to a specific device.
+* **database** - Contains files with record definitions for all devices this application supports.
 
 * **iocBoot** - Directory where the IOC initialization scripts reside. These files must be properly configured, as described at the "Executing the IOC" section. In the future, definition of control system nodes structure will lead to many specific initialization scripts. In this folder, a file named `StreamDebug.log` will be created at execution time. All the error messages reported by StreamDevice will be logged into this file.
 
