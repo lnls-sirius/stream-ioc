@@ -18,10 +18,10 @@ cd ${TOP}
 dbLoadDatabase("dbd/streamApp.dbd")
 streamApp_registerRecordDeviceDriver(pdbbase)
 
-# RS-485 serial interface (9600 bps)
+# RS-485 serial interface (38400 bps)
 
 drvAsynSerialPortConfigure("serialPort1", "/dev/ttyUSB0")
-asynSetOption("serialPort1", 0, "baud", "9600")
+asynSetOption("serialPort1", 0, "baud", "38400")
 
 # Records corresponding to UVX parameter F-ABI09F
 
