@@ -2,5 +2,6 @@ bin/
 configure/O.linux-x86_64/
 dbd/
 include/
+iocBoot/StreamDebug.log
 lib/
 
