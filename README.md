@@ -10,6 +10,7 @@ In order to get this software running, you should have installed in your system 
 
 Currently Stream-IOC provides EPICS interfaces for:
 
+* Agilent 4UHV Ion Pump Controller
 * [MBTemp](https://wiki-sirius.lnls.br/mediawiki/index.php/CON:MBTemp)
 
 ## Directory structure
