@@ -5,27 +5,27 @@
 # This file contains one record definition, which corresponds to a temperature measurement and has
 # five parameters:
 #
-# RECORD_NAME - Name of record.
-#
-# SCAN_RATE - Record scan rate (time interval between two consecutive temperature readings).
-#
-# MBTEMP_ADDRESS - MBTemp serial address (from 1 to 31).
-#
 # CHANNEL - Channel in MBTemp board where the temperature sensor is connected to (from 0 to 7).
 #
 # DESCRIPTION - EPICS record description.
 #
+# MBTEMP_ADDRESS - MBTemp serial address (from 1 to 31).
+#
 # PORT - Name of the serial port configured in asynDriver.
+#
+# RECORD_NAME - Name of record.
+#
+# SCAN_RATE - Record scan rate (time interval between two consecutive temperature readings).
 
 record(ai, "$(RECORD_NAME)") {
-    field(PINI, "YES")
-    field(SCAN, "$(SCAN_RATE)")
-    field(INP, "@MBTemp.proto readTemperature($(MBTEMP_ADDRESS),$(CHANNEL)) $(PORT)")
-    field(DTYP, "stream")
     field(DESC, "$(DESCRIPTION)")
-    field(LINR, "LINEAR")
+    field(DTYP, "stream")
     field(EGU, "degrees Celsius")
-    field(ESLO, "0.01")
     field(EOFF, "0.0")
+    field(ESLO, "0.01")
+    field(INP, "@MBTemp.proto readTemperature($(MBTEMP_ADDRESS),$(CHANNEL)) $(PORT)")
+    field(LINR, "LINEAR")
+    field(PINI, "YES")
     field(PREC, "2")
+    field(SCAN, "$(SCAN_RATE)")
 }
