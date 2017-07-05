@@ -17,12 +17,27 @@
 
 # Pressure
 
-record(ai, "$(PREFIX):Pressure-RB") {
-    field(DESC, "Pressure")
+record(ai, "$(PREFIX):Pressure-Mon") {
+    field(DESC, "Measured pressure")
     field(DTYP, "stream")
-    field(EGU,  "mbar")
-    field(INP,  "@Agilent-4UHV.proto readPressure($(SERIAL_ADDRESS),$(CHANNEL_NUMBER)) $(PORT)")
+    field(EGU, "mbar")
+    field(INP, "@Agilent-4UHV.proto readPressure($(SERIAL_ADDRESS),$(CHANNEL_NUMBER)) $(PORT)")
     field(PINI, "YES")
     field(PREC, "9")
-    field(SCAN, ".5 second")
+    field(SCAN, "2 second")
+}
+
+# Voltage
+
+record(ai, "$(PREFIX):Voltage-Mon") {
+    field(DESC, "Measured voltage")
+    field(DTYP, "stream")
+    field(EGU, "kV")
+    field(ESLO, "0.001")
+    field(HOPR, "10")
+    field(INP, "@Agilent-4UHV.proto readVoltage($(SERIAL_ADDRESS),$(CHANNEL_NUMBER)) $(PORT)")
+    field(LINR, "LINEAR")
+    field(LOPR, "0")
+    field(PREC, "1")
+    field(SCAN, "5 second")
 }
