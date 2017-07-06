@@ -15,6 +15,6 @@ readPressure {
 
 readVoltage {
     MaxInput = 15;
-    out STX, $1, "8\$10", 0x30, ETX, "%01<xor>";
-    in STX, "\?", "8\$10", 0x30, "%6d", ETX, "%01<xor>";
+    out STX, $1, "8\$20", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "8\$20", 0x30, "%6d", ETX, "%01<xor>";
 }
