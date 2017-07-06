@@ -1,4 +1,5 @@
 bin/
+configure/O.linux-arm/
 configure/O.linux-x86_64/
 dbd/
 include/
