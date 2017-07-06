@@ -15,6 +15,20 @@
 # add 128 to the desired address. As an example, for the serial address 20, this parameter should
 # be configured as 128 + 20 = 148.
 
+# Current
+
+record(ai, "$(PREFIX):Current-Mon") {
+    field(DESC, "Measured current")
+    field(DTYP, "stream")
+    field(EGU, "A")
+    field(HOPR, "0.9")
+    field(INP, "@Agilent-4UHV.proto readCurrent($(SERIAL_ADDRESS),$(CHANNEL_NUMBER)) $(PORT)")
+    field(LOPR, "0")
+    field(PINI, "YES")
+    field(PREC, "10")
+    field(SCAN, "10 second")
+}
+
 # Pressure
 
 record(ai, "$(PREFIX):Pressure-Mon") {

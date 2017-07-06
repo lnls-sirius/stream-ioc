@@ -3,6 +3,14 @@
 # Communication protocol for Agilent 4UHV Ion Pump Controller. This was based on the work of Pete
 # Owens from the Science and Technology Facilities Council (STFC).
 
+# Routine for current reading
+
+readCurrent {
+    MaxInput = 19;
+    out STX, $1, "8\$21", 0x30, ETX, "%01<xor>"; 
+    in STX, "\?", "8\$21", 0x30, "%10g", ETX, "%01<xor>";
+}
+
 # Routine for pressure reading
 
 readPressure {
