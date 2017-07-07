@@ -1,6 +1,6 @@
-# MBTemp-Temperature.db
+# MBTemp-Channel.db
 
-# Record definition for one temperature. Developed for MBTemp version 2.1 and newer.
+# Record definition for one temperature channel. Developed for MBTemp version 2.1 and newer.
 
 # This file contains one record definition, which corresponds to a temperature measurement and has
 # five parameters:
