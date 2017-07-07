@@ -1,6 +1,6 @@
 # Agilent-4UHV.proto
 
-# Communication protocol for Agilent 4UHV Ion Pump Controller. This was based on the work of Pete
+# Communication protocol for Agilent 4UHV Ion Pump Controller. This is based on the work of Pete
 # Owens from the Science and Technology Facilities Council (STFC).
 
 # Channel current reading
