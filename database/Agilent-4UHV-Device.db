@@ -1,0 +1,34 @@
+# Agilent-4UHV-Device.db
+
+# Record definition file for one Agilent 4UHV Ion Pump Controller device. This was based on the work
+# of Pete Owens from the Science and Technology Facilities Council (STFC).
+
+# Parameters are:
+#
+# PORT - Name of the serial port configured in asynDriver.
+#
+# PREFIX - Prefix name for all PVs associated with the device.
+#
+# SERIAL_ADDRESS - Controller RS-485 serial address (from 0 to 31). For configuring this parameter,
+# add 128 to the desired address. As an example, for the serial address 20, this parameter should be
+# configured as 128 + 20 = 148.
+
+# Model
+
+record(stringin, "$(PREFIX):Model") {
+    field(DESC, "Device model")
+    field(DTYP, "stream")
+    field(INP, "@Agilent-4UHV.proto getModel($(SERIAL_ADDRESS)) $(PORT)")
+    field(PINI, "YES")
+    field(SCAN, "10 second")
+}
+
+# Serial number
+
+record(stringin, "$(PREFIX):SerialNumber") {
+    field(DESC, "Device serial number")
+    field(DTYP, "stream")
+    field(INP, "@Agilent-4UHV.proto getSerialNumber($(SERIAL_ADDRESS)) $(PORT)")
+    field(PINI, "YES")
+    field(SCAN, "10 second")
+}

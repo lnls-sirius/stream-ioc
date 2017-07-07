@@ -3,25 +3,41 @@
 # Communication protocol for Agilent 4UHV Ion Pump Controller. This was based on the work of Pete
 # Owens from the Science and Technology Facilities Council (STFC).
 
-# Routine for current reading
+# Channel current reading
 
-readCurrent {
+getCurrent {
     MaxInput = 19;
-    out STX, $1, "8\$21", 0x30, ETX, "%01<xor>"; 
+    out STX, $1, "8\$21", 0x30, ETX, "%01<xor>";
     in STX, "\?", "8\$21", 0x30, "%10g", ETX, "%01<xor>";
 }
 
-# Routine for pressure reading
+# Device model
 
-readPressure {
+getModel {
+    MaxInput = 19;
+    out STX, $1, "319", 0x30, ETX, "%01<xor>";
+    in STX "\?"  "319" 0x30 "%10c", ETX, "%01<xor>";
+}
+
+# Channel pressure reading
+
+getPressure {
     MaxInput = 19;
     out STX, $1, "8\$22", 0x30, ETX, "%01<xor>";
     in STX, "\?", "8\$22", 0x30, "%10g", ETX, "%01<xor>";
 }
 
-# Routine for voltage reading
+# Device serial number
 
-readVoltage {
+getSerialNumber {
+    MaxInput = 19;
+    out STX, $1, "323", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "323", 0x30, "%10c", ETX "%01<xor>";
+}
+
+# Channel voltage reading
+
+getVoltage {
     MaxInput = 15;
     out STX, $1, "8\$20", 0x30, ETX, "%01<xor>";
     in STX, "\?", "8\$20", 0x30, "%6d", ETX, "%01<xor>";

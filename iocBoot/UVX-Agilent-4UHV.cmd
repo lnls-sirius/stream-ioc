@@ -23,6 +23,10 @@ streamApp_registerRecordDeviceDriver(pdbbase)
 drvAsynSerialPortConfigure("serialPort1", "/dev/ttyUSB0")
 asynSetOption("serialPort1", 0, "baud", "38400")
 
+# Records corresponding to the second Agilet 4UHV device installed in UVX
+
+dbLoadRecords("database/Agilent-4UHV-Device.db", "PORT = serialPort1, PREFIX = VAC:AgilentController2, SERIAL_ADDRESS = 129")
+
 # Records corresponding to UVX parameter F-ABI09F
 
 dbLoadRecords("database/Agilent-4UHV-Channel.db", "CHANNEL_NUMBER = 1, PORT = serialPort1, PREFIX = VAC:F-ABI09F, SERIAL_ADDRESS = 129")
