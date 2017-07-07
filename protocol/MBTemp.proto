@@ -22,7 +22,7 @@ ReplyTimeout = 100;
 
 # Routine for temperature reading (implements BSMP protocol)
 
-readTemperature {
+getTemperature {
     out $1, 0x10, 0x00, 0x01, $2, "%<nsum>";
     in 0x00, 0x11, 0x00, 0x02, "%02r%<nsum>";
 }

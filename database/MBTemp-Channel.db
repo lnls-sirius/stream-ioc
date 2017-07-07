@@ -23,7 +23,7 @@ record(ai, "$(RECORD_NAME)") {
     field(EGU, "degrees Celsius")
     field(EOFF, "0.0")
     field(ESLO, "0.01")
-    field(INP, "@MBTemp.proto readTemperature($(MBTEMP_ADDRESS),$(CHANNEL)) $(PORT)")
+    field(INP, "@MBTemp.proto getTemperature($(MBTEMP_ADDRESS),$(CHANNEL)) $(PORT)")
     field(LINR, "LINEAR")
     field(PINI, "YES")
     field(PREC, "2")
