@@ -3,6 +3,10 @@
 # Communication protocol for Agilent 4UHV Ion Pump Controller. This is based on the work of Pete
 # Owens from the Science and Technology Facilities Council (STFC).
 
+# The timeout involved in reading operations is 20 ms
+
+ReadTimeout = 20;
+
 # Channel current reading
 
 getCurrent {
@@ -11,12 +15,20 @@ getCurrent {
     in STX, "\?", "8\$21", 0x30, "%10g", ETX, "%01<xor>";
 }
 
+# Fan temperature
+
+getFanTemperature {
+    MaxInput = 15;
+    out STX, $1, "800", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "800", 0x30, "%6d", ETX, "%01<xor>";
+}
+
 # Device model
 
 getModel {
     MaxInput = 19;
     out STX, $1, "319", 0x30, ETX, "%01<xor>";
-    in STX "\?"  "319" 0x30 "%10c", ETX, "%01<xor>";
+    in STX, "\?", "319", 0x30, "%10c", ETX, "%01<xor>";
 }
 
 # Channel pressure reading
@@ -32,7 +44,7 @@ getPressure {
 getSerialNumber {
     MaxInput = 19;
     out STX, $1, "323", 0x30, ETX, "%01<xor>";
-    in STX, "\?", "323", 0x30, "%10c", ETX "%01<xor>";
+    in STX, "\?", "323", 0x30, "%10c", ETX, "%01<xor>";
 }
 
 # Channel voltage reading

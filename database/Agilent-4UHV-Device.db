@@ -13,9 +13,22 @@
 # add 128 to the desired address. As an example, for the serial address 20, this parameter should be
 # configured as 128 + 20 = 148.
 
+# Fan temperature
+
+record(longin, "$(PREFIX):FanTemperature-Mon") {
+    field(DESC, "Fan temperature")
+    field(DTYP, "stream")
+    field(EGU, "°C")
+    field(HOPR, "200")
+    field(INP, "@Agilent-4UHV.proto getFanTemperature($(SERIAL_ADDRESS)) $(PORT)")
+    field(LOPR, "0")
+    field(PINI, "YES")
+    field(SCAN, "10 second")
+}
+
 # Model
 
-record(stringin, "$(PREFIX):Model") {
+record(stringin, "$(PREFIX):Model-Cte") {
     field(DESC, "Device model")
     field(DTYP, "stream")
     field(INP, "@Agilent-4UHV.proto getModel($(SERIAL_ADDRESS)) $(PORT)")
@@ -25,7 +38,7 @@ record(stringin, "$(PREFIX):Model") {
 
 # Serial number
 
-record(stringin, "$(PREFIX):SerialNumber") {
+record(stringin, "$(PREFIX):SerialNumber-Cte") {
     field(DESC, "Device serial number")
     field(DTYP, "stream")
     field(INP, "@Agilent-4UHV.proto getSerialNumber($(SERIAL_ADDRESS)) $(PORT)")
