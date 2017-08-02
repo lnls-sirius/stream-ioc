@@ -29,6 +29,19 @@ record(ai, "$(PREFIX):Current-Mon") {
     field(SCAN, "10 second")
 }
 
+# HV temperature
+
+record(longin, "$(PREFIX):HVTemperature-Mon") {
+    field(DESC, "HV temperature")
+    field(DTYP, "stream")
+    field(EGU, "degrees Celsius")
+    field(HOPR, "200")
+    field(INP, "@Agilent-4UHV.proto getHVTemperature$(CHANNEL_NUMBER)($(SERIAL_ADDRESS)) $(PORT)")
+    field(LOPR, "0")
+    field(PINI, "YES")
+    field(SCAN, "10 second")
+}
+
 # Pressure
 
 record(ai, "$(PREFIX):Pressure-Mon") {

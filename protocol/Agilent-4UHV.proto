@@ -23,6 +23,38 @@ getFanTemperature {
     in STX, "\?", "800", 0x30, "%6d", ETX, "%01<xor>";
 }
 
+# HV temperature - channel 1
+
+getHVTemperature1 {
+    MaxInput = 15;
+    out STX, $1, "801", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "801", 0x30, "%6d", ETX, "%01<xor>";
+}
+
+# HV temperature - channel 2
+
+getHVTemperature2 {
+    MaxInput = 15;
+    out STX, $1, "802", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "802", 0x30, "%6d", ETX, "%01<xor>";
+}
+
+# HV temperature - channel 3
+
+getHVTemperature3 {
+    MaxInput = 15;
+    out STX, $1, "808", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "808", 0x30, "%6d", ETX, "%01<xor>";
+}
+
+# HV temperature - channel 4
+
+getHVTemperature4 {
+    MaxInput = 15;
+    out STX, $1, "809", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "809", 0x30, "%6d", ETX, "%01<xor>";
+}
+
 # Device model
 
 getModel {

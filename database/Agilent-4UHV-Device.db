@@ -18,7 +18,7 @@
 record(longin, "$(PREFIX):FanTemperature-Mon") {
     field(DESC, "Fan temperature")
     field(DTYP, "stream")
-    field(EGU, "°C")
+    field(EGU, "degrees Celsius")
     field(HOPR, "200")
     field(INP, "@Agilent-4UHV.proto getFanTemperature($(SERIAL_ADDRESS)) $(PORT)")
     field(LOPR, "0")
