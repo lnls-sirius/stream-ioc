@@ -29,6 +29,34 @@ record(ai, "$(PREFIX):Current-Mon") {
     field(SCAN, "10 second")
 }
 
+# Device number readback
+
+record(longin, "$(PREFIX):DeviceNumber-RB") {
+    field(DESC, "Device number readback")
+    field(DTYP, "stream")
+    field(INP, "@Agilent-4UHV.proto getDeviceNumber($(SERIAL_ADDRESS),$(CHANNEL_NUMBER)) $(PORT)")
+    field(PINI, "YES")
+    field(SCAN, "10 second")
+}
+
+# Device number setpoint
+
+record(longout, "$(PREFIX):DeviceNumber-SP") {
+    field(DESC, "Device number setpoint")
+    field(DTYP, "stream")
+    field(OUT, "@Agilent-4UHV.proto setDeviceNumber($(SERIAL_ADDRESS),$(CHANNEL_NUMBER)) $(PORT)")
+}
+
+# Error code
+
+record(mbbiDirect, "$(PREFIX):ErrorCode-Mon") {
+    field(DESC, "Error code")
+    field(DTYP, "stream")
+    field(INP,  "@Agilent-4UHV.proto getErrorCode($(SERIAL_ADDRESS),$(CHANNEL_NUMBER)) $(PORT)")
+    field(PINI, "YES")
+    field(SCAN, "5 second")
+}
+
 # HV temperature
 
 record(longin, "$(PREFIX):HVTemperature-Mon") {

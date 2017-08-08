@@ -15,6 +15,23 @@ getCurrent {
     in STX, "\?", "8\$21", 0x30, "%10g", ETX, "%01<xor>";
 }
 
+# Device number readback
+
+getDeviceNumber {
+    MaxInput = 15;
+    out STX, $1, "6\$20", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "6\$20", 0x30, "%6d", ETX, "%01<xor>";
+}
+
+# Error code reading
+
+getErrorCode {
+    out STX, $1, "505", 0x31, "00000\$2", ETX, "%01<xor>";
+    in STX, "\?", ACK, ETX, "%01<xor>";
+    out STX, $1, "206", 0x30, ETX, "%01<xor>"; 
+    in STX, "\?", "206", 0x30, "%6d", ETX, "%01<xor>";
+}
+
 # Fan temperature
 
 getFanTemperature {
@@ -55,6 +72,14 @@ getHVTemperature4 {
     in STX, "\?", "809", 0x30, "%6d", ETX, "%01<xor>";
 }
 
+# Operating mode (autostart on/off) readback
+
+getMode {
+    MaxInput = 19;
+    out STX, $1, "601", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "601", 0x30, "%10d", ETX, "%01<xor>";
+}
+
 # Device model
 
 getModel {
@@ -71,6 +96,14 @@ getPressure {
     in STX, "\?", "8\$22", 0x30, "%10g", ETX, "%01<xor>";
 }
 
+# "Protect" reading
+
+getProtect {
+    MaxInput = 19;
+    out STX, $1, "602", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "602", 0x30, "%10b", ETX, "%01<xor>";
+}
+
 # Device serial number
 
 getSerialNumber {
@@ -79,10 +112,50 @@ getSerialNumber {
     in STX, "\?", "323", 0x30, "%10c", ETX, "%01<xor>";
 }
 
+# "Step" reading
+
+getStep {
+    MaxInput = 19;
+    out STX, $1, "603", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "603", 0x30, "%10b", ETX, "%01<xor>";
+}
+
+# Unit readback
+
+getUnit {
+    MaxInput = 15;
+    out STX, $1, "600", 0x30, ETX, "%01<xor>";
+    in STX, "\?", "600", 0x30, "%6d", ETX, "%01<xor>";
+}
+
 # Channel voltage reading
 
 getVoltage {
     MaxInput = 15;
     out STX, $1, "8\$20", 0x30, ETX, "%01<xor>";
     in STX, "\?", "8\$20", 0x30, "%6d", ETX, "%01<xor>";
+}
+
+# Device number setpoint
+
+setDeviceNumber {
+    MaxInput = 6;
+    out STX, $1, "6\$20", 0x31, "%06d", ETX, "%01<xor>";
+    in STX, "\?", ACK, ETX, "%01<xor>";
+}
+
+# Operating mode (autostart on/off) setpoint
+
+setMode {
+    MaxInput = 6;
+    out STX, $1, "601", 0x31, "%010d", ETX, "%01<xor>";
+    in STX, "\?", ACK, ETX, "%01<xor>";
+}
+
+# Unit setpoint
+
+setUnit {
+    MaxInput = 6;
+    out STX, $1, "600", 0x31, "%06d", ETX, "%01<xor>";
+    in STX, "\?", ACK, ETX, "%01<xor>";
 }

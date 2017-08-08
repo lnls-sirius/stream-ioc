@@ -26,12 +26,44 @@ record(longin, "$(PREFIX):FanTemperature-Mon") {
     field(SCAN, "10 second")
 }
 
+# Operating mode (autostart on/off) readback
+
+record(bi, "$(PREFIX):Mode-RB") {
+    field(DESC, "Autostart readback")
+    field(DTYP, "stream")
+    field(INP, "@Agilent-4UHV.proto getMode($(SERIAL_ADDRESS)) $(PORT)")
+    field(ONAM, "On")
+    field(PINI, "YES")
+    field(SCAN, "10 second")
+    field(ZNAM, "Off")
+}
+
+# Operating mode (autostart on/off) setpoint
+
+record(bo, "$(PREFIX):Mode-SP") {
+    field(DESC, "Autostart setpoint")
+    field(DTYP, "stream")
+    field(ONAM, "On")
+    field(OUT,  "@Agilent-4UHV.proto setMode($(SERIAL_ADDRESS)) $(PORT)")
+    field(ZNAM, "Off")
+}
+
 # Model
 
 record(stringin, "$(PREFIX):Model-Cte") {
     field(DESC, "Device model")
     field(DTYP, "stream")
     field(INP, "@Agilent-4UHV.proto getModel($(SERIAL_ADDRESS)) $(PORT)")
+    field(PINI, "YES")
+    field(SCAN, "10 second")
+}
+
+# Protect
+
+record(longin, "$(PREFIX):Protect-Mon") {
+    field(DESC, "Protect")
+    field(DTYP, "stream")
+    field(INP, "@Agilent-4UHV.proto getProtect($(SERIAL_ADDRESS)) $(PORT)")
     field(PINI, "YES")
     field(SCAN, "10 second")
 }
@@ -44,4 +76,38 @@ record(stringin, "$(PREFIX):SerialNumber-Cte") {
     field(INP, "@Agilent-4UHV.proto getSerialNumber($(SERIAL_ADDRESS)) $(PORT)")
     field(PINI, "YES")
     field(SCAN, "10 second")
+}
+
+# Step mode
+
+record(longin, "$(PREFIX):Step-Mon") {
+    field(DESC, "Step mode")
+    field(DTYP, "stream")
+    field(INP, "@Agilent-4UHV.proto getStep($(SERIAL_ADDRESS)) $(PORT)")
+    field(PINI, "YES")
+    field(SCAN, "10 second")
+}
+
+# Unit readback
+
+record(mbbi, "$(PREFIX):Unit-RB") {
+    field(DESC, "Unit readback")
+    field(DTYP, "stream")
+    field(INP, "@Agilent-4UHV.proto getUnit($(SERIAL_ADDRESS)) $(PORT)")
+    field(ONST, "mbar")
+    field(PINI, "YES")
+    field(SCAN, "10 second")
+    field(TWST, "Pa")
+    field(ZRST, "Torr")
+}
+
+# Unit setpoint
+
+record(mbbo, "$(PREFIX):Unit-SP") {
+    field(DESC, "Unit setpoint")
+    field(DTYP, "stream")
+    field(ONST, "mbar")
+    field(OUT, "@Agilent-4UHV.proto setUnit($(SERIAL_ADDRESS)) $(PORT)")
+    field(TWST, "Pa")
+    field(ZRST, "Torr")
 }
