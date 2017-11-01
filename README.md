@@ -40,8 +40,8 @@ Here is a brief explanation of the directory structure:
 This software is distributed in the form of source code. In order to compile it, first define at the `configure/RELEASE` file the system paths to EPICS base and asynDriver. By default, these configurations are:
 
 ```
-EPICS_BASE = /opt/base-3.14.12.6
-ASYN = /opt/asyn4-31
+EPICS_BASE = /opt/base-3.15.5
+ASYN = /opt/asyn4-32
 ```
 
 After editing `configure/RELEASE`, run these commands at the top directory:

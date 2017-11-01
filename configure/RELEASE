@@ -1,5 +1,5 @@
 # RELEASE
 
-EPICS_BASE = /opt/base-3.14.12.6
+EPICS_BASE = /opt/base-3.15.5
 
-ASYN = /opt/asyn4-31
+ASYN = /opt/asyn4-32
