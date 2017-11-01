@@ -6,8 +6,8 @@
 
 # Environment variables
 
-epicsEnvSet("EPICS_BASE", "/opt/base-3.14.12.6")
-epicsEnvSet("ASYN", "/opt/asyn4-31")
+epicsEnvSet("EPICS_BASE", "/opt/base-3.15.5")
+epicsEnvSet("ASYN", "/opt/asyn4-32")
 epicsEnvSet("TOP", "/root/stream-ioc")
 epicsEnvSet("ARCH", "linux-arm")
 epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(TOP)/protocol")
@@ -25,14 +25,14 @@ asynSetOption("serialPort1", 0, "baud", "19200")
 
 # Records corresponding to the eight temperature measurements given by a board at serial address 3
 
-dbLoadRecords("database/MBTemp-Temperature.db", "RECORD_NAME = MBTemp:TAQD09A, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 0, DESCRIPTION = UVX parameter TAQD09A, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Temperature.db", "RECORD_NAME = MBTemp:TAQF09A, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 1, DESCRIPTION = UVX parameter TAQF09A, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Temperature.db", "RECORD_NAME = MBTemp:TACV09A, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 2, DESCRIPTION = UVX parameter TACV09A, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Temperature.db", "RECORD_NAME = MBTemp:TADI08, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 3, DESCRIPTION = UVX parameter TADI08, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Temperature.db", "RECORD_NAME = MBTemp:TACH08, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 4, DESCRIPTION = UVX parameter TACH08, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Temperature.db", "RECORD_NAME = MBTemp:TASF08, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 5, DESCRIPTION = UVX parameter TASF08, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Temperature.db", "RECORD_NAME = MBTemp:HTAA, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 6, DESCRIPTION = UVX parameter HTAA, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Temperature.db", "RECORD_NAME = MBTemp:HTAB, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 7, DESCRIPTION = UVX parameter HTAB, PORT = serialPort1")
+dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = MBTemp:TAQD09A, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 0, DESCRIPTION = UVX parameter TAQD09A, PORT = serialPort1")
+dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = MBTemp:TAQF09A, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 1, DESCRIPTION = UVX parameter TAQF09A, PORT = serialPort1")
+dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = MBTemp:TACV09A, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 2, DESCRIPTION = UVX parameter TACV09A, PORT = serialPort1")
+dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = MBTemp:TADI08, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 3, DESCRIPTION = UVX parameter TADI08, PORT = serialPort1")
+dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = MBTemp:TACH08, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 4, DESCRIPTION = UVX parameter TACH08, PORT = serialPort1")
+dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = MBTemp:TASF08, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 5, DESCRIPTION = UVX parameter TASF08, PORT = serialPort1")
+dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = MBTemp:HTAA, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 6, DESCRIPTION = UVX parameter HTAA, PORT = serialPort1")
+dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = MBTemp:HTAB, SCAN_RATE = .5 second, MBTEMP_ADDRESS = 3, CHANNEL = 7, DESCRIPTION = UVX parameter HTAB, PORT = serialPort1")
 
 # Effectively initializes the IOC
 

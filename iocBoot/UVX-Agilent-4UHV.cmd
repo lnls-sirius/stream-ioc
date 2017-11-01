@@ -6,8 +6,8 @@
 
 # Environment variables
 
-epicsEnvSet("EPICS_BASE", "/opt/base-3.14.12.6")
-epicsEnvSet("ASYN", "/opt/asyn4-31")
+epicsEnvSet("EPICS_BASE", "/opt/base-3.15.5")
+epicsEnvSet("ASYN", "/opt/asyn4-32")
 epicsEnvSet("TOP", "/root/stream-ioc")
 epicsEnvSet("ARCH", "linux-arm")
 epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(TOP)/protocol")
