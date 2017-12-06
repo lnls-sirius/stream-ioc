@@ -74,7 +74,6 @@ def scanThread():
         # Time interval before the next reading
 
         time.sleep(TIME_INTERVAL)
-    
 
 # This launches the auxiliary thread of the program
 
