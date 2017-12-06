@@ -11,7 +11,7 @@ In order to get this software running, you should have installed in your system 
 Currently Stream-IOC provides EPICS interfaces for:
 
 * Agilent 4UHV Ion Pump Controller
-* DCM SE-10 environment temperature and humidity monitoring system
+* [DCM SE-10](https://dcmtech.com.br/equipamentos-e-sistemas-para-monitorar-temperatura-e-umidade/se-10-monitor-de-ambientes-com-acionamento-de-cargas/) (environment temperature and humidity monitoring system)
 * [MBTemp](https://wiki-sirius.lnls.br/mediawiki/index.php/CON:MBTemp)
 
 ## Directory structure
