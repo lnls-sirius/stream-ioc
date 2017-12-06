@@ -1,0 +1,28 @@
+# DCM-SE10.proto
+
+# Communication protocol for DCM SE-10 modules
+
+# Protocol terminator character
+
+Terminator = LF;
+
+# Humidity sensor reading
+
+getHumidity {
+    out "H?";
+    in "%f";
+}
+
+# Internal temperature sensor reading
+
+getTemperature1 {
+    out "T1?";
+    in "%f";
+}
+
+# External temperature sensor reading
+
+getTemperature2 {
+    out "T2?";
+    in "%f";
+}

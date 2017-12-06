@@ -11,6 +11,7 @@ In order to get this software running, you should have installed in your system 
 Currently Stream-IOC provides EPICS interfaces for:
 
 * Agilent 4UHV Ion Pump Controller
+* DCM SE-10 environment temperature and humidity monitoring system
 * [MBTemp](https://wiki-sirius.lnls.br/mediawiki/index.php/CON:MBTemp)
 
 ## Directory structure
@@ -28,6 +29,8 @@ Here is a brief explanation of the directory structure:
 * **configure** - Directory with configuration files for compiling the EPICS IOC.
 
 * **database** - Contains files with record definitions for all devices this application supports.
+
+* **interface** - Folder with Python programs that provide TCP, UDP or Unix sockets for communication between the EPICS IOC and some devices.
 
 * **iocBoot** - Directory where the IOC initialization scripts reside. These files must be properly configured, as described at the "Executing the IOC" section. In the future, definition of control system nodes structure will lead to many specific initialization scripts. In this folder, a file named `StreamDebug.log` will be created at execution time. All the error messages reported by StreamDevice will be logged into this file.
 

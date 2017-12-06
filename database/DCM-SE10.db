@@ -1,0 +1,49 @@
+# DCM-SE10.db
+
+# Record definition file for one DCM SE-10 device.
+
+# Each record defined below has the following parameters:
+#
+# PORT - Name of the port configured in asynDriver.
+#
+# PREFIX - Prefix name for all PVs associated with the device.
+#
+# SCAN_RATE - Record scan rate (time interval between two consecutive temperature readings).
+
+# Humidity (internal sensor)
+
+record(ai, "$(PREFIX):RH") {
+    field(DESC, "Relative humidity sensor")
+    field(DTYP, "stream")
+    field(EGU, "%")
+    field(HOPR, "100.0")
+    field(INP, "@DCM-SE10.proto getHumidity $(PORT)")
+    field(LOPR, "0.0")
+    field(PINI, "YES")
+    field(PREC, "2")
+    field(SCAN, "$(SCAN_RATE)")
+}
+
+# Temperature (external sensor)
+
+record(ai, "$(PREFIX):ExtTemp") {
+    field(DESC, "External temperature sensor")
+    field(DTYP, "stream")
+    field(EGU, "degrees Celsius")
+    field(INP, "@DCM-SE10.proto getTemperature2 $(PORT)")
+    field(PINI, "YES")
+    field(PREC, "2")
+    field(SCAN, "$(SCAN_RATE)")
+}
+
+# Temperature (internal sensor)
+
+record(ai, "$(PREFIX):IntTemp") {
+    field(DESC, "Internal temperature sensor")
+    field(DTYP, "stream")
+    field(EGU, "degrees Celsius")
+    field(INP, "@DCM-SE10.proto getTemperature1 $(PORT)")
+    field(PINI, "YES")
+    field(PREC, "2")
+    field(SCAN, "$(SCAN_RATE)")
+}
