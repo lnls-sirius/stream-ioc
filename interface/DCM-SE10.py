@@ -51,17 +51,25 @@ def scanThread():
     global TEMPERATURE2
     global HUMIDITY
 
+    # Loop
+
     while (True):
 
-        # Here data is requested from the device and parsed
+        try:
 
-        data = requests.get("http://" + DEVICE_IP_ADDRESS + "/json").json()
+            # Here data is requested from the device and parsed
 
-        # New values for temperatures and humidity are obtained from the JSON data structure
+            data = requests.get("http://" + DEVICE_IP_ADDRESS + "/json").json()
 
-        TEMPERATURE1 = str(data["temp"])
-        TEMPERATURE2 = str(data["temp_ext"])
-        HUMIDITY = str(data["umid"])
+            # New values for temperatures and humidity are obtained from the JSON data structure
+
+            TEMPERATURE1 = str(data["temp"])
+            TEMPERATURE2 = str(data["temp_ext"])
+            HUMIDITY = str(data["umid"])
+
+        except (Exception):
+
+            pass
 
         # Time interval before the next reading
 
