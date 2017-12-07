@@ -1,7 +1,7 @@
 # MBTemp.proto
 
-# Protocol for MBTemp boards. Developed for MBTemp version 2.1 and newer, communicating at 19200 bps
-# through an RS-485 link.
+# Protocol for MBTemp boards. Developed for MBTemp version 2.1 and newer, communicating at 115200
+# bps.
 
 # The BSMP protocol doesn't have any terminator character
 

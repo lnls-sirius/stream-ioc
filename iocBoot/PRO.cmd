@@ -19,10 +19,10 @@ cd ${TOP}
 dbLoadDatabase("dbd/streamApp.dbd")
 streamApp_registerRecordDeviceDriver(pdbbase)
 
-# RS-485 serial interface for the MBTemp board (19200 bps)
+# RS-485 serial interface for the MBTemp board (115200 bps)
 
 drvAsynSerialPortConfigure("serialPort1", "/dev/ttyUSB0")
-asynSetOption("serialPort1", 0, "baud", "19200")
+asynSetOption("serialPort1", 0, "baud", "115200")
 
 # Port for the DCM SE-10 device
 
