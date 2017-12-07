@@ -2,7 +2,7 @@
 
 # UVX-Agilent-4UHV.cmd
 
-# This script in being used for new Agilent 4UHV installations in UVX.
+# This script is being used for one of the Agilent 4UHV pumps installed in UVX.
 
 # Environment variables
 
