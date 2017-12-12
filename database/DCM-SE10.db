@@ -8,7 +8,7 @@
 #
 # PREFIX - Prefix name for all PVs associated with the device.
 #
-# SCAN_RATE - Record scan rate (time interval between two consecutive temperature readings).
+# SCAN_RATE - Record scan rate (time interval between two consecutive readings).
 
 # Humidity (internal sensor)
 

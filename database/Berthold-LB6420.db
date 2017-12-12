@@ -1,0 +1,57 @@
+# Berthold-LB6420.db
+
+# Record definition file for one Berthold Technologies LB 6420 radiation probe.
+
+# Each record defined below has the following parameters:
+#
+# PORT - Name of the port configured in asynDriver.
+#
+# PREFIX - Prefix name for all PVs associated with the device.
+
+# Gamma
+
+record(ai, "$(PREFIX):Gamma") {
+    field(DESC, "Gamma")
+    field(DTYP, "stream")
+    field(EGU, "µSv/h")
+    field(INP, "@Berthold-LB6420.proto getGamma $(PORT)")
+    field(PINI, "YES")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}
+
+# High energy neutrons
+
+record(ai, "$(PREFIX):HighEnergyNeutrons") {
+    field(DESC, "High energy neutrons")
+    field(DTYP, "stream")
+    field(EGU, "µSv/h")
+    field(INP, "@Berthold-LB6420.proto getHighEnergyNeutrons $(PORT)")
+    field(PINI, "YES")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}
+
+# Total dose rate
+
+record(ai, "$(PREFIX):TotalDoseRate") {
+    field(DESC, "Total dose rate")
+    field(DTYP, "stream")
+    field(EGU, "µSv/h")
+    field(INP, "@Berthold-LB6420.proto getTotalDoseRate $(PORT)")
+    field(PINI, "YES")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}
+
+# Total neutron rate
+
+record(ai, "$(PREFIX):TotalNeutronRate") {
+    field(DESC, "Total neutron rate")
+    field(DTYP, "stream")
+    field(EGU, "µSv/h")
+    field(INP, "@Berthold-LB6420.proto getTotalNeutronRate $(PORT)")
+    field(PINI, "YES")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}

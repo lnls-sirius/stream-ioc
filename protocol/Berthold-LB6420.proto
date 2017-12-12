@@ -1,0 +1,35 @@
+# Berthold-LB6420.proto
+
+# Communication protocol for Berthold LB 6420 radiation probes
+
+# Protocol terminator character
+
+Terminator = LF;
+
+# Gamma
+
+getGamma {
+    out "GAMMA?";
+    in "%f";
+}
+
+# High energy neutrons
+
+getHighEnergyNeutrons {
+    out "HIGH_ENERGY_NEUTRONS?";
+    in "%f";
+}
+
+# Total dose rate
+
+getTotalDoseRate {
+    out "TOTAL_DOSE_RATE?";
+    in "%f";
+}
+
+# Total neutron rate
+
+getTotalNeutronRate {
+    out "TOTAL_NEUTRON_RATE?";
+    int "%f";
+}
