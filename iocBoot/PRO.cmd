@@ -7,8 +7,8 @@
 
 # Environment variables
 
-epicsEnvSet("EPICS_BASE", "/opt/base-3.15.5")
-epicsEnvSet("ASYN", "/opt/asyn4-32")
+epicsEnvSet("EPICS_BASE", "/root/base-3.15.5")
+epicsEnvSet("ASYN", "/root/asyn4-32")
 epicsEnvSet("TOP", "/root/stream-ioc")
 epicsEnvSet("ARCH", "linux-arm")
 epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(TOP)/protocol")
@@ -30,14 +30,14 @@ drvAsynIPPortConfigure("IPPort1", "127.0.0.1:17001 UDP")
 
 # Records corresponding to the eight temperature measurements given by the MBTemp board
 
-dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = PRO:MBTemp:Ch1, SCAN_RATE = 2 second, MBTEMP_ADDRESS = 1, CHANNEL = 0, DESCRIPTION = MBTemp Channel 1, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = PRO:MBTemp:Ch2, SCAN_RATE = 2 second, MBTEMP_ADDRESS = 1, CHANNEL = 1, DESCRIPTION = MBTemp Channel 2, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = PRO:MBTemp:Ch3, SCAN_RATE = 2 second, MBTEMP_ADDRESS = 1, CHANNEL = 2, DESCRIPTION = MBTemp Channel 3, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = PRO:MBTemp:Ch4, SCAN_RATE = 2 second, MBTEMP_ADDRESS = 1, CHANNEL = 3, DESCRIPTION = MBTemp Channel 4, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = PRO:MBTemp:Ch5, SCAN_RATE = 2 second, MBTEMP_ADDRESS = 1, CHANNEL = 4, DESCRIPTION = MBTemp Channel 5, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = PRO:MBTemp:Ch6, SCAN_RATE = 2 second, MBTEMP_ADDRESS = 1, CHANNEL = 5, DESCRIPTION = MBTemp Channel 6, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = PRO:MBTemp:Ch7, SCAN_RATE = 2 second, MBTEMP_ADDRESS = 1, CHANNEL = 6, DESCRIPTION = MBTemp Channel 7, PORT = serialPort1")
-dbLoadRecords("database/MBTemp-Channel.db", "RECORD_NAME = PRO:MBTemp:Ch8, SCAN_RATE = 2 second, MBTEMP_ADDRESS = 1, CHANNEL = 7, DESCRIPTION = MBTemp Channel 8, PORT = serialPort1")
+dbLoadRecords("database/MBTemp-Channel.db", "CHANNEL = 0, DESCRIPTION = MBTemp Channel 1, MBTEMP_ADDRESS = 1, PORT = serialPort1, RECORD_NAME = PRO:MBTemp:Ch1, SCAN_RATE = 2 second")
+dbLoadRecords("database/MBTemp-Channel.db", "CHANNEL = 1, DESCRIPTION = MBTemp Channel 2, MBTEMP_ADDRESS = 1, PORT = serialPort1, RECORD_NAME = PRO:MBTemp:Ch2, SCAN_RATE = 2 second")
+dbLoadRecords("database/MBTemp-Channel.db", "CHANNEL = 2, DESCRIPTION = MBTemp Channel 3, MBTEMP_ADDRESS = 1, PORT = serialPort1, RECORD_NAME = PRO:MBTemp:Ch3, SCAN_RATE = 2 second")
+dbLoadRecords("database/MBTemp-Channel.db", "CHANNEL = 3, DESCRIPTION = MBTemp Channel 4, MBTEMP_ADDRESS = 1, PORT = serialPort1, RECORD_NAME = PRO:MBTemp:Ch4, SCAN_RATE = 2 second")
+dbLoadRecords("database/MBTemp-Channel.db", "CHANNEL = 4, DESCRIPTION = MBTemp Channel 5, MBTEMP_ADDRESS = 1, PORT = serialPort1, RECORD_NAME = PRO:MBTemp:Ch5, SCAN_RATE = 2 second")
+dbLoadRecords("database/MBTemp-Channel.db", "CHANNEL = 5, DESCRIPTION = MBTemp Channel 6, MBTEMP_ADDRESS = 1, PORT = serialPort1, RECORD_NAME = PRO:MBTemp:Ch6, SCAN_RATE = 2 second")
+dbLoadRecords("database/MBTemp-Channel.db", "CHANNEL = 6, DESCRIPTION = MBTemp Channel 7, MBTEMP_ADDRESS = 1, PORT = serialPort1, RECORD_NAME = PRO:MBTemp:Ch7, SCAN_RATE = 2 second")
+dbLoadRecords("database/MBTemp-Channel.db", "CHANNEL = 7, DESCRIPTION = MBTemp Channel 8, MBTEMP_ADDRESS = 1, PORT = serialPort1, RECORD_NAME = PRO:MBTemp:Ch8, SCAN_RATE = 2 second")
 
 # Records of the DCM SE-10 device
 
