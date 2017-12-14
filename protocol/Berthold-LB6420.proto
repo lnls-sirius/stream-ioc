@@ -31,5 +31,5 @@ getTotalDoseRate {
 
 getTotalNeutronRate {
     out "TOTAL_NEUTRON_RATE?";
-    int "%f";
+    in "%f";
 }

@@ -15,6 +15,7 @@ import datetime
 import socket
 import struct
 import sys
+import threading
 import time
 
 # UDP server port number
@@ -80,6 +81,16 @@ def scanThread():
     global GAMMA
     global TOTAL_NEUTRON_RATE
     global HIGH_ENERGY_NEUTRONS
+
+    global N
+
+    global date_and_time
+    global raw_data
+
+    global total_dose_rate
+    global gamma
+    global total_neutron_rate
+    global high_energy_neutrons
 
     # This creates a TCP/IP socket for communication to the probe
 
