@@ -1,8 +1,9 @@
 #!../bin/linux-arm/streamApp
 
-# RAD.cmd
+# RAD1.cmd
 
-# This script is being used for new radiation probes of LNLS Radiation Protection Group (RAD)
+# This script is being used for the new Berthold LB 6420 probe of LNLS Radiation Protection Group
+# (RAD).
 
 # Environment variables
 

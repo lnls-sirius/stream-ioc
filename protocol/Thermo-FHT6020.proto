@@ -1,0 +1,15 @@
+# Thermo-FHT6020.proto
+
+# Communication protocol for the Thermo Fisher Scientific FHT 6020 controller. Only the FH40G ports
+# of the controller are considered here.
+
+# Protocol terminator character
+
+Terminator = ETX;
+
+# FH40G channel reading
+
+getFH40G {
+    out BEL, "\$1", "RM\$2", %0<sum>;
+    in BEL, "\$1", "RM ", "%f", "  0000  0000", %0<sum>;
+}
