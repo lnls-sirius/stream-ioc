@@ -13,7 +13,7 @@
 record(ai, "$(PREFIX):Gamma") {
     field(DESC, "Gamma")
     field(DTYP, "stream")
-    field(EGU, "µSv/h")
+    field(EGU, "uSv/h")
     field(INP, "@Berthold-LB6420.proto getGamma $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
@@ -25,7 +25,7 @@ record(ai, "$(PREFIX):Gamma") {
 record(ai, "$(PREFIX):HighEnergyNeutrons") {
     field(DESC, "High energy neutrons")
     field(DTYP, "stream")
-    field(EGU, "µSv/h")
+    field(EGU, "uSv/h")
     field(INP, "@Berthold-LB6420.proto getHighEnergyNeutrons $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
@@ -37,7 +37,7 @@ record(ai, "$(PREFIX):HighEnergyNeutrons") {
 record(ai, "$(PREFIX):TotalDoseRate") {
     field(DESC, "Total dose rate")
     field(DTYP, "stream")
-    field(EGU, "µSv/h")
+    field(EGU, "uSv/h")
     field(INP, "@Berthold-LB6420.proto getTotalDoseRate $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
@@ -49,7 +49,7 @@ record(ai, "$(PREFIX):TotalDoseRate") {
 record(ai, "$(PREFIX):TotalNeutronRate") {
     field(DESC, "Total neutron rate")
     field(DTYP, "stream")
-    field(EGU, "µSv/h")
+    field(EGU, "uSv/h")
     field(INP, "@Berthold-LB6420.proto getTotalNeutronRate $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")

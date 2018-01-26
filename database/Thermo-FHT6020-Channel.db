@@ -18,9 +18,9 @@
 record(ai, "$(RECORD_NAME)") {
     field(DESC, "$(DESCRIPTION)")
     field(DTYP, "stream")
-    field(EGU, "µSv/h")
+    field(EGU, "uSv/h")
     field(INP, "@Thermo-FHT6020.proto getFH40G($(ADDRESS),$(FH40G_PORT)) $(PORT)")
     field(PINI, "YES")
-    field(PREC, "3")
+    field(PREC, "4")
     field(SCAN, "1 second")
 }

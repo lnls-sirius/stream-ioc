@@ -10,6 +10,6 @@ Terminator = ETX;
 # FH40G channel reading
 
 getFH40G {
-    out BEL, "\$1", "RM\$2", %0<sum>;
-    in BEL, "\$1", "RM ", "%f", "  0000  0000", %0<sum>;
+    out BEL, "\$1", "RM\$2", "%0<sum>";
+    in BEL, "\$1", "RM ", "%f", "  0000  0000 ", "%0<sum>";
 }
