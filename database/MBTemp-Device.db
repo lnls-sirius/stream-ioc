@@ -1,0 +1,20 @@
+# MBTemp-Device.db
+
+# This file is intended to contain records related to the configuration of a MBTemp board.
+
+# Each record defined below has the following parameters:
+#
+# MBTEMP_ADDRESS - MBTemp serial address (from 1 to 31).
+#
+# PORT - Name of the serial port configured in asynDriver.
+#
+# PREFIX - Prefix name for all PVs associated with the device.
+
+record(longout, "$(PREFIX):Alpha") {
+    field(DESC, "Moving average smoothing factor")
+    field(DRVH, "999")
+    field(DRVL, "0")
+    field(DTYP, "stream")
+    field(OUT, "@MBTemp.proto setAlpha($(MBTEMP_ADDRESS)) $(PORT)")
+    field(PINI, "YES")
+}

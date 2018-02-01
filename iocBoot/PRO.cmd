@@ -28,6 +28,10 @@ asynSetOption("serialPort1", 0, "baud", "115200")
 
 drvAsynIPPortConfigure("IPPort1", "127.0.0.1:17001 UDP")
 
+# Record for configuration of MBTemp exponential moving average smoothing factor
+
+dbLoadRecords("database/MBTemp-Device.db", "MBTEMP_ADDRESS = 1, PORT = serialPort1, PREFIX = PRO:MBTemp")
+
 # Records corresponding to the eight temperature measurements given by the MBTemp board
 
 dbLoadRecords("database/MBTemp-Channel.db", "CHANNEL = 0, DESCRIPTION = MBTemp Channel 1, MBTEMP_ADDRESS = 1, PORT = serialPort1, RECORD_NAME = PRO:MBTemp:Ch1, SCAN_RATE = 2 second")
