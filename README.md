@@ -4,7 +4,7 @@ This project is an EPICS IOC based on StreamDevice. All StreamDevice-based EPICS
 
 ## System requirements
 
-In order to get this software running, you should have installed in your system EPICS base (version 3.15.5 recommended) and asynDriver module (version 4-32 recommended). Stream-IOC is intended to run in a Linux environment.
+In order to get this software running, you should have installed in your system EPICS base (version 3.15.5 recommended) and asynDriver module (version 4-33 recommended). Stream-IOC is intended to run in a Linux environment.
 
 ## Supported devices
 
@@ -46,7 +46,7 @@ This software is distributed in the form of source code. In order to compile it,
 
 ```
 EPICS_BASE=/opt/base-3.15.5
-ASYN=/opt/asyn4-32
+ASYN=/opt/asyn4-33
 ```
 
 After editing `configure/RELEASE`, run these commands at the top directory:
