@@ -1,6 +1,6 @@
 #!../bin/linux-arm/streamApp
 
-# PRO.cmd
+# PRO1.cmd
 
 # This script is being used for temperature and humidity measurements at a room of LNLS Mechanical
 # Designs Group (PRO).
