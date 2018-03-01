@@ -6,6 +6,13 @@
 
 Terminator = LF;
 
+# Averaging time (readback)
+
+getAveragingTime {
+    out "AVERAGING_TIME?";
+    in "%u";
+}
+
 # Gamma
 
 getGamma {
@@ -32,4 +39,14 @@ getTotalDoseRate {
 getTotalNeutronRate {
     out "TOTAL_NEUTRON_RATE?";
     in "%f";
+}
+
+# Averaging time (setpoint)
+
+setAveragingTime {
+    out "AVERAGING_TIME %u";
+    in "OK";
+    @init {
+        getAveragingTime;
+    }
 }

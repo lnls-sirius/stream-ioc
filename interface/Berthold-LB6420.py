@@ -12,13 +12,14 @@
 # Necessary Python modules
 
 import datetime
+import math
 import socket
 import struct
 import sys
 import threading
 import time
 
-# UDP server port number
+# UDP server port
 
 UDP_PORT = int(sys.argv[1])
 
@@ -27,32 +28,25 @@ UDP_PORT = int(sys.argv[1])
 PROBE_IP = sys.argv[2]
 PROBE_PORT = 1000
 
-# Averaging time configuration for simple moving average (s)
+# Default averaging time configuration for simple moving average (s)
 
 AVERAGING_TIME = 120
 
-# Dose rates are initialized at 0.0 µSv/h
+# Maximum averaging time configuration for simple moving average (s)
 
-TOTAL_DOSE_RATE = 0.0         # Parameter 19
-GAMMA = 0.0                   # Parameter 31
-TOTAL_NEUTRON_RATE = 0.0      # Parameter 34
-HIGH_ENERGY_NEUTRONS = 0.0    # Parameter 33
+MAXIMUM_AVERAGING_TIME = 120
 
 # Time series (raw data) for dose rate calculations
 
 date_and_time = []
 raw_data = []
 
-# Time series of calculated doses
+# Time series of calculated dose rates
 
-total_dose_rate = []
-gamma = []
-total_neutron_rate = []
-high_energy_neutrons = []
-
-# Number of probe readings already performed (this counter stops when it reaches AVERAGING_TIME + 1)
-
-N = 0
+total_dose_rate = []         # Parameter 19
+gamma = []                   # Parameter 31
+total_neutron_rate = []      # Parameter 34
+high_energy_neutrons = []    # Parameter 33
 
 # This function returns one of the 64 parameters of the probe, converting the byte stream into an
 # integer.
@@ -76,13 +70,6 @@ def dose_rate_value(date_and_time, raw_data, parameter):
 def scanThread():
 
     # Global variables
-
-    global TOTAL_DOSE_RATE
-    global GAMMA
-    global TOTAL_NEUTRON_RATE
-    global HIGH_ENERGY_NEUTRONS
-
-    global N
 
     global date_and_time
     global raw_data
@@ -120,40 +107,23 @@ def scanThread():
                 new_raw_data.append(raw_value(answer, parameter))
             raw_data.append(new_raw_data)
 
-            if (N < AVERAGING_TIME + 1):
-                N += 1
-
-            if (len(date_and_time) > AVERAGING_TIME + 1):
+            if (len(date_and_time) > MAXIMUM_AVERAGING_TIME + 1):
                 date_and_time = date_and_time[1:]
                 raw_data = raw_data[1:]
 
-            if (N >= 2):
+            if (len(date_and_time) >= 2):
 
                 total_dose_rate.append(dose_rate_value(date_and_time, raw_data, 19))
                 gamma.append(dose_rate_value(date_and_time, raw_data, 31))
                 total_neutron_rate.append(dose_rate_value(date_and_time, raw_data, 34))
                 high_energy_neutrons.append(dose_rate_value(date_and_time, raw_data, 33))
 
-                if (len(total_dose_rate) > AVERAGING_TIME):
+                if (len(total_dose_rate) > MAXIMUM_AVERAGING_TIME):
 
-                    TOTAL_DOSE_RATE += (total_dose_rate[-1] - total_dose_rate[0]) / AVERAGING_TIME
                     total_dose_rate = total_dose_rate[1:]
-
-                    GAMMA += (gamma[-1] - gamma[0]) / AVERAGING_TIME
                     gamma = gamma[1:]
-
-                    TOTAL_NEUTRON_RATE += (total_neutron_rate[-1] - total_neutron_rate[0]) / AVERAGING_TIME
                     total_neutron_rate = total_neutron_rate[1:]
-
-                    HIGH_ENERGY_NEUTRONS += (high_energy_neutrons[-1] - high_energy_neutrons[0]) / AVERAGING_TIME
                     high_energy_neutrons = high_energy_neutrons[1:]
-
-                else:
-
-                    TOTAL_DOSE_RATE = (TOTAL_DOSE_RATE * (N - 2) + total_dose_rate[-1]) / (N - 1)
-                    GAMMA = (GAMMA * (N - 2) + gamma[-1]) / (N - 1)
-                    TOTAL_NEUTRON_RATE = (TOTAL_NEUTRON_RATE * (N - 2) + total_neutron_rate[-1]) / (N - 1)
-                    HIGH_ENERGY_NEUTRONS = (HIGH_ENERGY_NEUTRONS * (N - 2) + high_energy_neutrons[-1]) / (N - 1)
 
         time.sleep(1)
 
@@ -181,20 +151,45 @@ while (True):
 
     data, address = udp_server_socket.recvfrom(512)
 
-    # There is a simple protocol for communication to the client
+    # Input processing. There is a simple protocol for communication to the client.
 
     if (data):
 
-        if (data == "TOTAL_DOSE_RATE?\n"):
-            answer = "{:.10f}".format(TOTAL_DOSE_RATE)
+        # This software will not answer to any request until all its buffers are filled
+
+        if (len(total_dose_rate) < MAXIMUM_AVERAGING_TIME):
+            answer = "INITIALIZING\n"
+            udp_server_socket.sendto(answer, address)
+            continue            
+
+        if ((data[:14] == "AVERAGING_TIME") and (data[-1] == "\n")):
+            if (len(data[:-1].split(" ")) == 2):
+                try:
+                    NEW_AVERAGING_TIME = int(data[:-1].split(" ")[1])
+                except (ValueError):
+                    answer = "INVALID_INPUT\n"
+                    udp_server_socket.sendto(answer, address)
+                    continue
+                if ((NEW_AVERAGING_TIME >= 1) and (NEW_AVERAGING_TIME <= 120)):
+                    AVERAGING_TIME = NEW_AVERAGING_TIME
+                    answer = "OK\n"
+                else:
+                    answer = "INVALID_INPUT\n"
+                udp_server_socket.sendto(answer, address)
+                continue
+
+        if (data == "AVERAGING_TIME?\n"):
+            answer = str(AVERAGING_TIME)
+        elif (data == "TOTAL_DOSE_RATE?\n"):
+            answer = "{:.10f}".format(math.fsum(total_dose_rate[-AVERAGING_TIME:]) / AVERAGING_TIME)
         elif (data == "GAMMA?\n"):
-            answer = "{:.10f}".format(GAMMA)
+            answer = "{:.10f}".format(math.fsum(gamma[-AVERAGING_TIME:]) / AVERAGING_TIME)
         elif (data == "TOTAL_NEUTRON_RATE?\n"):
-            answer = "{:.10f}".format(TOTAL_NEUTRON_RATE)
+            answer = "{:.10f}".format(math.fsum(total_neutron_rate[-AVERAGING_TIME:]) / AVERAGING_TIME)
         elif (data == "HIGH_ENERGY_NEUTRONS?\n"):
-            answer = "{:.10f}".format(HIGH_ENERGY_NEUTRONS)
+            answer = "{:.10f}".format(math.fsum(high_energy_neutrons[-AVERAGING_TIME:]) / AVERAGING_TIME)
         else:
-            continue
+            answer = "INVALID_INPUT"
 
         answer += "\n"
         udp_server_socket.sendto(answer, address)

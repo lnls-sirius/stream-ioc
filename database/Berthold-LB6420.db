@@ -8,6 +8,29 @@
 #
 # PREFIX - Prefix name for all PVs associated with the device.
 
+# Averaging time configuration for simple moving average of all probe parameters (readback)
+
+record(longin, "$(PREFIX):AveragingTime-RB") {
+    field(DESC, "Averaging time readback")
+    field(DTYP, "stream")
+    field(EGU, "s")
+    field(INP, "@Berthold-LB6420.proto getAveragingTime $(PORT)")
+    field(PINI, "YES")
+    field(SCAN, "1 second")
+}
+
+# Averaging time configuration for simple moving average of all probe parameters (setpoint)
+
+record(longout, "$(PREFIX):AveragingTime-SP") {
+    field(DESC, "Averaging time setpoint")
+    field(DRVH, "120")
+    field(DRVL, "1")
+    field(DTYP, "stream")
+    field(EGU, "s")
+    field(OUT, "@Berthold-LB6420.proto setAveragingTime $(PORT)")
+    field(PINI, "YES")
+}
+
 # Gamma
 
 record(ai, "$(PREFIX):Gamma") {
