@@ -13,6 +13,8 @@
 
 import datetime
 import math
+import os
+import pickle
 import socket
 import struct
 import sys
@@ -28,13 +30,21 @@ UDP_PORT = int(sys.argv[1])
 PROBE_IP = sys.argv[2]
 PROBE_PORT = 1000
 
-# Default averaging time configuration for simple moving average (s)
-
-AVERAGING_TIME = 120
-
 # Maximum averaging time configuration for simple moving average (s)
 
 MAXIMUM_AVERAGING_TIME = 120
+
+# Averaging time configuration for simple moving average (s). If there is a configuration file, this
+# parameter is loaded from it. Otherwise, it is set to MAXIMUM_AVERAGING_TIME and stored in a new
+# configuration file.
+
+CONFIGURATION_FILE = "/".join(os.path.abspath(__file__).split("/")[:-1]) + "/Berthold-LB6420.data"
+
+if (os.path.isfile(CONFIGURATION_FILE) == True):
+    AVERAGING_TIME = pickle.load(open(CONFIGURATION_FILE, "rb"))
+else:
+    AVERAGING_TIME = MAXIMUM_AVERAGING_TIME
+    pickle.dump(AVERAGING_TIME, open(CONFIGURATION_FILE, "wb"))
 
 # Time series (raw data) for dose rate calculations
 
@@ -170,8 +180,9 @@ while (True):
                     answer = "INVALID_INPUT\n"
                     udp_server_socket.sendto(answer, address)
                     continue
-                if ((NEW_AVERAGING_TIME >= 1) and (NEW_AVERAGING_TIME <= 120)):
+                if ((NEW_AVERAGING_TIME >= 1) and (NEW_AVERAGING_TIME <= MAXIMUM_AVERAGING_TIME)):
                     AVERAGING_TIME = NEW_AVERAGING_TIME
+                    pickle.dump(AVERAGING_TIME, open(CONFIGURATION_FILE, "wb"))
                     answer = "OK\n"
                 else:
                     answer = "INVALID_INPUT\n"
@@ -181,13 +192,17 @@ while (True):
         if (data == "AVERAGING_TIME?\n"):
             answer = str(AVERAGING_TIME)
         elif (data == "TOTAL_DOSE_RATE?\n"):
-            answer = "{:.10f}".format(math.fsum(total_dose_rate[-AVERAGING_TIME:]) / AVERAGING_TIME)
+            dose_rate = math.fsum(total_dose_rate[-AVERAGING_TIME:]) / AVERAGING_TIME
+            answer = "{:.10f}".format(dose_rate)
         elif (data == "GAMMA?\n"):
-            answer = "{:.10f}".format(math.fsum(gamma[-AVERAGING_TIME:]) / AVERAGING_TIME)
+            dose_rate = math.fsum(gamma[-AVERAGING_TIME:]) / AVERAGING_TIME
+            answer = "{:.10f}".format(dose_rate)
         elif (data == "TOTAL_NEUTRON_RATE?\n"):
-            answer = "{:.10f}".format(math.fsum(total_neutron_rate[-AVERAGING_TIME:]) / AVERAGING_TIME)
+            dose_rate = math.fsum(total_neutron_rate[-AVERAGING_TIME:]) / AVERAGING_TIME
+            answer = "{:.10f}".format(dose_rate)
         elif (data == "HIGH_ENERGY_NEUTRONS?\n"):
-            answer = "{:.10f}".format(math.fsum(high_energy_neutrons[-AVERAGING_TIME:]) / AVERAGING_TIME)
+            dose_rate = math.fsum(high_energy_neutrons[-AVERAGING_TIME:]) / AVERAGING_TIME
+            answer = "{:.10f}".format(dose_rate)
         else:
             answer = "INVALID_INPUT"
 

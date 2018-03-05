@@ -3,6 +3,6 @@ configure/O.linux-arm/
 configure/O.linux-x86_64/
 dbd/
 include/
+interface/*.data
 iocBoot/StreamDebug.log
 lib/
-

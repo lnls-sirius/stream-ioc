@@ -32,7 +32,7 @@ Here is a brief explanation of the directory structure:
 
 * **database** - Contains files with record definitions for all devices this application supports.
 
-* **interface** - Folder with Python programs that provide TCP, UDP or Unix sockets for communication between the EPICS IOC and some devices.
+* **interface** - Folder with Python programs that provide TCP, UDP or Unix sockets for communication between the EPICS IOC and some devices. An interface program may create a file with the ".data" extension in this directory, which will be used to store configuration parameters of the interface software or the controlled hardware.
 
 * **iocBoot** - Directory where the IOC initialization scripts reside. These files must be properly configured, as described at the "Executing the IOC" section. In the future, definition of control system nodes structure will lead to many specific initialization scripts. In this folder, a file named `StreamDebug.log` will be created at execution time. All the error messages reported by StreamDevice will be logged into this file.
 
