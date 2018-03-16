@@ -1,0 +1,38 @@
+# Thermo.proto
+
+# Communication protocol for Thermo probes and 6020 monitor
+
+# Protocol terminator character
+
+Terminator = LF;
+
+# Gamma
+
+getGamma {
+    out "RAD_G?";
+    in "%f";
+}
+
+# Neutron
+
+getNeutron {
+    out "RAD_N?";
+    in "%f";
+}
+
+# Total dose rate
+
+getTotalDoseRate {
+    out "RAD_T?";
+    in "%f";
+}
+
+# Integral
+
+getIntegral {
+    out "RAD_I";
+    in "%f";
+}
+
+
+
