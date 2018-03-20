@@ -15,7 +15,7 @@ record(ai, "$(PREFIX):Gamma") {
     field(DESC, "Gamma")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@Thermo.proto getGamma $(PORT)")
+    field(INP, "@ELSE-Probes-tcp.proto getGamma $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -27,7 +27,7 @@ record(ai, "$(PREFIX):Neutron") {
     field(DESC, "High energy neutrons")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@Thermo.proto getNeutron $(PORT)")
+    field(INP, "@ELSE-Probes-tcp.proto getNeutron $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -39,22 +39,20 @@ record(ai, "$(PREFIX):TotalDoseRate") {
     field(DESC, "Total dose rate")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@Thermo.proto getTotalDoseRate $(PORT)")
+    field(INP, "@ELSE-Probes-tcp.proto getTotalDoseRate $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
 }
 
-# Integral 
+# Integral
 
-record(ai, "$(PREFIX):DoseIntegrada") {
+record(ai, "$(PREFIX):DoseIntegral") {
     field(DESC, "Integral")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@Thermo.proto getIntegral $(PORT)")
+    field(INP, "@ELSE-Probes-tcp.proto getIntegral $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
 }
-
-

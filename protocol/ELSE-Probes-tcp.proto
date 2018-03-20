@@ -1,0 +1,35 @@
+# ELSE-Probes-tcp.proto
+
+# Communication protocol for ELSE Nuclear probes (ICP-T-PF and LUPIN 5401 BF3-NP models) and SATURN
+
+# Protocol terminator character
+
+Terminator = LF;
+
+# Gamma
+
+getGamma {
+    out "RAD_E_Gamma?";
+    in "%f";
+}
+
+# Neutron
+
+getNeutron {
+    out "RAD_E_Neutron?";
+    in "%f";
+}
+
+# Total dose rate
+
+getTotalDoseRate {
+    out "RAD_E_Total?";
+    in "%f";
+}
+
+# Total Integral
+
+getIntegral {
+    out "RAD_E_Integral?";
+    in "%f";
+}
