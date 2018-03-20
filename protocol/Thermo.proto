@@ -30,7 +30,7 @@ getTotalDoseRate {
 # Integral
 
 getIntegral {
-    out "RAD_I";
+    out "RAD_I?";
     in "%f";
 }
 
