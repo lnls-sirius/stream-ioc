@@ -50,7 +50,7 @@ record(ai, "$(PREFIX):TotalDoseRate") {
 record(ai, "$(PREFIX):DoseIntegral") {
     field(DESC, "Integral")
     field(DTYP, "stream")
-    field(EGU, "uSv/h")
+    field(EGU, "uSv")
     field(INP, "@ELSE-Probes-tcp.proto getIntegral $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
