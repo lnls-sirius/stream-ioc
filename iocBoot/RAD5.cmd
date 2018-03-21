@@ -21,7 +21,7 @@ streamApp_registerRecordDeviceDriver(pdbbase)
 
 # Port for the ELSE probes
 
-drvAsynIPPortConfigure("IPPort1", "127.0.0.1:17003 UDP")
+drvAsynIPPortConfigure("IPPort1", "127.0.0.1:17002 UDP")
 
 # Records of the ELSE probes
 
