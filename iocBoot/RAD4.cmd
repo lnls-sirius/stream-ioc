@@ -1,6 +1,6 @@
 #!../bin/linux-arm/streamApp
 
-# RAD3.cmd
+# RAD4.cmd
 
 # This script is being used for the new ELSE Nuclear probes of LNLS Radiation Protection Group
 # (RAD).
@@ -21,7 +21,7 @@ streamApp_registerRecordDeviceDriver(pdbbase)
 
 # Port for the ELSE probes
 
-drvAsynIPPortConfigure("IPPort1", "127.0.0.1:17002 UDP")
+drvAsynIPPortConfigure("IPPort1", "127.0.0.1:17003 UDP")
 
 # Records of the ELSE probes
 
