@@ -47,10 +47,10 @@ record(ai, "$(PREFIX):TotalDoseRate") {
 
 # Integral 
 
-record(ai, "$(PREFIX):DoseIntegrada") {
+record(ai, "$(PREFIX):DoseIntegral") {
     field(DESC, "Integral")
     field(DTYP, "stream")
-    field(EGU, "uSv/h")
+    field(EGU, "uSv")
     field(INP, "@Thermo.proto getIntegral $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
