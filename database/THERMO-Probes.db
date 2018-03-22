@@ -57,15 +57,3 @@ record(ai, "$(PREFIX):DoseIntegral") {
     field(SCAN, "1 second")
 }
 
-# MaxIntegral
-
-record(ai, "$(PREFIX):MaxIntegral") {
-    field(DESC, "MaxIntegral")
-    field(DTYP, "stream")
-    field(EGU, "uSv")
-    field(INP, "@Thermo.proto getMaxIntegral $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
-}
-

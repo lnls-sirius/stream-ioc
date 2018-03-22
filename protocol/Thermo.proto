@@ -34,10 +34,3 @@ getIntegral {
     in "%f";
 }
 
-# MaxIntegral
-
-getMaxIntegral {
-    out "RAD_Max_I?";
-    in "%f";
-}
-
