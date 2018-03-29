@@ -7,7 +7,10 @@
 # monitoring system.
 
 # This Python program should be executed with two parameters. The first is the port of the UDP
-# server. The other is the IP address of the Berthold LB 6420 probe.
+# server. The other is the IP address of the Berthold LB 6420 probe. After launching this program,
+# the user should wait at least 120 s before running the EPICS IOC.
+
+# Tested with Python 2.7.3.
 
 # Necessary Python modules
 
