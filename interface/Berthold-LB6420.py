@@ -58,6 +58,10 @@ gamma = []                   # Parameter 31
 total_neutron_rate = []      # Parameter 34
 high_energy_neutrons = []    # Parameter 33
 
+integral = sum(total_dose_rate) / 3600
+sample = 14400
+deltat = 1.0
+
 # This function returns one of the 64 parameters of the probe, converting the byte stream into an
 # integer.
 
@@ -72,8 +76,11 @@ def dose_rate_value(date_and_time, raw_data, parameter):
     time_difference = (date_and_time[-1] - date_and_time[-2]).total_seconds()
     raw_difference = raw_data[-1][parameter] - raw_data[-2][parameter]
     new_dose_rate = (raw_difference / time_difference) * 3600 * 1E-6
-
     return(new_dose_rate)
+
+def time_sec(date_and_time):
+    deltatime = (date_and_time[-1] - date_and_time[-2]).total_seconds()
+    return deltatime
 
 # Thread for reading data from the Berthold LB 6420 probe
 
@@ -83,11 +90,13 @@ def scanThread():
 
     global date_and_time
     global raw_data
-
     global total_dose_rate
     global gamma
     global total_neutron_rate
     global high_energy_neutrons
+    global integral
+    global sample
+    global deltat
 
     # This creates a TCP/IP socket for communication to the probe
 
@@ -104,7 +113,7 @@ def scanThread():
         client_socket.send("\x0E\x04\x00\x00")
         answer = client_socket.recv(1024)
         answer = client_socket.recv(1024)
-
+        #print(len(answer))
         # If the answer has 512 bytes (the expected message length), the received data is added to
         # the time series and dose rate values are updated.
 
@@ -113,11 +122,13 @@ def scanThread():
             date_and_time.append(datetime.datetime.utcnow())
 
             new_raw_data = []
+
             for parameter in range(0, 64):
                 new_raw_data.append(raw_value(answer, parameter))
             raw_data.append(new_raw_data)
 
             if (len(date_and_time) > MAXIMUM_AVERAGING_TIME + 1):
+
                 date_and_time = date_and_time[1:]
                 raw_data = raw_data[1:]
 
@@ -130,10 +141,20 @@ def scanThread():
 
                 if (len(total_dose_rate) > MAXIMUM_AVERAGING_TIME):
 
-                    total_dose_rate = total_dose_rate[1:]
                     gamma = gamma[1:]
                     total_neutron_rate = total_neutron_rate[1:]
                     high_energy_neutrons = high_energy_neutrons[1:]
+
+                if (len(total_dose_rate) <= sample):
+
+                    integral += (total_dose_rate[-1] / 3600)
+                    #print("A")
+
+                if (len(total_dose_rate) > sample):
+
+                    #print("B")
+                    integral += ((((total_dose_rate[-1] + total_dose_rate[-2]) * deltat) - ((total_dose_rate[0] + total_dose_rate[1]) * deltat)) / (2 * 3600))
+                    total_dose_rate = total_dose_rate[1:]
 
         time.sleep(1)
 
@@ -170,7 +191,7 @@ while (True):
         if (len(total_dose_rate) < MAXIMUM_AVERAGING_TIME):
             answer = "INITIALIZING\n"
             udp_server_socket.sendto(answer, address)
-            continue            
+            continue
 
         if ((data[:14] == "AVERAGING_TIME") and (data[-1] == "\n")):
             if (len(data[:-1].split(" ")) == 2):
@@ -202,6 +223,9 @@ while (True):
             answer = "{:.10f}".format(dose_rate)
         elif (data == "HIGH_ENERGY_NEUTRONS?\n"):
             dose_rate = math.fsum(high_energy_neutrons[-AVERAGING_TIME:]) / AVERAGING_TIME
+            answer = "{:.10f}".format(dose_rate)
+        elif (data == "INTEGRAL?\n"):
+            dose_rate = integral
             answer = "{:.10f}".format(dose_rate)
         else:
             answer = "INVALID_INPUT"
