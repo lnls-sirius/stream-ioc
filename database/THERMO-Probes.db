@@ -57,3 +57,27 @@ record(ai, "$(PREFIX):DoseIntegral") {
     field(SCAN, "1 second")
 }
 
+# Integral de Gamma
+
+record(ai, "$(PREFIX):IntegralGamma") {
+    field(DESC, "IntegralGamma")
+    field(DTYP, "stream")
+    field(EGU, "uSv")
+    field(INP, "@Thermo.proto getGammaIntegral $(PORT)")
+    field(PINI, "YES")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}
+
+# Integral de Neutrons
+
+record(ai, "$(PREFIX):IntegralNeutron") {
+    field(DESC, "IntegralNeutron")
+    field(DTYP, "stream")
+    field(EGU, "uSv")
+    field(INP, "@Thermo.proto getNeutronIntegral $(PORT)")
+    field(PINI, "YES")
+    field(PREC, "3")
+    field(SCAN, "1 second")
+}
+

@@ -34,3 +34,16 @@ getIntegral {
     in "%f";
 }
 
+# Integral de Gamma
+
+getGammaIntegral {
+    out "RAD_I_G?";
+    in "%f";
+}
+
+# Integral de Neutrons
+
+getNeutronIntegral {
+    out "RAD_I_N?";
+    in "%f";
+}
