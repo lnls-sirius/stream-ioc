@@ -7,10 +7,7 @@
 # monitoring system.
 
 # This Python program should be executed with two parameters. The first is the port of the UDP
-# server. The other is the IP address of the Berthold LB 6420 probe. After launching this program,
-# the user should wait at least 120 s before running the EPICS IOC.
-
-# Tested with Python 2.7.3.
+# server. The other is the IP address of the Berthold LB 6420 probe.
 
 # Necessary Python modules
 
@@ -23,6 +20,10 @@ import struct
 import sys
 import threading
 import time
+import logging
+
+# Log File for exceptions
+logging.basicConfig(filename='app.log',level=logging.INFO)
 
 # UDP server port
 
@@ -61,6 +62,8 @@ gamma = []                   # Parameter 31
 total_neutron_rate = []      # Parameter 34
 high_energy_neutrons = []    # Parameter 33
 
+integralgamma = float(sum(gamma) / 3600)
+integralneutron = float(sum(total_neutron_rate) / 3600)
 integral = sum(total_dose_rate) / 3600
 sample = 14400
 deltat = 1.0
@@ -100,6 +103,8 @@ def scanThread():
     global integral
     global sample
     global deltat
+    global integralgamma
+    global integralneutron
 
     # This creates a TCP/IP socket for communication to the probe
 
@@ -110,56 +115,66 @@ def scanThread():
 
     while (True):
 
-        # A new set of data is required. Two "recv" calls are necessary because the probe sends two
-        # answer messages to the client in sequence. The second one contains the desired data.
+        try:
 
-        client_socket.send("\x0E\x04\x00\x00")
-        answer = client_socket.recv(1024)
-        answer = client_socket.recv(1024)
-        #print(len(answer))
-        # If the answer has 512 bytes (the expected message length), the received data is added to
-        # the time series and dose rate values are updated.
+            # A new set of data is required. Two "recv" calls are necessary because the probe sends two
+            #answer messages to the client in sequence. The second one contains the desired data.
 
-        if (len(answer) == 512):
+            client_socket.send("\x0E\x04\x00\x00")
+            answer = client_socket.recv(1024)
+            answer = client_socket.recv(1024)
+            
 
-            date_and_time.append(datetime.datetime.utcnow())
+            # If the answer has 512 bytes (the expected message length), the received data is added to
+            # the time series and dose rate values are updated.
 
-            new_raw_data = []
+            if (len(answer) == 512):
 
-            for parameter in range(0, 64):
-                new_raw_data.append(raw_value(answer, parameter))
-            raw_data.append(new_raw_data)
+                date_and_time.append(datetime.datetime.utcnow())
 
-            if (len(date_and_time) > MAXIMUM_AVERAGING_TIME + 1):
+                new_raw_data = []
 
-                date_and_time = date_and_time[1:]
-                raw_data = raw_data[1:]
+                for parameter in range(0, 64):
+                    new_raw_data.append(raw_value(answer, parameter))
+                raw_data.append(new_raw_data)
 
-            if (len(date_and_time) >= 2):
+                if (len(date_and_time) > MAXIMUM_AVERAGING_TIME + 1):
 
-                total_dose_rate.append(dose_rate_value(date_and_time, raw_data, 19))
-                gamma.append(dose_rate_value(date_and_time, raw_data, 31))
-                total_neutron_rate.append(dose_rate_value(date_and_time, raw_data, 34))
-                high_energy_neutrons.append(dose_rate_value(date_and_time, raw_data, 33))
+                    date_and_time = date_and_time[1:]
+                    raw_data = raw_data[1:]
 
-                if (len(total_dose_rate) > MAXIMUM_AVERAGING_TIME):
+                if (len(date_and_time) >= 2):
 
-                    gamma = gamma[1:]
-                    total_neutron_rate = total_neutron_rate[1:]
-                    high_energy_neutrons = high_energy_neutrons[1:]
+                    total_dose_rate.append(dose_rate_value(date_and_time, raw_data, 19))
+                    gamma.append(dose_rate_value(date_and_time, raw_data, 31))
+                    total_neutron_rate.append(dose_rate_value(date_and_time, raw_data, 34))
+                    high_energy_neutrons.append(dose_rate_value(date_and_time, raw_data, 33))
 
-                if (len(total_dose_rate) <= sample):
+                    if (len(total_dose_rate) <= sample):
 
-                    integral += (total_dose_rate[-1] / 3600)
-                    #print("A")
+                        integralgamma += (gamma[-1] / 3600)
+                        integralneutron += (total_neutron_rate[-1] / 3600)
+                        integral += (total_dose_rate[-1] / 3600)
 
-                if (len(total_dose_rate) > sample):
 
-                    #print("B")
-                    integral += ((((total_dose_rate[-1] + total_dose_rate[-2]) * deltat) - ((total_dose_rate[0] + total_dose_rate[1]) * deltat)) / (2 * 3600))
-                    total_dose_rate = total_dose_rate[1:]
+                    if (len(total_dose_rate) > sample):
 
-        time.sleep(1)
+                        integralgamma += ((((gamma[-1] + gamma[-2]) * deltat) - ((gamma[0] + gamma[1]) * deltat)) / (2 * 3600))
+                        integralneutron += ((((total_neutron_rate[-1] + total_neutron_rate[-2]) * deltat) - ((total_neutron_rate[0] + total_neutron_rate[1]) * deltat)) / (2 * 3600))
+                        print("{}".format(type(integralneutron)))
+                        gamma = gamma[1:]
+                        total_neutron_rate = total_neutron_rate[1:]
+                        high_energy_neutrons = high_energy_neutrons[1:]
+                    
+                        integral += ((((total_dose_rate[-1] + total_dose_rate[-2]) * deltat) - ((total_dose_rate[0] + total_dose_rate[1]) * deltat)) / (2 * 3600))
+                        total_dose_rate = total_dose_rate[1:]
+
+            time.sleep(1)
+
+        except Exception as e:
+            print(e)
+            logging.error("Error occurred" + str(e))
+            pass
 
 # This launches the auxiliary thread of the program
 
@@ -230,8 +245,15 @@ while (True):
         elif (data == "INTEGRAL?\n"):
             dose_rate = integral
             answer = "{:.10f}".format(dose_rate)
+        elif (data == "INTEGRALGAMMA?\n"):
+            dose_rate = integralgamma
+            answer = "{:.10f}".format(dose_rate)
+        elif (data == "INTEGRALNEUTRON?\n"):
+            dose_rate = integralneutron
+            answer = "{:.10f}".format(dose_rate)
         else:
             answer = "INVALID_INPUT"
 
         answer += "\n"
         udp_server_socket.sendto(answer, address)
+

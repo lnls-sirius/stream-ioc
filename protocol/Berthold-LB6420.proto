@@ -6,13 +6,6 @@
 
 Terminator = LF;
 
-# Averaging time (readback)
-
-getAveragingTime {
-    out "AVERAGING_TIME?";
-    in "%u";
-}
-
 # Gamma
 
 getGamma {
@@ -41,12 +34,17 @@ getTotalNeutronRate {
     in "%f";
 }
 
-# Averaging time (setpoint)
+getIntegral {
+    out "INTEGRAL?";
+    in "%f";
+}
 
-setAveragingTime {
-    out "AVERAGING_TIME %u";
-    in "OK";
-    @init {
-        getAveragingTime;
-    }
+getIntegralGamma {
+    out "INTEGRALGAMMA?";
+    in "%f";
+}
+
+getIntegralNeutron {
+    out "INTEGRALNEUTON?";
+    in "%f";
 }
