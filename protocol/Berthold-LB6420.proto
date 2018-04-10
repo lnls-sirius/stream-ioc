@@ -45,6 +45,6 @@ getIntegralGamma {
 }
 
 getIntegralNeutron {
-    out "INTEGRALNEUTON?";
+    out "INTEGRALNEUTRON?";
     in "%f";
 }

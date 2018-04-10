@@ -23,6 +23,7 @@ import time
 import logging
 
 # Log File for exceptions
+
 logging.basicConfig(filename='app.log',level=logging.INFO)
 
 # UDP server port
@@ -72,6 +73,7 @@ deltat = 1.0
 # integer.
 
 def raw_value(stream, parameter):
+
     base_index = 8 * parameter
     return(struct.unpack(">q", stream[base_index:(base_index + 8)])[0])
 
@@ -85,6 +87,7 @@ def dose_rate_value(date_and_time, raw_data, parameter):
     return(new_dose_rate)
 
 def time_sec(date_and_time):
+
     deltatime = (date_and_time[-1] - date_and_time[-2]).total_seconds()
     return deltatime
 
@@ -121,6 +124,7 @@ def scanThread():
             #answer messages to the client in sequence. The second one contains the desired data.
 
             client_socket.send("\x0E\x04\x00\x00")
+
             answer = client_socket.recv(1024)
             answer = client_socket.recv(1024)
             
@@ -160,18 +164,21 @@ def scanThread():
                     if (len(total_dose_rate) > sample):
 
                         integralgamma += ((((gamma[-1] + gamma[-2]) * deltat) - ((gamma[0] + gamma[1]) * deltat)) / (2 * 3600))
+
                         integralneutron += ((((total_neutron_rate[-1] + total_neutron_rate[-2]) * deltat) - ((total_neutron_rate[0] + total_neutron_rate[1]) * deltat)) / (2 * 3600))
-                        print("{}".format(type(integralneutron)))
+                        #print("\n" + integralneutron)
+                        #print("\n" + type(integralneutron))
                         gamma = gamma[1:]
                         total_neutron_rate = total_neutron_rate[1:]
                         high_energy_neutrons = high_energy_neutrons[1:]
-                    
+
                         integral += ((((total_dose_rate[-1] + total_dose_rate[-2]) * deltat) - ((total_dose_rate[0] + total_dose_rate[1]) * deltat)) / (2 * 3600))
                         total_dose_rate = total_dose_rate[1:]
 
             time.sleep(1)
 
         except Exception as e:
+
             print(e)
             logging.error("Error occurred" + str(e))
             pass
