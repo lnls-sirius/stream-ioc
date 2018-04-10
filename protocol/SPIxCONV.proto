@@ -47,11 +47,19 @@ set_digital_output_byte{
     out 0x05, $1, $2;
 }
 #==============================================================================
-set_digital_output_bit{
+set_portA_digital_output_bit{
     # output parameters: board, bit, value
     #out 0x06, $1, $2, $3;
     #out 0x06, $1, $2, 1;
-    out 0x06, 1, $1, "%(RVAL)i";
+    out 0x0B, 1, $1, "%(RVAL)i";
+    #out 0x06, $1, $2, "%(RVAL)i";
+}
+#==============================================================================
+set_portB_digital_output_bit{
+    # output parameters: board, bit, value
+    #out 0x06, $1, $2, $3;
+    #out 0x06, $1, $2, 1;
+    out 0x0C, 1, $1, "%(RVAL)i";
     #out 0x06, $1, $2, "%(RVAL)i";
 }
 #==============================================================================
@@ -62,10 +70,18 @@ read_digital_input_byte{
     in "%d";
 }
 #==============================================================================
-read_digital_input_bit{
+read_portA_digital_input_bit{
     # output parameters: board, bit_pos
     #out 0x08, "%u", $2;
-    out 0x08, 1, $1;
+    out 0x0D, 1, $1;
+    # input parameters:  bit read
+    in "%u";
+}
+#==============================================================================
+read_portB_digital_input_bit{
+    # output parameters: board, bit_pos
+    #out 0x08, "%u", $2;
+    out 0x0E, 1, $1;
     # input parameters:  bit read
     in "%u";
 }
