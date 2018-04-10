@@ -15,6 +15,7 @@ Currently Stream-IOC provides EPICS interfaces for:
 * [DCM SE-10](https://dcmtech.com.br/equipamentos-e-sistemas-para-monitorar-temperatura-e-umidade/se-10-monitor-de-ambientes-com-acionamento-de-cargas/)
 * [MBTemp](https://wiki-sirius.lnls.br/mediawiki/index.php/CON:MBTemp)
 * Thermo Fisher Scientific FHT 6020
+* Else Nuclear SATURN 5702
 
 ## Directory structure
 
