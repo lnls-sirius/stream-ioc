@@ -402,14 +402,14 @@ record(bo, "$(PREFIX):on_off") {
 
 
 
-#S	TB-04:PM-InjS
-#S	TS-01:PM-EjeSF
-#S	TS-01:PM-EjeSG
-#S	TS-04:PM-InjSG-1
-#S	TS-04:PM-InjSG-2
-#S	TS-04:PM-InjSF
-#K	BO-01D:PM-InjK
-#K	BO-48D:PM-EjeK
-#K	SI-01SA:PM-InjNLK
-#K	SI-01SA:PM-InjDpK
-#P	SI-19C4:PM-VPing
+#S	TB-04:PU-InjSept
+#S	TS-01:PU-EjeSeptF
+#S	TS-01:PU-EjeSeptG
+#S	TS-04:PU-InjSeptG-1
+#S	TS-04:PU-InjSeptG-2
+#S	TS-04:PU-InjSeptF
+#K	BO-01D:PU-InjKckr
+#K	BO-48D:PU-EjeKckr
+#K	SI-01SA:PU-InjNLKckr
+#K	SI-01SA:PU-InjDpKckr
+#P	SI-19C4:PU-PingV
