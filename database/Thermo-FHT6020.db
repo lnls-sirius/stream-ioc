@@ -1,13 +1,12 @@
-# ELSE-Probes.db
+# Thermo-FHT6020.db
 
-# Record definition file for a set of one ICP-T-PF and one LUPIN 5401 BF3-NP detectors from ELSE
-# Nuclear.
+# Record definition file for one Thermo Fisher Scientific FHT 6020 controller.
 
 # Each record defined below has the following parameters:
 #
 # PORT - Name of the port configured in asynDriver.
 #
-# PREFIX - Prefix name for all PVs associated with the devices.
+# PREFIX - Prefix name for all PVs associated with the device.
 
 # Gamma
 
@@ -15,7 +14,7 @@ record(ai, "$(PREFIX):Gamma") {
     field(DESC, "Gamma")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@Thermo.proto getGamma $(PORT)")
+    field(INP, "@Thermo-FHT6020.proto getGamma $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -27,7 +26,7 @@ record(ai, "$(PREFIX):Neutron") {
     field(DESC, "High energy neutrons")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@Thermo.proto getNeutron $(PORT)")
+    field(INP, "@Thermo-FHT6020.proto getNeutron $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -39,7 +38,7 @@ record(ai, "$(PREFIX):TotalDoseRate") {
     field(DESC, "Total dose rate")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@Thermo.proto getTotalDoseRate $(PORT)")
+    field(INP, "@Thermo-FHT6020.proto getTotalDoseRate $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -51,7 +50,7 @@ record(ai, "$(PREFIX):DoseIntegral") {
     field(DESC, "Integral")
     field(DTYP, "stream")
     field(EGU, "uSv")
-    field(INP, "@Thermo.proto getIntegral $(PORT)")
+    field(INP, "@Thermo-FHT6020.proto getIntegral $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -63,7 +62,7 @@ record(ai, "$(PREFIX):IntegralGamma") {
     field(DESC, "IntegralGamma")
     field(DTYP, "stream")
     field(EGU, "uSv")
-    field(INP, "@Thermo.proto getGammaIntegral $(PORT)")
+    field(INP, "@Thermo-FHT6020.proto getGammaIntegral $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -75,9 +74,8 @@ record(ai, "$(PREFIX):IntegralNeutron") {
     field(DESC, "IntegralNeutron")
     field(DTYP, "stream")
     field(EGU, "uSv")
-    field(INP, "@Thermo.proto getNeutronIntegral $(PORT)")
+    field(INP, "@Thermo-FHT6020.proto getNeutronIntegral $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
 }
-

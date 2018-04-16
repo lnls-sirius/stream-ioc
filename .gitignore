@@ -5,4 +5,5 @@ dbd/
 include/
 interface/*.data
 iocBoot/StreamDebug.log
+iocBoot/SPIxCONV/StreamDebug.log
 lib/

@@ -9,7 +9,7 @@
 
 epicsEnvSet("EPICS_BASE", "/root/base-3.15.5")
 epicsEnvSet("ASYN", "/root/asyn4-33")
-epicsEnvSet("TOP", "/root/NOVO/stream-ioc")
+epicsEnvSet("TOP", "/root/stream-ioc")
 epicsEnvSet("ARCH", "linux-arm")
 epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(TOP)/protocol")
 

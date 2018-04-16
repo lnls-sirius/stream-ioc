@@ -1,9 +1,9 @@
 #!../bin/linux-arm/streamApp
 
-# RADThermo.cmd
+# RAD2.cmd
 
-# This script is being used for the new ELSE Nuclear probes of LNLS Radiation Protection Group
-# (RAD).
+# This script is being used for the probes connected to the new Thermo Fisher Scientific FHT 6020
+# controller of LNLS Radiation Protection Group (RAD).
 
 # Environment variables
 
@@ -19,23 +19,15 @@ cd ${TOP}
 dbLoadDatabase("dbd/streamApp.dbd")
 streamApp_registerRecordDeviceDriver(pdbbase)
 
-# Port for the ELSE probes
+# UDP/IP socket for the Thermo Fisher Scientific FHT 6020 controller
 
 drvAsynIPPortConfigure("IPPort1", "127.0.0.1:17002 UDP")
 
-# Records of the ELSE probes
+# Records for the two probes connected to the controller
 
-dbLoadRecords("database/THERMO-Probes.db", "PORT = IPPort1, PREFIX = RAD:THERMO")
+dbLoadRecords("database/Thermo-FHT6020.db", "PORT = IPPort1, PREFIX = RAD:THERMO")
 
 # Effectively initializes the IOC
 
 cd iocBoot
 iocInit
-
-
-
-
-
-
-
-
