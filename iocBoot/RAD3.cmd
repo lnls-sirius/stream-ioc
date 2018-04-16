@@ -25,7 +25,7 @@ drvAsynIPPortConfigure("IPPort1", "127.0.0.1:17003 UDP")
 
 # Records of the ELSE probes
 
-dbLoadRecords("database/ELSE-Probes-tcp.db", "PORT = IPPort1, PREFIX = RAD:ELSE")
+dbLoadRecords("database/ELSE-SATURN5702.db", "PORT = IPPort1, PREFIX = RAD:ELSE")
 
 # Effectively initializes the IOC
 

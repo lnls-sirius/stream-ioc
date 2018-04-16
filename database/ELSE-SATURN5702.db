@@ -1,4 +1,4 @@
-# ELSE-Probes-tcp.db
+# ELSE-SATURN5702.db
 
 # Record definition file for a set of one ICP-T-PF and one LUPIN 5401 BF3-NP detectors from ELSE
 # Nuclear.
@@ -15,7 +15,7 @@ record(ai, "$(PREFIX):Gamma") {
     field(DESC, "Gamma")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@ELSE-Probes-tcp.proto getGamma $(PORT)")
+    field(INP, "@ELSE-SATURN5702.proto getGamma $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -27,7 +27,7 @@ record(ai, "$(PREFIX):Neutron") {
     field(DESC, "High energy neutrons")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@ELSE-Probes-tcp.proto getNeutron $(PORT)")
+    field(INP, "@ELSE-SATURN5702.proto getNeutron $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -39,7 +39,7 @@ record(ai, "$(PREFIX):TotalDoseRate") {
     field(DESC, "Total dose rate")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@ELSE-Probes-tcp.proto getTotalDoseRate $(PORT)")
+    field(INP, "@ELSE-SATURN5702.proto getTotalDoseRate $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -51,7 +51,7 @@ record(ai, "$(PREFIX):DoseIntegral") {
     field(DESC, "Integral")
     field(DTYP, "stream")
     field(EGU, "uSv")
-    field(INP, "@ELSE-Probes-tcp.proto getIntegral $(PORT)")
+    field(INP, "@ELSE-SATURN5702.proto getIntegral $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -63,7 +63,7 @@ record(ai, "$(PREFIX):IntegralGamma") {
     field(DESC, "IntegralGamma")
     field(DTYP, "stream")
     field(EGU, "uSv")
-    field(INP, "@ELSE-Probes-tcp.proto getIntegralGamma $(PORT)")
+    field(INP, "@ELSE-SATURN5702.proto getIntegralGamma $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
@@ -75,7 +75,7 @@ record(ai, "$(PREFIX):IntegralNeutron") {
     field(DESC, "IntegralNeutron")
     field(DTYP, "stream")
     field(EGU, "uSv")
-    field(INP, "@ELSE-Probes-tcp.proto getIntegralNeutron $(PORT)")
+    field(INP, "@ELSE-SATURN5702.proto getIntegralNeutron $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
