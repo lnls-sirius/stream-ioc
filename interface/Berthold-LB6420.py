@@ -161,7 +161,7 @@ def scanThread():
                         integral += (total_dose_rate[-1] / 3600)
 
 
-                    if (len(total_dose_rate) > sample):
+                    if (len(total_dose_rate) > sample) or (len(total_dose_rate) > MAXIMUM_AVERAGING_TIME):
 
                         integralgamma += ((((gamma[-1] + gamma[-2]) * deltat) - ((gamma[0] + gamma[1]) * deltat)) / (2 * 3600))
 
