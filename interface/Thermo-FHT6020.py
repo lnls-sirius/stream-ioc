@@ -29,6 +29,7 @@ dataN = 0.0
 deltatime = 0.0
 i=0
 j=0
+flag = 0
 iterate = sample
 timeref = datetime.datetime.utcnow()
 
@@ -80,6 +81,7 @@ def scanThread():
     global j
     global timeref
     global iterate
+    global flag
 
     # Inicialização da interface serial
 
@@ -159,6 +161,7 @@ def scanThread():
 
                 if (timeBuffer[-1] - timeref).total_seconds() > sample and (timeBuffer[-2] - timeref).total_seconds() < sample:
 
+                    flag = 1
                     integralneutron = 0
                     integralgamma = 0
                     integral = 0
@@ -174,6 +177,7 @@ def scanThread():
                     iterate = i
                     timeref = timeBuffer[-1]
                     i=0
+                    flag = 0
 
                 else:
 
@@ -235,22 +239,22 @@ while (True):
 
     if (data):
 
-        if (data == "RAD_G?\n"):
+        if (data == "RAD_G?\n") and flag != 1:
             answer = "{:.10f}".format(gammaBuffer[-1])
 
-        elif (data == "RAD_N?\n"):
+        elif (data == "RAD_N?\n") and flag != 1:
             answer = "{:.10f}".format(neutronBuffer[-1])
 
-        elif (data == "RAD_T?\n"):
+        elif (data == "RAD_T?\n" and flag != 1):
             answer = "{:.10f}".format(dataBuffer[-1])
 
-        elif (data == "RAD_I?\n"):
+        elif (data == "RAD_I?\n") and flag != 1:
             answer = "{:.10f}".format(integral)
 
-        elif (data == "RAD_I_G?\n"):
+        elif (data == "RAD_I_G?\n") and flag != 1:
             answer = "{:.10f}".format(integralgamma)
 
-        elif (data == "RAD_I_N?\n"):
+        elif (data == "RAD_I_N?\n") and flag != 1:
             answer = "{:.10f}".format(integralneutron)
 
         else:

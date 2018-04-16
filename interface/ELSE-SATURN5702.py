@@ -34,6 +34,7 @@ timeref = datetime.datetime.utcnow()
 i = 0
 j = 0
 iterate = sample
+flag = 0
 
 UDP_PORT = int(sys.argv[1])
 
@@ -123,6 +124,7 @@ def scanThread():
     global j
     global timeref
     global iterate
+    global flag
 
     # Main Loop
 
@@ -157,6 +159,7 @@ def scanThread():
 
                 if (timeBuffer[-1] - timeref).total_seconds() > sample and (timeBuffer[-2] - timeref).total_seconds() < sample:
 
+                    flag = 1
                     integralneutron = 0
                     integralgamma = 0
                     integral = 0
@@ -172,6 +175,7 @@ def scanThread():
                     iterate = i
                     timeref = timeBuffer[-1]
                     i=0
+                    flag = 0
 
                 else:
 
@@ -234,22 +238,22 @@ while (True):
 
     if (data):
 
-        if (data == "RAD_E_Gamma?\n" and dataNeutron != None and dataGamma != None):
+        if (data == "RAD_E_Gamma?\n" and dataNeutron != None and dataGamma != None and flag != 1):
             answer = "{:.10f}".format(gammaBuffer[-1])
 
-        elif (data == "RAD_E_Neutron?\n" and dataNeutron != None and dataGamma != None):
+        elif (data == "RAD_E_Neutron?\n" and dataNeutron != None and dataGamma != None and flag != 1):
             answer = "{:.10f}".format(neutronBuffer[-1])
 
-        elif (data == "RAD_E_Total?\n" and dataNeutron != None and dataGamma != None):
+        elif (data == "RAD_E_Total?\n" and dataNeutron != None and dataGamma != None and flag != 1):
             answer = "{:.10f}".format(dataBuffer[-1])
 
-        elif (data == "RAD_E_Integral?\n" and dataNeutron != None and dataGamma != None):
+        elif (data == "RAD_E_Integral?\n" and dataNeutron != None and dataGamma != None and flag != 1):
             answer = "{:.10f}".format(integral)
 
-        elif (data == "RAD_E_IntegralGamma?\n" and dataNeutron != None and dataGamma != None):
+        elif (data == "RAD_E_IntegralGamma?\n" and dataNeutron != None and dataGamma != None and flag != 1):
             answer = "{:.10f}".format(integralgamma)
 
-        elif (data == "RAD_E_IntegralNeutron?\n" and dataNeutron != None and dataGamma != None):
+        elif (data == "RAD_E_IntegralNeutron?\n" and dataNeutron != None and dataGamma != None and flag != 1):
             answer = "{:.10f}".format(integralneutron)
 
         else:
