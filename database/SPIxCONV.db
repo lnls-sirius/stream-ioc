@@ -86,7 +86,7 @@ record(ai, "$(PREFIX):Voltage-Mon") {
 #***************************************
 # interlock signal
 #-------------------
-record(bi, "$(PREFIX):CmdMode-Sts") {
+record(bi, "$(PREFIX):CtrlMode-Mon") {
     field(DESC, "Operation status: local/remote")
     field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(0) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
@@ -108,7 +108,7 @@ record(bi, "$(PREFIX):Intlk1-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel1-Cte") {
+record(stringout, "$(PREFIX):Intlk1Label-Cte") {
     field(DESC, "Interlock label 1")
     field(VAL, "Switch Module")
 }
@@ -125,7 +125,7 @@ record(bi, "$(PREFIX):Intlk2-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel2-Cte") {
+record(stringout, "$(PREFIX):Intlk2Label-Cte") {
     field(DESC, "Interlock label 2")
     field(VAL, "AC CPFL OFF")
 }
@@ -142,7 +142,7 @@ record(bi, "$(PREFIX):Intlk3-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel3-Cte") {
+record(stringout, "$(PREFIX):Intlk3Label-Cte") {
     field(DESC, "Interlock label 3")
     field(VAL, "Temperature")
 }
@@ -159,7 +159,7 @@ record(bi, "$(PREFIX):Intlk4-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel4-Cte") {
+record(stringout, "$(PREFIX):Intlk4Label-Cte") {
     field(DESC, "Interlock label 4")
     field(VAL, "Personnel protection")
 }
@@ -176,7 +176,7 @@ record(bi, "$(PREFIX):Intlk5-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel5-Cte") {
+record(stringout, "$(PREFIX):Intlk5Label-Cte") {
     field(DESC, "Interlock label 5")
     field(VAL, "HVPS Overcurrent")
 }
@@ -193,7 +193,7 @@ record(bi, "$(PREFIX):Intlk6-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel6-Cte") {
+record(stringout, "$(PREFIX):Intlk6Label-Cte") {
     field(DESC, "Interlock label 6")
     field(VAL, "HVPS Overvoltage")
 }
@@ -210,7 +210,7 @@ record(bi, "$(PREFIX):Intlk7-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel7-Cte") {
+record(stringout, "$(PREFIX):Intlk7Label-Cte") {
     field(DESC, "Interlock label 7")
     field(VAL, "External")
 }
