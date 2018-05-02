@@ -22,6 +22,8 @@ import threading
 import time
 import logging
 
+j=0
+
 # Log File for exceptions
 
 logging.basicConfig(filename='app.log',level=logging.INFO)
@@ -68,6 +70,12 @@ integralneutron = float(sum(total_neutron_rate) / 3600)
 integral = sum(total_dose_rate) / 3600
 sample = 14400
 deltat = 1.0
+timeBuffer = [0]*sample
+deltatimeBuffer = [0]*sample
+dataBuffer = [0.0]*sample
+gammaBuffer = [0.0]*sample
+neutronBuffer = [0.0]*sample
+deltatime = 0.0
 
 # This function returns one of the 64 parameters of the probe, converting the byte stream into an
 # integer.
@@ -108,6 +116,13 @@ def scanThread():
     global deltat
     global integralgamma
     global integralneutron
+    global deltatimeBuffer
+    global timeBuffer
+    global deltatime
+    global dataBuffer
+    global neutronBuffer
+    global gammaBuffer
+    global j
 
     # This creates a TCP/IP socket for communication to the probe
 
@@ -127,7 +142,7 @@ def scanThread():
 
             answer = client_socket.recv(1024)
             answer = client_socket.recv(1024)
-            
+            j=0
 
             # If the answer has 512 bytes (the expected message length), the received data is added to
             # the time series and dose rate values are updated.
@@ -137,6 +152,13 @@ def scanThread():
                 date_and_time.append(datetime.datetime.utcnow())
 
                 new_raw_data = []
+
+		timeBuffer.append(datetime.datetime.utcnow())
+
+		if timeBuffer[-1] != 0 and timeBuffer[-2] != 0:
+
+		    deltatime = time_sec(timeBuffer)
+                    deltatimeBuffer.append(deltatime)
 
                 for parameter in range(0, 64):
                     new_raw_data.append(raw_value(answer, parameter))
@@ -153,27 +175,52 @@ def scanThread():
                     gamma.append(dose_rate_value(date_and_time, raw_data, 31))
                     total_neutron_rate.append(dose_rate_value(date_and_time, raw_data, 34))
                     high_energy_neutrons.append(dose_rate_value(date_and_time, raw_data, 33))
+		    dataBuffer.append(total_dose_rate[-1])
+		    gammaBuffer.append(gamma[-1])
+		    neutronBuffer.append(total_neutron_rate[-1])
 
-                    if (len(total_dose_rate) <= sample):
+                    integralgamma += ((gammaBuffer[-1] + gammaBuffer[-2]) * deltatime)  / (2 * 3600)
+                    integralneutron += ((neutronBuffer[-1] + neutronBuffer[-2]) * deltatime)  / (2 * 3600)
+                    integral += ((dataBuffer[-1] + dataBuffer[-2]) * deltatime)  / (2 * 3600)
 
-                        integralgamma += (gamma[-1] / 3600)
-                        integralneutron += (total_neutron_rate[-1] / 3600)
-                        integral += (total_dose_rate[-1] / 3600)
+		    if (deltatimeBuffer[0] != 0):
 
+                        while j <= sample:
+		    	
+		            flag = 1
+                	
+                            if (timeBuffer[-1] - timeBuffer[j]).total_seconds() > sample:
+        	        
+                                integralgamma -= ((gammaBuffer[j] + gammaBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
+                                integralneutron -= ((neutronBuffer[j] + neutronBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
+                                integral -= ((dataBuffer[j] + dataBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
+                        
+			    j += 1
 
-                    if (len(total_dose_rate) > sample) or (len(total_dose_rate) > MAXIMUM_AVERAGING_TIME):
+                    j = 0
+                    flag = 0
 
-                        integralgamma += ((((gamma[-1] + gamma[-2]) * deltat) - ((gamma[0] + gamma[1]) * deltat)) / (2 * 3600))
+                    if  (len(total_dose_rate) > MAXIMUM_AVERAGING_TIME):
 
-                        integralneutron += ((((total_neutron_rate[-1] + total_neutron_rate[-2]) * deltat) - ((total_neutron_rate[0] + total_neutron_rate[1]) * deltat)) / (2 * 3600))
-                        #print("\n" + integralneutron)
-                        #print("\n" + type(integralneutron))
                         gamma = gamma[1:]
                         total_neutron_rate = total_neutron_rate[1:]
                         high_energy_neutrons = high_energy_neutrons[1:]
-
-                        integral += ((((total_dose_rate[-1] + total_dose_rate[-2]) * deltat) - ((total_dose_rate[0] + total_dose_rate[1]) * deltat)) / (2 * 3600))
                         total_dose_rate = total_dose_rate[1:]
+
+	    if len(dataBuffer) > sample:
+                dataBuffer = dataBuffer[1:]
+
+            if len(timeBuffer) > sample:
+                timeBuffer = timeBuffer[1:]
+
+            if len(deltatimeBuffer) > sample:
+                deltatimeBuffer = deltatimeBuffer[1:]
+
+            if len(gammaBuffer) > sample:
+                gammaBuffer = gammaBuffer[1:]
+
+            if len(neutronBuffer) > sample:
+                neutronBuffer = neutronBuffer[1:]
 
             time.sleep(1)
 
