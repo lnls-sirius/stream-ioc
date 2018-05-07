@@ -26,9 +26,12 @@ dataNeutron = 0.0
 dataTotal = 0.0
 dataG = 0.0
 dataN = 0.0
-deltatime = 0
+deltatime = 0.0
+i=0
 j=0
 flag = 0
+iterate = sample
+timeref = datetime.datetime.utcnow()
 
 SERIAL_PORT = str(sys.argv[1])
 
@@ -74,7 +77,10 @@ def scanThread():
     global neutronBuffer
     global sample
     global deltatime
+    global i
     global j
+    global timeref
+    global iterate
     global flag
 
     # Inicialização da interface serial
@@ -153,29 +159,33 @@ def scanThread():
 
             if timeBuffer[-1] != 0 and timeBuffer[-2] != 0:
 
-                deltatime = time_sec(timeBuffer)
-                deltatimeBuffer.append(deltatime)
-		
-                integralgamma += ((gammaBuffer[-1] + gammaBuffer[-2]) * deltatimeBuffer[-1])  / (2 * 3600)
-                integralneutron += ((neutronBuffer[-1] + neutronBuffer[-2]) * deltatimeBuffer[-1])  / (2 * 3600)
-                integral += ((dataBuffer[-1] + dataBuffer[-2]) * deltatimeBuffer[-1])  / (2 * 3600)
+                if (timeBuffer[-1] - timeref).total_seconds() > sample and (timeBuffer[-2] - timeref).total_seconds() < sample:
 
-		if deltatimeBuffer[0] != 0:
-                    while j <= sample:
-		    	
-		        flag = 1
-                	
-                        if (timeBuffer[-1] - timeBuffer[j]).total_seconds() > sample and deltatimeBuffer[0] != 0:
-        	        
-                            integralgamma -= ((gammaBuffer[j] + gammaBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
-                            integralneutron -= ((neutronBuffer[j] + neutronBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
-                            integral -= ((dataBuffer[j] + dataBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
+                    flag = 1
+                    integralneutron = 0
+                    integralgamma = 0
+                    integral = 0
+                    j=0
+
+                    while j <= i:
+                        
+                        integralgamma += ((gammaBuffer[j] + gammaBuffer[j+1]) * deltatimeBuffer[j]) / (2 * 3600)
+                        integralneutron += ((neutronBuffer[j] + neutronBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
+                        integral += ((dataBuffer[j] + dataBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
                         j += 1
 
-                j = 0
-                flag = 0
+                    iterate = i
+                    timeref = timeBuffer[-1]
+                    i=0
+                    flag = 0
 
-                    
+                else:
+
+                    deltatime = time_sec(timeBuffer)
+                    deltatimeBuffer.append(deltatime)
+                    integralgamma += ((((gammaBuffer[-1] + gammaBuffer[-2]) * deltatime) - ((gammaBuffer[0] + gammaBuffer[1]) * deltatimeBuffer[0])) / (2 * 3600))
+                    integralneutron += ((((neutronBuffer[-1] + neutronBuffer[-2]) * deltatime) - ((neutronBuffer[0] + neutronBuffer[1]) * deltatimeBuffer[0])) / (2 * 3600))
+                    integral += ((((dataBuffer[-1] + dataBuffer[-2]) * deltatime) - ((dataBuffer[0] + dataBuffer[1]) * deltatimeBuffer[0])) / (2*3600))
 
         # Apaga o primeiro elemento do vetor ao adicionar um novo caso passe do tamanho sample
 
@@ -194,6 +204,7 @@ def scanThread():
             if len(neutronBuffer) > sample:
                 neutronBuffer = neutronBuffer[1:]
 
+            i += 1
 
         # print("O valor da integral em 4h é:  " + "{}".format(integral) + " uSv")
         # print("\n")
