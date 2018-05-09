@@ -63,10 +63,6 @@ gamma = [0.0]*sample                   # Parameter 31
 total_neutron_rate = [0.0]*sample      # Parameter 34
 high_energy_neutrons = [0.0]*sample    # Parameter 33
 
-integralgamma = float(sum(gamma) / 3600)
-integralneutron = float(sum(total_neutron_rate) / 3600)
-integral = sum(total_dose_rate) / 3600
-deltat = 1.0
 
 # This function returns one of the 64 parameters of the probe, converting the byte stream into an
 # integer.
@@ -102,11 +98,7 @@ def scanThread():
     global gamma
     global total_neutron_rate
     global high_energy_neutrons
-    global integral
     global sample
-    global deltat
-    global integralgamma
-    global integralneutron
 
     # This creates a TCP/IP socket for communication to the probe
 
@@ -153,10 +145,6 @@ def scanThread():
                     total_neutron_rate.append(dose_rate_value(date_and_time, raw_data, 34))
                     high_energy_neutrons.append(dose_rate_value(date_and_time, raw_data, 33))
 
-                    if len(total_dose_rate) > 1:
-                        integralgamma += ((((gamma[-1] + gamma[-2]) * deltat) - ((gamma[0] + gamma[1]) * deltat)) / (2 * 3600))
-                        integralneutron += ((((total_neutron_rate[-1] + total_neutron_rate[-2]) * deltat) - ((total_neutron_rate[0] + total_neutron_rate[1]) * deltat)) / (2 * 3600))
-                        integral += ((((total_dose_rate[-1] + total_dose_rate[-2]) * deltat) - ((total_dose_rate[0] + total_dose_rate[1]) * deltat)) / (2 * 3600))
 
                     if len(total_dose_rate) > sample:    
                         gamma = gamma[1:]
@@ -237,15 +225,6 @@ while (True):
             answer = "{:.10f}".format(dose_rate)
         elif (data == "HIGH_ENERGY_NEUTRONS?\n"):
             dose_rate = math.fsum(high_energy_neutrons[-AVERAGING_TIME:]) / AVERAGING_TIME
-            answer = "{:.10f}".format(dose_rate)
-        elif (data == "INTEGRAL?\n"):
-            dose_rate = integral
-            answer = "{:.10f}".format(dose_rate)
-        elif (data == "INTEGRALGAMMA?\n"):
-            dose_rate = integralgamma
-            answer = "{:.10f}".format(dose_rate)
-        elif (data == "INTEGRALNEUTRON?\n"):
-            dose_rate = integralneutron
             answer = "{:.10f}".format(dose_rate)
         else:
             answer = "INVALID_INPUT"

@@ -45,40 +45,5 @@ record(ai, "$(PREFIX):TotalDoseRate") {
     field(SCAN, "1 second")
 }
 
-# Integral
-
-record(ai, "$(PREFIX):DoseIntegral") {
-    field(DESC, "Integral")
-    field(DTYP, "stream")
-    field(EGU, "uSv")
-    field(INP, "@ELSE-SATURN5702.proto getIntegral $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
-}
-
-# Integral Gamma
-
-record(ai, "$(PREFIX):IntegralGamma") {
-    field(DESC, "IntegralGamma")
-    field(DTYP, "stream")
-    field(EGU, "uSv")
-    field(INP, "@ELSE-SATURN5702.proto getIntegralGamma $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
-}
-
-# Integral Neutron
-
-record(ai, "$(PREFIX):IntegralNeutron") {
-    field(DESC, "IntegralNeutron")
-    field(DTYP, "stream")
-    field(EGU, "uSv")
-    field(INP, "@ELSE-SATURN5702.proto getIntegralNeutron $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
-}
 
 

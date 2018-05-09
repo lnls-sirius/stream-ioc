@@ -44,38 +44,3 @@ record(ai, "$(PREFIX):TotalDoseRate") {
     field(SCAN, "1 second")
 }
 
-# Integral 
-
-record(ai, "$(PREFIX):DoseIntegral") {
-    field(DESC, "Integral")
-    field(DTYP, "stream")
-    field(EGU, "uSv")
-    field(INP, "@Thermo-FHT6020.proto getIntegral $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
-}
-
-# Integral de Gamma
-
-record(ai, "$(PREFIX):IntegralGamma") {
-    field(DESC, "IntegralGamma")
-    field(DTYP, "stream")
-    field(EGU, "uSv")
-    field(INP, "@Thermo-FHT6020.proto getGammaIntegral $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
-}
-
-# Integral de Neutrons
-
-record(ai, "$(PREFIX):IntegralNeutron") {
-    field(DESC, "IntegralNeutron")
-    field(DTYP, "stream")
-    field(EGU, "uSv")
-    field(INP, "@Thermo-FHT6020.proto getNeutronIntegral $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
-}

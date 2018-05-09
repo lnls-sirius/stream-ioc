@@ -51,17 +51,3 @@ getTotalNeutronRate {
     in "%f";
 }
 
-getIntegral {
-    out "INTEGRAL?";
-    in "%f";
-}
-
-getIntegralGamma {
-    out "INTEGRALGAMMA?";
-    in "%f";
-}
-
-getIntegralNeutron {
-    out "INTEGRALNEUTRON?";
-    in "%f";
-}

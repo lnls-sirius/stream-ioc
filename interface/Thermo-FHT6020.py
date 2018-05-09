@@ -12,26 +12,11 @@ import logging
 
 # Definindo o pino do P9 14 como saída para o osciloscópio
 
-sample = 14400
-dataBuffer = [0.0]*sample
-timeBuffer = [0]*sample
-deltatimeBuffer = [0]*sample
-gammaBuffer = [0.0]*sample
-neutronBuffer = [0.0]*sample
-integralgamma = 0.0
-integralneutron = 0.0
-integral = 0.0
 dataGamma = 0.0
 dataNeutron = 0.0
 dataTotal = 0.0
 dataG = 0.0
 dataN = 0.0
-deltatime = 0.0
-i=0
-j=0
-flag = 0
-iterate = sample
-timeref = datetime.datetime.utcnow()
 
 SERIAL_PORT = str(sys.argv[1])
 
@@ -49,39 +34,18 @@ def incluirChecksum(entrada):
     soma = soma % 256
     return(entrada + "{0:02X}".format(soma) + "\x03")
 
-# Funcao para calcular o delta time para integral
-
-def time_sec(timeBuffer):
-    deltatime = (timeBuffer[-1] - timeBuffer[-2]).total_seconds()
-    return deltatime
-
 # Thread Principal
 
 def scanThread():
 
     # Global Variables
 
-    global integral
-    global dataBuffer
     global SERIAL_PORT
     global dataGamma
     global dataNeutron
     global dataTotal
     global dataN
     global dataG
-    global timeBuffer
-    global deltatimeBuffer
-    global integralgamma
-    global integralneutron
-    global gammaBuffer
-    global neutronBuffer
-    global sample
-    global deltatime
-    global i
-    global j
-    global timeref
-    global iterate
-    global flag
 
     # Inicialização da interface serial
 
@@ -141,74 +105,6 @@ def scanThread():
 
             dataTotal = dataG + dataN
 
-
-        #print("Radiação Total:     " + "{}".format(dataTotal) + " uSv/h")
-        #print("\n")
-
-        # Calcula o valor em Sv/h e ja que terei que multiplicar por segundo preciso de converter
-        # De uSv/h para Sv/s e multiplicar por delta T para obter a área
-
-            gammaBuffer.append(dataG)
-            neutronBuffer.append(dataN)
-            dataBuffer.append(dataTotal)
-
-        # Tendo em vista que a integral começa zerada a soma de todos os vetores é igual a zero logo não
-        # preciso somar todos os vetores.
-
-            timeBuffer.append(datetime.datetime.utcnow())
-
-            if timeBuffer[-1] != 0 and timeBuffer[-2] != 0:
-
-                if (timeBuffer[-1] - timeref).total_seconds() > sample and (timeBuffer[-2] - timeref).total_seconds() < sample:
-
-                    flag = 1
-                    integralneutron = 0
-                    integralgamma = 0
-                    integral = 0
-                    j=0
-
-                    while j <= i:
-                        
-                        integralgamma += ((gammaBuffer[j] + gammaBuffer[j+1]) * deltatimeBuffer[j]) / (2 * 3600)
-                        integralneutron += ((neutronBuffer[j] + neutronBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
-                        integral += ((dataBuffer[j] + dataBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
-                        j += 1
-
-                    iterate = i
-                    timeref = timeBuffer[-1]
-                    i=0
-                    flag = 0
-
-                else:
-
-                    deltatime = time_sec(timeBuffer)
-                    deltatimeBuffer.append(deltatime)
-                    integralgamma += ((((gammaBuffer[-1] + gammaBuffer[-2]) * deltatime) - ((gammaBuffer[0] + gammaBuffer[1]) * deltatimeBuffer[0])) / (2 * 3600))
-                    integralneutron += ((((neutronBuffer[-1] + neutronBuffer[-2]) * deltatime) - ((neutronBuffer[0] + neutronBuffer[1]) * deltatimeBuffer[0])) / (2 * 3600))
-                    integral += ((((dataBuffer[-1] + dataBuffer[-2]) * deltatime) - ((dataBuffer[0] + dataBuffer[1]) * deltatimeBuffer[0])) / (2*3600))
-
-        # Apaga o primeiro elemento do vetor ao adicionar um novo caso passe do tamanho sample
-
-            if len(dataBuffer) > sample:
-                dataBuffer = dataBuffer[1:]
-
-            if len(timeBuffer) > sample:
-                timeBuffer = timeBuffer[1:]
-
-            if len(deltatimeBuffer) > sample:
-                deltatimeBuffer = deltatimeBuffer[1:]
-
-            if len(gammaBuffer) > sample:
-                gammaBuffer = gammaBuffer[1:]
-
-            if len(neutronBuffer) > sample:
-                neutronBuffer = neutronBuffer[1:]
-
-            i += 1
-
-        # print("O valor da integral em 4h é:  " + "{}".format(integral) + " uSv")
-        # print("\n")
-
         except Exception as e:
             print(e)
             logging.error("Error occurred" + str(e))
@@ -239,23 +135,14 @@ while (True):
 
     if (data):
 
-        if (data == "RAD_G?\n") and flag != 1:
-            answer = "{:.10f}".format(gammaBuffer[-1])
+        if (data == "RAD_G?\n"):
+            answer = "{:.10f}".format(dataG)
 
-        elif (data == "RAD_N?\n") and flag != 1:
-            answer = "{:.10f}".format(neutronBuffer[-1])
+        elif (data == "RAD_N?\n"):
+            answer = "{:.10f}".format(dataN)
 
-        elif (data == "RAD_T?\n" and flag != 1):
-            answer = "{:.10f}".format(dataBuffer[-1])
-
-        elif (data == "RAD_I?\n") and flag != 1:
-            answer = "{:.10f}".format(integral)
-
-        elif (data == "RAD_I_G?\n") and flag != 1:
-            answer = "{:.10f}".format(integralgamma)
-
-        elif (data == "RAD_I_N?\n") and flag != 1:
-            answer = "{:.10f}".format(integralneutron)
+        elif (data == "RAD_T?\n"):
+            answer = "{:.10f}".format(dataTotal)
 
         else:
             continue
@@ -263,4 +150,3 @@ while (True):
         answer += "\n"
         udp_server_socket.sendto(answer, address)
 
-        # The end

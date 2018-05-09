@@ -79,38 +79,3 @@ record(ai, "$(PREFIX):TotalNeutronRate") {
     field(SCAN, "1 second")
 }
 
-# Integral rate
-
-record(ai, "$(PREFIX):DoseIntegral") {
-    field(DESC, "Total neutron rate")
-    field(DTYP, "stream")
-    field(EGU, "uSv")
-    field(INP, "@Berthold-LB6420.proto getIntegral $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
-}
-
-# Integral Gamma rate
-
-record(ai, "$(PREFIX):IntegralGamma") {
-    field(DESC, "IntegralGamma")
-    field(DTYP, "stream")
-    field(EGU, "uSv")
-    field(INP, "@Berthold-LB6420.proto getIntegralGamma $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
-}
-
-# Integral Neutron rate
-
-record(ai, "$(PREFIX):IntegralNeutron") {
-    field(DESC, "IntegralNeutron")
-    field(DTYP, "stream")
-    field(EGU, "uSv")
-    field(INP, "@Berthold-LB6420.proto getIntegralNeutron $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
-}

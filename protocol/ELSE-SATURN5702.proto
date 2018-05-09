@@ -27,23 +27,3 @@ getTotalDoseRate {
     in "%f";
 }
 
-# Total Integral
-
-getIntegral {
-    out "RAD_E_Integral?";
-    in "%f";
-}
-
-# Total Integral Gamma
-
-getIntegralGamma {
-    out "RAD_E_IntegralGamma?";
-    in "%f";
-}
-
-# Total Integral Neutron
-
-getIntegralNeutron {
-    out "RAD_E_IntegralNeutron?";
-    in "%f";
-}

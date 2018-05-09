@@ -14,15 +14,6 @@ import logging
 
 # Definindo as viaveis
 
-sample = 14400
-dataBuffer = [0.0]*5
-timeBuffer = [0]*sample
-deltatimeBuffer = [0]*sample
-gammaBuffer = [0.0]*sample
-neutronBuffer = [0.0]*sample
-integralgamma = 0.0
-integralneutron = 0.0
-integral = 0.0
 dataGamma = 0.0
 dataNeutron = 0.0
 dataTotal = 0.0
@@ -30,11 +21,6 @@ dataG = 0.0
 dataN = 0.0
 ipGamma = "192.168.0.100"
 ipNeutron = "192.168.0.200"
-timeref = datetime.datetime.utcnow()
-i = 0
-j = 0
-iterate = sample
-flag = 0
 
 UDP_PORT = int(sys.argv[1])
 
@@ -90,41 +76,22 @@ def cnct2(ip):
 
         # Funcao para calcular o delta time para integral
 
-def time_sec(timeBuffer):
-
-    deltatime = (timeBuffer[-1] - timeBuffer[-2]).total_seconds()
-    return deltatime
-
-
 # Thread Principal
 
 def scanThread():
 
     # Global Variables
 
-    global integral
-    global dataBuffer
     global SERIAL_PORT
     global dataGamma
     global dataNeutron
     global dataTotal
     global dataN
     global dataG
-    global timeBuffer
-    global deltatimeBuffer
     global ipNeutron
     global ipGamma
     global client_socket1
     global client_socket2
-    global integralneutron
-    global integralgamma
-    global gammaBuffer
-    global neutronBuffer
-    global i
-    global j
-    global timeref
-    global iterate
-    global flag
 
     # Main Loop
 
@@ -145,68 +112,6 @@ def scanThread():
             if dataNeutron != None and dataGamma != None:
 
                 dataTotal = dataGamma + dataNeutron
-                dataBuffer.append(dataTotal)
-                neutronBuffer.append(dataNeutron)
-                gammaBuffer.append(dataGamma)
-
-        # Save the time now in Buffer Time
-
-            timeBuffer.append(datetime.datetime.utcnow())
-
-        # If save just one time do:
-
-            if timeBuffer[-1] != 0 and timeBuffer[-2] != 0 and dataNeutron != None and dataGamma != None:
-
-                if (timeBuffer[-1] - timeref).total_seconds() > sample and (timeBuffer[-2] - timeref).total_seconds() < sample:
-
-                    flag = 1
-                    integralneutron = 0
-                    integralgamma = 0
-                    integral = 0
-                    j=0
-
-                    while j <= i:
-
-                        integralgamma += ((gammaBuffer[j] + gammaBuffer[j+1]) * deltatimeBuffer[j]) / (2 * 3600)
-                        integralneutron += ((neutronBuffer[j] + neutronBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
-                        integral += ((dataBuffer[j] + dataBuffer[j + 1]) * deltatimeBuffer[j]) / (2 * 3600)
-                        j += 1
-
-                    iterate = i
-                    timeref = timeBuffer[-1]
-                    i=0
-                    flag = 0
-
-                else:
-
-                    deltatime = time_sec(timeBuffer)
-                    deltatimeBuffer.append(deltatime)
-                    integralneutron += ((((neutronBuffer[-1] + neutronBuffer[-2]) * deltatime) - ((neutronBuffer[0] + neutronBuffer[1]) * deltatimeBuffer[0])) / (2 * 3600))
-                    integralgamma += ((((gammaBuffer[-1] + gammaBuffer[-2]) * deltatime) - ((gammaBuffer[0] + gammaBuffer[1]) * deltatimeBuffer[0])) / (2 * 3600))
-                    integral += ((((dataBuffer[-1] + dataBuffer[-2]) * deltatime) - ((dataBuffer[0] + dataBuffer[1]) * deltatimeBuffer[0])) / (2 * 3600))
-
-
-
-        # Fix the time of buffers only in sample time
-
-            if len(dataBuffer) > (iterate):
-                dataBuffer = dataBuffer[1:]
-
-            if len(timeBuffer) > 5:
-                timeBuffer = timeBuffer[1:]
-
-            if len(deltatimeBuffer) > iterate:
-                deltatimeBuffer = deltatimeBuffer[1:]
-
-            if len(gammaBuffer) > iterate:
-                gammaBuffer = gammaBuffer[1:]
-
-            if len(neutronBuffer) > iterate:
-                neutronBuffer = neutronBuffer[1:]
-
-        # Incrementa o contador i
-
-            i += 1
 
         except Exception as e:
             print(e)
@@ -238,23 +143,14 @@ while (True):
 
     if (data):
 
-        if (data == "RAD_E_Gamma?\n" and dataNeutron != None and dataGamma != None and flag != 1):
-            answer = "{:.10f}".format(gammaBuffer[-1])
+        if (data == "RAD_E_Gamma?\n" and dataNeutron != None and dataGamma != None):
+            answer = "{:.10f}".format(dataGamma)
 
-        elif (data == "RAD_E_Neutron?\n" and dataNeutron != None and dataGamma != None and flag != 1):
-            answer = "{:.10f}".format(neutronBuffer[-1])
+        elif (data == "RAD_E_Neutron?\n" and dataNeutron != None and dataGamma != None):
+            answer = "{:.10f}".format(dataNeutron)
 
-        elif (data == "RAD_E_Total?\n" and dataNeutron != None and dataGamma != None and flag != 1):
-            answer = "{:.10f}".format(dataBuffer[-1])
-
-        elif (data == "RAD_E_Integral?\n" and dataNeutron != None and dataGamma != None and flag != 1):
-            answer = "{:.10f}".format(integral)
-
-        elif (data == "RAD_E_IntegralGamma?\n" and dataNeutron != None and dataGamma != None and flag != 1):
-            answer = "{:.10f}".format(integralgamma)
-
-        elif (data == "RAD_E_IntegralNeutron?\n" and dataNeutron != None and dataGamma != None and flag != 1):
-            answer = "{:.10f}".format(integralneutron)
+        elif (data == "RAD_E_Total?\n" and dataNeutron != None and dataGamma != None):
+            answer = "{:.10f}".format(dataTotal)
 
         else:
             continue
