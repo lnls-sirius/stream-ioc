@@ -16,6 +16,7 @@ Currently Stream-IOC provides EPICS interfaces for:
 * ELSE Nuclear SATURN 5702
 * [MBTemp](https://wiki-sirius.lnls.br/mediawiki/index.php/CON:MBTemp)
 * Thermo Fisher Scientific FHT 6020
+* [SPIxCONV](https://wiki-sirius.lnls.br/mediawiki/index.php/CON:SPIxCONV)
 
 ## Directory structure
 

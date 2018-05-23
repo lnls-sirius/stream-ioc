@@ -87,11 +87,13 @@ record(ai, "$(PREFIX):Voltage-Mon") {
 # interlock signal
 #-------------------
 record(bi, "$(PREFIX):CtrlMode-Mon") {
-    field(DESC, "Operation status: local/remote")
+    field(DESC, "Control mode")
     field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(0) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZNAM, "Local")                        # One Name
+    field(ONAM, "Remote")                       # Zero Name
 }
 #***************************************
 #   INTERLOCKS (7 INPUTS)
@@ -104,13 +106,15 @@ record(bi, "$(PREFIX):Intlk1-Mon") {
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZNAM, "Fail")                         # Zero Name
+    field(ONAM, "Ok")                           # One Name
 }
 #-------------------
 # interlock label
 #-------------------
 record(stringout, "$(PREFIX):Intlk1Label-Cte") {
     field(DESC, "Interlock label 1")
-    field(VAL, "Switch Module")
+    field(VAL, "Switch module")
 }
 #------------------------------------------------------------------------------
 # interlock signal
@@ -121,6 +125,8 @@ record(bi, "$(PREFIX):Intlk2-Mon") {
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZNAM, "Fail")                         # Zero Name
+    field(ONAM, "Ok")                           # One Name
 }
 #-------------------
 # interlock label
@@ -138,7 +144,9 @@ record(bi, "$(PREFIX):Intlk3-Mon") {
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
-}
+    field(ZNAM, "Fail")                         # Zero Name
+    field(ONAM, "Ok")                           # One Name
+    }
 #-------------------
 # interlock label
 #-------------------
@@ -155,6 +163,8 @@ record(bi, "$(PREFIX):Intlk4-Mon") {
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZNAM, "Fail")                         # Zero Name
+    field(ONAM, "Ok")                           # One Name
 }
 #-------------------
 # interlock label
@@ -172,6 +182,8 @@ record(bi, "$(PREFIX):Intlk5-Mon") {
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZNAM, "Fail")                         # Zero Name
+    field(ONAM, "Ok")                           # One Name
 }
 #-------------------
 # interlock label
@@ -189,6 +201,8 @@ record(bi, "$(PREFIX):Intlk6-Mon") {
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZNAM, "Fail")                         # Zero Name
+    field(ONAM, "Ok")                           # One Name
 }
 #-------------------
 # interlock label
@@ -206,6 +220,8 @@ record(bi, "$(PREFIX):Intlk7-Mon") {
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZNAM, "Fail")                         # Zero Name
+    field(ONAM, "Ok")                           # One Name
 }
 #-------------------
 # interlock label
@@ -223,9 +239,11 @@ record(stringout, "$(PREFIX):Intlk7Label-Cte") {
 record(bo, "$(PREFIX):OpMode-Sel") {
     field(DESC, "Set operation mode")
     field(OUT, "@SPIxCONV.proto set_portB_digital_output_bit(0) socket_spixconv")
-    field(DTYP, "stream")                      # Device Type
-    field(SCAN, "Passive")                     # Scanning Rate
+    field(DTYP, "stream")                       # Device Type
+    field(SCAN, "Passive")                      # Scanning Rate
     field(VAL, "0")
+    field(ZNAM, "NLK")                          # Zero Name
+    field(ONAM, "On Axis")                      # One Name
 }
 #-------------------
 # PV label
@@ -242,6 +260,8 @@ record(bo, "$(PREFIX):PwrState-Sel") {
     field(OUT, "@SPIxCONV.proto set_portB_digital_output_bit(1) socket_spixconv")
     field(DTYP, "stream")                      # Device Type
     field(SCAN, "Passive")                     # Scanning Rate
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
 }
 #-------------------
 # PV label
@@ -260,6 +280,8 @@ record(bo, "$(PREFIX):Pulse-Sel") {
     field(SCAN, "Passive")                     # Scanning Rate
     field(ZSV, "NO_ALARM")
     field(OSV, "NO_ALARM")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
 }
 #-------------------
 # PV label
@@ -277,6 +299,8 @@ record(bo, "$(PREFIX):Reset-Cmd") {
     field(DTYP, "stream")                      # Device Type
     field(SCAN, "Passive")                     # Scanning Rate
     field(HIGH, "0.2")                         # Seconds to Hold High
+    field(ZNAM, "Running")                      # Zero Name
+    field(ONAM, "Resetting")                    # One Name
 }
 #-------------------
 # PV label
@@ -288,57 +312,50 @@ record(stringout, "$(PREFIX):PortBLabel3") {
 #***************************************
 #   AVAILABLE PVs (4 I/O)
 #***************************************
-record(bi, "$(PREFIX):PortBIn4") {
-    field(DESC, "Interlock signal 4")
-    field(INP, "@SPIxCONV.proto read_portB_digital_input_bit(4) socket_spixconv")
-    field(DTYP, "stream")                       # Device Type
-    field(PINI, "YES")                          # Process at Initialization
-    field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
-}
-#-------------------
-# PV label
-#-------------------
-record(stringout, "$(PREFIX):PortBLabel4") {
-    field(DESC, "PV label 4")
-    field(VAL, "---Available PV---")
-}
-#------------------------------------------------------------------------------
 record(bi, "$(PREFIX):OpMode-Sts") {
     field(DESC, "Interlock signal 5")
     field(INP, "@SPIxCONV.proto read_portB_digital_input_bit(5) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZNAM, "NLK")                          # Zero Name
+    field(ONAM, "On Axis")                      # One Name
 }
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortBLabel5") {
+record(stringout, "$(PREFIX):OpMode-Cte") {
     field(DESC, "PV label 5")
     field(VAL, "Read operation mode")
 }
-#------------------------------------------------------------------------------
+#***************************************
+#   SWITCH OVERCURRENT (1 INPUT)
+#***************************************
 record(bi, "$(PREFIX):Intlk8-Mon") {
-    field(DESC, "Interlock signal 6")
+    field(DESC, "Interlock signal 8")
     field(INP, "@SPIxCONV.proto read_portB_digital_input_bit(6) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZNAM, "Fail")                         # Zero Name
+    field(ONAM, "Ok")                           # One Name
 }
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortBLabel6") {
-    field(DESC, "PV label 6")
+record(stringout, "$(PREFIX):Intlk8-Cte") {
+    field(DESC, "Interlock label 8")
     field(VAL, "Switch Overcurrent")
 }
 #------------------------------------------------------------------------------
 record(bi, "$(PREFIX):PwrState-Mon") {
-    field(DESC, "Interlock signal 7")
+    field(DESC, "Read power supply status")
     field(INP, "@SPIxCONV.proto read_portB_digital_input_bit(7) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
 }
 #-------------------
 # PV label
@@ -347,28 +364,6 @@ record(stringout, "$(PREFIX):PortBLabel7") {
     field(DESC, "PV label 7")
     field(VAL, "HVPS Status")
 }
-#==============================================================================
-#   DIGITAL PORT C
-#==============================================================================
-
-# --- records not created --- #
-
-# bi:           interlock signal    $(PREFIX):PortCIn1
-# bo:           output signal       $(PREFIX):PortCOut6
-# stringout:    label constant      $(PREFIX):PortCLabel5
-# bo:           pin direction       $(PREFIX):PortCSW3
-
-#==============================================================================
-#   DIGITAL PORT D
-#==============================================================================
-
-# --- records not created --- #
-
-# bi:           interlock signal    $(PREFIX):PortDIn1
-# bo:           output signal       $(PREFIX):PortDOut6
-# stringout:    label constant      $(PREFIX):PortDLabel5
-# bo:           pin direction       $(PREFIX):PortDSW3
-
 #==============================================================================
 #   ON/OFF STATE
 #==============================================================================
