@@ -36,7 +36,7 @@ record(ao, "$(PREFIX):Voltage-SP") {
 }
 #------------------------------------------------------------------------------
 record(ai, "$(PREFIX):Voltage-RB") {
-    field(DESC, "read analog out setpoint") # Description
+    field(DESC, "read analog out setpoint")     # Description
     field(DTYP, "stream")                       # Device Type
     field(EGU,  "Volt")                         # Engineering Units
     # DAC and ADC calibration (applied to raw value):
@@ -46,7 +46,7 @@ record(ai, "$(PREFIX):Voltage-RB") {
     field(ASLO, "0.00007629423635191479459684") # Calibration Slope
     field(AOFF, "-10.0")                        # Calibration Offset
     # adjust conversion to voltage power supply range:
-    field(ESLO, "$(VOLTAGE_FACTOR)")                        # Conversion Slope
+    field(ESLO, "$(VOLTAGE_FACTOR)")            # Conversion Slope
     field(EOFF, "0.0")                          # Conversion Offset
     field(INP,  "@SPIxCONV.proto read_analog_output($(SPIxCONV_ADDRESS)) socket_spixconv")
     field(LINR, "LINEAR")                       # Type of Conversion
@@ -69,13 +69,13 @@ record(ai, "$(PREFIX):Voltage-Mon") {
     field(ASLO, "0.00007629423635191479459684") # Calibration Slope
     field(AOFF, "-10.0")                        # Calibration Offset
     # adjust conversion to voltage power supply range:
-    field(ESLO, "$(VOLTAGE_FACTOR)")                        # Conversion Slope
+    field(ESLO, "$(VOLTAGE_FACTOR)")            # Conversion Slope
     field(EOFF, "0.0")                          # Conversion Offset
     field(INP,  "@SPIxCONV.proto read_analog_input($(SPIxCONV_ADDRESS)) socket_spixconv")
     field(LINR, "LINEAR")                       # Type of Conversion
     field(PINI, "YES")                          # Process at Initialization
     field(PREC, "1")                            # Display Precision
-    field(SCAN, "$(SCAN_RATE)")                    # Scanning Rate
+    field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
     field(SMOO, "0.5")                          # Smoothing factor from 0 to 1 (0: no smoothing; 1: value never change)
 }
 #==============================================================================
@@ -86,7 +86,7 @@ record(ai, "$(PREFIX):Voltage-Mon") {
 #***************************************
 # interlock signal
 #-------------------
-record(bi, "$(PREFIX):CmdMode-Sts") {
+record(bi, "$(PREFIX):CtrlMode-Mon") {
     field(DESC, "Operation status: local/remote")
     field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(0) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
@@ -108,8 +108,8 @@ record(bi, "$(PREFIX):Intlk1-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel1-Cte") {
-    field(DESC, "Interlock label 1")
+record(stringout, "$(PREFIX):Intlk1Label-Cte") {
+    field(DESC, "Interlock 1 label")
     field(VAL, "Switch Module")
 }
 #------------------------------------------------------------------------------
@@ -125,8 +125,8 @@ record(bi, "$(PREFIX):Intlk2-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel2-Cte") {
-    field(DESC, "Interlock label 2")
+record(stringout, "$(PREFIX):Intlk2Label-Cte") {
+    field(DESC, "Interlock 2 label")
     field(VAL, "AC CPFL OFF")
 }
 #------------------------------------------------------------------------------
@@ -142,8 +142,8 @@ record(bi, "$(PREFIX):Intlk3-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel3-Cte") {
-    field(DESC, "Interlock label 3")
+record(stringout, "$(PREFIX):Intlk3Label-Cte") {
+    field(DESC, "Interlock 3 label")
     field(VAL, "Temperature")
 }
 #------------------------------------------------------------------------------
@@ -159,8 +159,8 @@ record(bi, "$(PREFIX):Intlk4-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel4-Cte") {
-    field(DESC, "Interlock label 4")
+record(stringout, "$(PREFIX):Intlk4Label-Cte") {
+    field(DESC, "Interlock 4 label")
     field(VAL, "Personnel protection")
 }
 #------------------------------------------------------------------------------
@@ -176,8 +176,8 @@ record(bi, "$(PREFIX):Intlk5-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel5-Cte") {
-    field(DESC, "Interlock label 5")
+record(stringout, "$(PREFIX):Intlk5Label-Cte") {
+    field(DESC, "Interlock 5 label")
     field(VAL, "HVPS Overcurrent")
 }
 #------------------------------------------------------------------------------
@@ -193,8 +193,8 @@ record(bi, "$(PREFIX):Intlk6-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel6-Cte") {
-    field(DESC, "Interlock label 6")
+record(stringout, "$(PREFIX):Intlk6Label-Cte") {
+    field(DESC, "Interlock 6 label")
     field(VAL, "HVPS Overvoltage")
 }
 #------------------------------------------------------------------------------
@@ -210,8 +210,8 @@ record(bi, "$(PREFIX):Intlk7-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):IntlkLabel7-Cte") {
-    field(DESC, "Interlock label 7")
+record(stringout, "$(PREFIX):Intlk7Label-Cte") {
+    field(DESC, "Interlock 7 label")
     field(VAL, "External")
 }
 #==============================================================================
@@ -220,8 +220,8 @@ record(stringout, "$(PREFIX):IntlkLabel7-Cte") {
 #***************************************
 #   SET OPERATION MODE (1 OUTPUT)
 #***************************************
-record(bo, "$(PREFIX):PortB_out0") {
-    field(DESC, "PortB_out0")
+record(bo, "$(PREFIX):PortBOut0") {
+    field(DESC, "PortBOut0")
     field(OUT, "@SPIxCONV.proto set_portB_digital_output_bit(0) socket_spixconv")
     field(DTYP, "stream")                      # Device Type
     field(SCAN, "Passive")                     # Scanning Rate
@@ -230,7 +230,7 @@ record(bo, "$(PREFIX):PortB_out0") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortB_label0") {
+record(stringout, "$(PREFIX):PortBLabel0") {
     field(DESC, "PV label 0")
     field(VAL, "---Available PV---")
 }
@@ -246,7 +246,7 @@ record(bo, "$(PREFIX):PwrState-Sel") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortB_label1") {
+record(stringout, "$(PREFIX):PortBLabel1") {
     field(DESC, "PV label 1")
     field(VAL, "Turn ON/OFF HVPS")
 }
@@ -264,7 +264,7 @@ record(bo, "$(PREFIX):Pulse-Sel") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortB_label2") {
+record(stringout, "$(PREFIX):PortBLabel2") {
     field(DESC, "PV label 2")
     field(VAL, "Turn ON/OFF trigger pulse")
 }
@@ -281,14 +281,14 @@ record(bo, "$(PREFIX):Reset-Cmd") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortB_label3") {
+record(stringout, "$(PREFIX):PortBLabel3") {
     field(DESC, "PV label 3")
     field(VAL, "Reset the controller unit")
 }
 #***************************************
 #   AVAILABLE PVs (4 I/O)
 #***************************************
-record(bi, "$(PREFIX):PortB_in4") {
+record(bi, "$(PREFIX):PortBIn4") {
     field(DESC, "Interlock signal 4")
     field(INP, "@SPIxCONV.proto read_portB_digital_input_bit(4) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
@@ -298,12 +298,12 @@ record(bi, "$(PREFIX):PortB_in4") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortB_label4") {
+record(stringout, "$(PREFIX):PortBLabel4") {
     field(DESC, "PV label 4")
     field(VAL, "---Available PV---")
 }
 #------------------------------------------------------------------------------
-record(bi, "$(PREFIX):PortB_in5") {
+record(bi, "$(PREFIX):PortBIn5") {
     field(DESC, "Interlock signal 5")
     field(INP, "@SPIxCONV.proto read_portB_digital_input_bit(5) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
@@ -313,7 +313,7 @@ record(bi, "$(PREFIX):PortB_in5") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortB_label5") {
+record(stringout, "$(PREFIX):PortBLabel5") {
     field(DESC, "PV label 5")
     field(VAL, "---Available PV---")
 }
@@ -328,7 +328,7 @@ record(bi, "$(PREFIX):Intlk8-Mon") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortB_label6") {
+record(stringout, "$(PREFIX):PortBLabel6") {
     field(DESC, "PV label 6")
     field(VAL, "Switch Overcurrent")
 }
@@ -343,7 +343,7 @@ record(bi, "$(PREFIX):PwrState-Mon") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortB_label7") {
+record(stringout, "$(PREFIX):PortBLabel7") {
     field(DESC, "PV label 7")
     field(VAL, "HVPS Status")
 }
@@ -353,10 +353,10 @@ record(stringout, "$(PREFIX):PortB_label7") {
 
 # --- records not created --- #
 
-# bi:           interlock signal    $(PREFIX):PortC_in1
-# bo:           output signal       $(PREFIX):PortC_out6
-# stringout:    label constant      $(PREFIX):PortC_label5
-# bo:           pin direction       $(PREFIX):PortC_SW3
+# bi:           interlock signal    $(PREFIX):PortCIn1
+# bo:           output signal       $(PREFIX):PortCOut6
+# stringout:    label constant      $(PREFIX):PortCLabel5
+# bo:           pin direction       $(PREFIX):PortCSW3
 
 #==============================================================================
 #   DIGITAL PORT D
@@ -364,15 +364,15 @@ record(stringout, "$(PREFIX):PortB_label7") {
 
 # --- records not created --- #
 
-# bi:           interlock signal    $(PREFIX):PortD_in1
-# bo:           output signal       $(PREFIX):PortD_out6
-# stringout:    label constant      $(PREFIX):PortD_label5
-# bo:           pin direction       $(PREFIX):PortD_SW3
+# bi:           interlock signal    $(PREFIX):PortDIn1
+# bo:           output signal       $(PREFIX):PortDOut6
+# stringout:    label constant      $(PREFIX):PortDLabel5
+# bo:           pin direction       $(PREFIX):PortDSW3
 
 #==============================================================================
 #   ON/OFF STATE
 #==============================================================================
-record(bo, "$(PREFIX):on_off") {
+record(bo, "$(PREFIX):OnOff") {
     field(DESC, "On/Off IOC status")
     field(SCAN, "Passive")
     field(VAL, "1")
