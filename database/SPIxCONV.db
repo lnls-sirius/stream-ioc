@@ -1,21 +1,13 @@
 # SPIxCONV.db
 
-# Record definition for one temperature channel. Developed for MBTemp version 2.1 and newer.
+# Record definition for all digital and analog channels. Developed for SPIxCONV version 1.1 and newer.
 
 # This file contains four records definition:
 #   - analog out
 #   - analog in
 #   - digital out
 #   - digital in
-# SPIxCONV.db
 
-# Record definition for one temperature channel. Developed for MBTemp version 2.1 and newer.
-
-# This file contains four records definition:
-#   - analog out
-#   - analog in
-#   - digital out
-#   - digital in
 #==============================================================================
 #   ANALOG OUT
 #==============================================================================
@@ -88,7 +80,7 @@ record(ai, "$(PREFIX):Voltage-Mon") {
 #-------------------
 record(bi, "$(PREFIX):CtrlMode-Mon") {
     field(DESC, "Control mode")
-    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(0) socket_spixconv")
+    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit($(SPIxCONV_ADDRESS),0) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
@@ -102,7 +94,7 @@ record(bi, "$(PREFIX):CtrlMode-Mon") {
 #-------------------
 record(bi, "$(PREFIX):Intlk1-Mon") {
     field(DESC, "Interlock signal 1")
-    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(1) socket_spixconv")
+    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit($(SPIxCONV_ADDRESS),1) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
@@ -121,7 +113,7 @@ record(stringout, "$(PREFIX):Intlk1Label-Cte") {
 #-------------------
 record(bi, "$(PREFIX):Intlk2-Mon") {
     field(DESC, "Interlock signal 2")
-    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(2) socket_spixconv")
+    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit($(SPIxCONV_ADDRESS),2) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
@@ -140,7 +132,7 @@ record(stringout, "$(PREFIX):Intlk2Label-Cte") {
 #-------------------
 record(bi, "$(PREFIX):Intlk3-Mon") {
     field(DESC, "Interlock signal 3")
-    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(3) socket_spixconv")
+    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit($(SPIxCONV_ADDRESS),3) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
@@ -159,7 +151,7 @@ record(stringout, "$(PREFIX):Intlk3Label-Cte") {
 #-------------------
 record(bi, "$(PREFIX):Intlk4-Mon") {
     field(DESC, "Interlock signal 4")
-    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(4) socket_spixconv")
+    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit($(SPIxCONV_ADDRESS),4) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
@@ -178,7 +170,7 @@ record(stringout, "$(PREFIX):Intlk4Label-Cte") {
 #-------------------
 record(bi, "$(PREFIX):Intlk5-Mon") {
     field(DESC, "Interlock signal 5")
-    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(5) socket_spixconv")
+    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit($(SPIxCONV_ADDRESS),5) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
@@ -197,7 +189,7 @@ record(stringout, "$(PREFIX):Intlk5Label-Cte") {
 #-------------------
 record(bi, "$(PREFIX):Intlk6-Mon") {
     field(DESC, "Interlock signal 6")
-    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(6) socket_spixconv")
+    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit($(SPIxCONV_ADDRESS),6) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
@@ -216,7 +208,7 @@ record(stringout, "$(PREFIX):Intlk6Label-Cte") {
 #-------------------
 record(bi, "$(PREFIX):Intlk7-Mon") {
     field(DESC, "Interlock signal 7")
-    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit(7) socket_spixconv")
+    field(INP, "@SPIxCONV.proto read_portA_digital_input_bit($(SPIxCONV_ADDRESS),7) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
@@ -238,7 +230,7 @@ record(stringout, "$(PREFIX):Intlk7Label-Cte") {
 #***************************************
 record(bo, "$(PREFIX):PwrState-Sel") {
     field(DESC, "Turn ON/OFF HVPS")
-    field(OUT, "@SPIxCONV.proto set_portB_digital_output_bit(1) socket_spixconv")
+    field(OUT, "@SPIxCONV.proto set_portB_digital_output_bit($(SPIxCONV_ADDRESS),1) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(SCAN, "Passive")                      # Scanning Rate
     field(ZNAM, "Off")                          # Zero Name
@@ -247,7 +239,7 @@ record(bo, "$(PREFIX):PwrState-Sel") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortBLabel1") {
+record(stringout, "$(PREFIX):PwrStateLabel1-Cte") {
     field(DESC, "PV label 1")
     field(VAL, "Turn ON/OFF HVPS")
 }
@@ -256,7 +248,7 @@ record(stringout, "$(PREFIX):PortBLabel1") {
 #***************************************
 record(bo, "$(PREFIX):Pulse-Sel") {
     field(DESC, "Turn ON/OFF trigger pulse")
-    field(OUT, "@SPIxCONV.proto set_portB_digital_output_bit(2) socket_spixconv")
+    field(OUT, "@SPIxCONV.proto set_portB_digital_output_bit($(SPIxCONV_ADDRESS),2) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(SCAN, "Passive")                      # Scanning Rate
     field(ZSV, "NO_ALARM")
@@ -267,7 +259,7 @@ record(bo, "$(PREFIX):Pulse-Sel") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortBLabel2") {
+record(stringout, "$(PREFIX):PulseLabel-Cte") {
     field(DESC, "PV label 2")
     field(VAL, "Turn ON/OFF trigger pulse")
 }
@@ -286,7 +278,7 @@ record(bo, "$(PREFIX):Reset-Cmd") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PortBLabel3") {
+record(stringout, "$(PREFIX):ResetLabel-Cte") {
     field(DESC, "PV label 3")
     field(VAL, "Reset the controller unit")
 }
@@ -297,7 +289,7 @@ record(stringout, "$(PREFIX):PortBLabel3") {
 #-------------------
 record(bi, "$(PREFIX):Intlk8-Mon") {
     field(DESC, "Interlock signal 8")
-    field(INP, "@SPIxCONV.proto read_portB_digital_input_bit(6) socket_spixconv")
+    field(INP, "@SPIxCONV.proto read_portB_digital_input_bit($(SPIxCONV_ADDRESS),6) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
@@ -307,14 +299,14 @@ record(bi, "$(PREFIX):Intlk8-Mon") {
 #-------------------
 # interlock label
 #-------------------
-record(stringout, "$(PREFIX):Intlk8-Cte") {
+record(stringout, "$(PREFIX):Intlk8Label-Cte") {
     field(DESC, "Interlock label 8")
     field(VAL, "Switch Overcurrent")
 }
 #------------------------------------------------------------------------------
 record(bi, "$(PREFIX):PwrState-Mon") {
     field(DESC, "Read power supply status")
-    field(INP, "@SPIxCONV.proto read_portB_digital_input_bit(7) socket_spixconv")
+    field(INP, "@SPIxCONV.proto read_portB_digital_input_bit($(SPIxCONV_ADDRESS),7) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
@@ -324,11 +316,10 @@ record(bi, "$(PREFIX):PwrState-Mon") {
 #-------------------
 # PV label
 #-------------------
-record(stringout, "$(PREFIX):PwrState-Cte") {
+record(stringout, "$(PREFIX):PwrStateLabel2-Cte") {
     field(DESC, "PV label 7")
     field(VAL, "HVPS Status")
 }
-
 #==============================================================================
 #   ON/OFF STATE
 #==============================================================================
@@ -336,6 +327,8 @@ record(bo, "$(PREFIX):OnOff") {
     field(DESC, "On/Off IOC status")
     field(SCAN, "Passive")
     field(VAL, "1")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
 }
 #==============================================================================
 
@@ -355,3 +348,24 @@ record(bo, "$(PREFIX):OnOff") {
 #    #field(NELM, "256")
 #    field(PINI, "YES")
 #}
+
+
+
+
+
+
+
+
+#***************************************
+#   TRIGGER (1 OUTPUT)
+#***************************************
+record(bi, "$(PREFIX):Pulse-Sts") {
+    field(DESC, "Read if trigger pulse is enabled or not")
+    field(INP, "@SPIxCONV.proto read_portB_digital_output_bit($(SPIxCONV_ADDRESS),2) socket_spixconv")
+    field(DTYP, "stream")                       # Device Type
+    field(SCAN, "Passive")                      # Scanning Rate
+    field(ZSV, "NO_ALARM")
+    field(OSV, "NO_ALARM")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
+}

@@ -1,26 +1,39 @@
 # SPIxCONV.proto
 
-# Protocol for SPIxCONV boards. Developed for SPIxCONV version 1.1 and newer, communicating at 19200 bps
-# through an RS-485 link.
-
-# The BSMP protocol doesn't have any terminator character
+# Protocol for SPIxCONV boards. Developed for SPIxCONV version 1.1 and newer
+# Protocol doesn't have any terminator character
 Terminator = "";
 
 # An outcoming message should wait at most 10 s to be sent
 LockTimeout = 10000;
 
-# The timeout involved in reading operations is 25 ms (in practice, it indicates the end of received
-# message).
+# The timeout involved in reading operations is 25 ms
 ReadTimeout = 25;
 
 # The application should wait at most 100 ms for a board to answer
 ReplyTimeout = 100;
 
-# Routine for temperature reading (implements BSMP protocol)
 #==============================================================================
 config{
     # output parameters: board
     out 0x01, $1;
+}
+#==============================================================================
+set_portA_direction_bit{
+    # output parameters: board, bit, value
+    out 0x01, $1, "A", $2, "%(RVAL)i";
+}
+set_portB_direction_bit{
+    # output parameters: board, bit, value
+    out 0x01, $1, "B", $2, "%(RVAL)i";
+}
+set_portC_direction_bit{
+    # output parameters: board, bit, value
+    out 0x01, $1, "C", $2, "%(RVAL)i";
+}
+set_portD_direction_bit{
+    # output parameters: board, bit, value
+    out 0x01, $1, "D", $2, "%(RVAL)i";
 }
 #==============================================================================
 set_analog_output{
@@ -47,43 +60,11 @@ set_digital_output_byte{
     out 0x05, $1, $2;
 }
 #==============================================================================
-set_portA_digital_output_bit{
-    # output parameters: board, bit, value
-    #out 0x06, $1, $2, $3;
-    #out 0x06, $1, $2, 1;
-    out 0x0B, 1, $1, "%(RVAL)i";
-    #out 0x06, $1, $2, "%(RVAL)i";
-}
-#==============================================================================
-set_portB_digital_output_bit{
-    # output parameters: board, bit, value
-    #out 0x06, $1, $2, $3;
-    #out 0x06, $1, $2, 1;
-    out 0x0C, 1, $1, "%(RVAL)i";
-    #out 0x06, $1, $2, "%(RVAL)i";
-}
-#==============================================================================
 read_digital_input_byte{
     # output parameters: board
     out 0x07, $1;
     # input parameters:  byte read
     in "%d";
-}
-#==============================================================================
-read_portA_digital_input_bit{
-    # output parameters: board, bit_pos
-    #out 0x08, "%u", $2;
-    out 0x0D, 1, $1;
-    # input parameters:  bit read
-    in "%u";
-}
-#==============================================================================
-read_portB_digital_input_bit{
-    # output parameters: board, bit_pos
-    #out 0x08, "%u", $2;
-    out 0x0E, 1, $1;
-    # input parameters:  bit read
-    in "%u";
 }
 #==============================================================================
 reset{
@@ -97,23 +78,32 @@ read_interlock_labels{
     in "%#s";
 }
 #==============================================================================
-set_portA_direction_bit{
-  # output parameters: board, bit, value
-  #out 0x06, $1, $2, $3 $4;
-  #out 0x06, $1, $2, $3 1;
-  out 0x01, 1, "A", $1, "%(RVAL)i";
-  #out 0x06, $1, $2, "%(RVAL)i";
+set_portA_digital_output_bit{
+    # output parameters: board, bit, value
+    out 0x0B, $1, $2, "%(RVAL)i";
 }
-set_portB_direction_bit{
-  # output parameters: board, bit, value
-  out 0x01, 1, "B", $1, "%(RVAL)i";
-}
-set_portC_direction_bit{
-  # output parameters: board, bit, value
-  out 0x01, 1, "C", $1, "%(RVAL)i";
-}
-set_portD_direction_bit{
-  # output parameters: board, bit, value
-  out 0x01, 1, "D", $1, "%(RVAL)i";
+read_portB_digital_output_bit{
+    # output parameters: board, bit
+    out 0x0B, $1, $2;
+    # input parameters:  bit read
+    in "%u";
 }
 #==============================================================================
+set_portB_digital_output_bit{
+    # output parameters: board, bit, value
+    out 0x0C, $1, $2, "%(RVAL)i";
+}
+#==============================================================================
+read_portA_digital_input_bit{
+    # output parameters: board, bit_pos
+    out 0x0D, $1, $2;
+    # input parameters:  bit read
+    in "%u";
+}
+#==============================================================================
+read_portB_digital_input_bit{
+    # output parameters: board, bit_pos
+    out 0x0E, $1, $2;
+    # input parameters:  bit read
+    in "%u";
+}
