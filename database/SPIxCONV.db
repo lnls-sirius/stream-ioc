@@ -264,6 +264,20 @@ record(stringout, "$(PREFIX):PulseLabel-Cte") {
     field(VAL, "Turn ON/OFF trigger pulse")
 }
 #***************************************
+#   TRIGGER --> OUTPUT read
+#***************************************
+# the record is set as input, but it is actually reading the output value set previously
+record(bi, "$(PREFIX):Pulse-Sts") {
+    field(DESC, "Read if trigger pulse is enabled or not")
+    field(INP, "@SPIxCONV.proto read_portB_digital_output_bit($(SPIxCONV_ADDRESS),2) socket_spixconv")
+    field(DTYP, "stream")                       # Device Type
+    field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+    field(ZSV, "NO_ALARM")
+    field(OSV, "NO_ALARM")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
+}
+#***************************************
 #   RESET (1 OUTPUT)
 #***************************************
 record(bo, "$(PREFIX):Reset-Cmd") {
@@ -331,9 +345,6 @@ record(bo, "$(PREFIX):OnOff") {
     field(ONAM, "On")                           # One Name
 }
 #==============================================================================
-
-
-
 #***************************************
 #   INTERLOCKS (7 INPUTS)
 #***************************************
@@ -348,24 +359,3 @@ record(bo, "$(PREFIX):OnOff") {
 #    #field(NELM, "256")
 #    field(PINI, "YES")
 #}
-
-
-
-
-
-
-
-
-#***************************************
-#   TRIGGER (1 OUTPUT)
-#***************************************
-record(bi, "$(PREFIX):Pulse-Sts") {
-    field(DESC, "Read if trigger pulse is enabled or not")
-    field(INP, "@SPIxCONV.proto read_portB_digital_output_bit($(SPIxCONV_ADDRESS),2) socket_spixconv")
-    field(DTYP, "stream")                       # Device Type
-    field(SCAN, "Passive")                      # Scanning Rate
-    field(ZSV, "NO_ALARM")
-    field(OSV, "NO_ALARM")
-    field(ZNAM, "Off")                          # Zero Name
-    field(ONAM, "On")                           # One Name
-}

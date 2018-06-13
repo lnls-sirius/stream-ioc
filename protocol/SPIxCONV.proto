@@ -78,10 +78,6 @@ read_interlock_labels{
     in "%#s";
 }
 #==============================================================================
-set_portA_digital_output_bit{
-    # output parameters: board, bit, value
-    out 0x0B, $1, $2, "%(RVAL)i";
-}
 read_portB_digital_output_bit{
     # output parameters: board, bit
     out 0x0B, $1, $2;
