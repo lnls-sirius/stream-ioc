@@ -19,6 +19,7 @@ record(ai, "$(PREFIX):Gamma") {
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
+    field(MDEL, "-1")
 }
 
 # Neutron
@@ -31,6 +32,7 @@ record(ai, "$(PREFIX):Neutron") {
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
+    field(MDEL, "-1")
 }
 
 # Total dose rate
@@ -43,6 +45,7 @@ record(ai, "$(PREFIX):TotalDoseRate") {
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
+    field(MDEL, "-1")
 }
 
 

@@ -41,6 +41,7 @@ record(ai, "$(PREFIX):Gamma") {
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
+    field(MDEL, "-1")
 }
 
 # High energy neutrons
@@ -53,6 +54,7 @@ record(ai, "$(PREFIX):HighEnergyNeutrons") {
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
+    field(MDEL, "-1")
 }
 
 # Total dose rate
@@ -65,6 +67,7 @@ record(ai, "$(PREFIX):TotalDoseRate") {
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
+    field(MDEL, "-1")
 }
 
 # Total neutron rate
@@ -77,5 +80,6 @@ record(ai, "$(PREFIX):TotalNeutronRate") {
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
+    field(MDEL, "-1")
 }
 
