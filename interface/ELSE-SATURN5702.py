@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Módulo necessário
+# Required Module
 
 import serial
 import requests
@@ -12,7 +12,7 @@ import time
 import datetime
 import logging
 
-# Definindo as viaveis
+# Defining the veriables
 
 dataGamma = 0.0
 dataNeutron = 0.0
@@ -34,7 +34,7 @@ client_socket2.connect((ipNeutron, 10001))
 
 logging.basicConfig(filename='app.log',level=logging.INFO)
 
-# Função que inclui o checksum e o caractere <ETX> a qualquer mensagem que se deseja enviar
+# Function that includes checksum and <ETX> character for any message you want to send
 
 def format_message(message):
 
@@ -44,11 +44,11 @@ def format_message(message):
     return (message + "{0:02X}".format(checksum) + "\x03")
 
 
-# Cria socket TCP/IP para comunicação com o SATURN I 5700 RTM da sonda de gamma
+# Creates TCP / IP socket for communication with the SATURN I 5700 RTM of the gamma probe
 
 def cnct1(ip):
 
-    # Requisita os valores das janelas de tempo para cáculo da média móvel
+    # Requires the values of the time windows for calculating the moving average
     # COLOCAR TB O VALOR O THRESHOLD LEVEL 01001GL RESPOSTA: (STX)01024GL1234.56:1234.56:1234.56
     # (CS)(CS) (ETX)
 
@@ -62,7 +62,7 @@ def cnct1(ip):
 
 def cnct2(ip):
 
-    # Requisita os valores das janelas de tempo para cáculo da média móvel
+    # Requires the values of the time windows for calculating the moving average
     # COLOCAR TB O VALOR O THRESHOLD LEVEL 01001GL RESPOSTA: (STX)01024GL1234.56:1234.56:1234.56
     # (CS)(CS) (ETX)
 
@@ -74,9 +74,8 @@ def cnct2(ip):
     else:
         pass
 
-        # Funcao para calcular o delta time para integral
 
-# Thread Principal
+# Main Thread
 
 def scanThread():
 
@@ -98,7 +97,6 @@ def scanThread():
     while (True) :
 
         try:
-            # Delay de 0.5s ============ Testar
 
             time.sleep(1)
 
@@ -119,7 +117,7 @@ def scanThread():
             pass
 
 
-# Inicializa a Main Thread
+# Initializes the Main Thread
 
 auxiliary_thread = threading.Thread(target = scanThread)
 auxiliary_thread.setDaemon(True)

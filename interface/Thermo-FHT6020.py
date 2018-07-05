@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-# Importando as bibliotecas
+# Importing libraries
 
 import serial
 import socket
@@ -9,8 +9,6 @@ import sys
 import threading
 import datetime
 import logging
-
-# Definindo o pino do P9 14 como saída para o osciloscópio
 
 dataGamma = 0.0
 dataNeutron = 0.0
@@ -25,7 +23,7 @@ UDP_PORT = int(sys.argv[2])
 # Log File for exceptions
 logging.basicConfig(filename='app.log',level=logging.INFO)
 
-# Funcao para incluir o checksum no pacote
+# Function to include the checksum in the package
 
 def incluirChecksum(entrada):
     soma = 0
@@ -34,7 +32,7 @@ def incluirChecksum(entrada):
     soma = soma % 256
     return(entrada + "{0:02X}".format(soma) + "\x03")
 
-# Thread Principal
+# Main Thread 
 
 def scanThread():
 
@@ -47,7 +45,7 @@ def scanThread():
     global dataN
     global dataG
 
-    # Inicialização da interface serial
+    # Serial interface initialization
 
     serial_interface = serial.Serial(port = "{}".format(SERIAL_PORT),
                                      baudrate = 19200,
@@ -61,47 +59,30 @@ def scanThread():
 
     while (True):
 
-        # Delay de 500ms para cara envio de pacote
+        time.sleep(0.5)
 
-        #time.sleep(0.500)
-
-        # Envia o pacote para a leitura Gamma
+        # Ships the pack for Gamma reading
         try:
 
             pct1 = incluirChecksum("\x07" + "01RM1")
 
-        #print(pct1)
-
             serial_interface.write(pct1)
-
-        # Lê os oito caracteres enviados Gamma
 
             dataGamma = serial_interface.read(50)
 
-        # Envia o pacote para a leitura Neutron
+        # Ships the pack for Neutron reading
 
             pct2 = incluirChecksum("\x07" + "01RM2")
 
-        #print(pct2)
-
             serial_interface.write(pct2)
-
-        # Lê os oito caracteres enviados Neutron
 
             dataNeutron = serial_interface.read(50)
 
-        # Calcula o valor da taxa de dose instantânea (em uSv/h)
-        # descobrir como chegam os dados e trata-los
-        # condicional caso a mensagem recebida for vazia por problema na sonda o algoritmo nao faz nada
+        # Conditional if the received message is empty due to problem in the probe the algorithm does nothing
 
             if dataGamma != "" and dataNeutron != "":
                 dataG = float(dataGamma.split(" ")[1])
                 dataN = float(dataNeutron.split(" ")[1])
-
-            #print("Radiação Gamma:     " + "{}".format(dataG) + " uSv/h")
-            #print("Radiação Neutron:   " + "{}".format(dataN) + " uSv/h")
-
-        # Imprime na tela o resultado
 
             dataTotal = dataG + dataN
 
@@ -111,19 +92,17 @@ def scanThread():
             pass
 
 
-# aux a thread principal
-
 auxiliary_thread = threading.Thread(target = scanThread)
 auxiliary_thread.setDaemon(True)
 auxiliary_thread.start()
 
-# O programa em sua verção final irá dormir 500s para garantir a leitura certa da sonda
+# The program in its final version will sleep 500s to ensure the right reading of the probe
 
 udp_server_address = ("0.0.0.0", UDP_PORT)
 udp_server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 udp_server_socket.bind(udp_server_address)
 
-# Loop Principal
+# Main Loop
 
 while (True):
 
