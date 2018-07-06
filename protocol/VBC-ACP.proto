@@ -1,0 +1,20 @@
+# ACP.proto
+# Protocol for ACP15 pump.
+
+# Protocol terminator character
+Terminator = CR;
+
+# The application should wait at most 100 ms for a board to answer
+ReplyTimeout = 100;
+
+#==============================================================================
+
+on_off {
+    out 0x0B, "%(VAL)i";
+    #in "#000,ok\r";
+}
+
+set_speed {
+    out 0x0C, "%(VAL)i";
+    #in "#000,ok\r";
+}

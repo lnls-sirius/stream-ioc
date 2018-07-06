@@ -1,0 +1,22 @@
+# VBC-ACP.db
+
+# Record definition for controlling ACP15 pump.
+# parameters:
+# PORT: Name of the serial port configured in asynDriver.
+
+record(bo, "$(PREFIX):OnOff") {
+    field(DESC, "Turns pump On/Off")
+    field(OUT, "@VBC-ACP.proto on_off() $(PORT)")
+    field(DTYP, "stream")
+    field(SCAN, "Passive")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
+}
+
+record(ao, "$(PREFIX):Speed") {
+    field(DESC, "Set pump speed")
+    field(OUT, "@VBC-ACP.proto set_speed $(PORT)")
+    field(EGU, "Hz")
+    field(DTYP, "stream")                       # Device Type
+    field(SCAN, "Passive")                      # Scanning Rate
+}
