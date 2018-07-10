@@ -1,0 +1,28 @@
+# VBC-BBB.proto
+# Protocol for controlling the valves through BBB.
+
+# The timeout involved in reading operations is 25 ms
+#ReadTimeout = 25;
+
+# The application should wait at most 100 ms for a board to answer
+#ReplyTimeout = 100;
+
+#==============================================================================
+
+relay_1 {
+    out 0x01, "%(VAL)i";
+}
+
+relay_2 {
+    out 0x02, "%(VAL)i";
+}
+
+relay_3 {
+    out 0x03, "%(VAL)i";
+}
+
+relay_4 {
+    out 0x04, "%(VAL)i";
+}
+
+#==============================================================================

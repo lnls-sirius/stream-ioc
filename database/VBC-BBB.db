@@ -1,0 +1,41 @@
+# VBC-BBB.db
+
+# Record definition for controlling valves (through BBB pins).
+# parameters:
+# PORT: Name of the serial port configured in asynDriver.
+
+record(bo, "$(PREFIX):Relay1") {
+    field(DESC, "Switches Relay 1")
+    field(OUT, "@VBC-BBB.proto relay_1 $(PORT)")
+    field(DTYP, "stream")
+    field(SCAN, "Passive")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
+}
+
+record(bo, "$(PREFIX):Relay2") {
+    field(DESC, "Switches Relay 2")
+    field(OUT, "@VBC-BBB.proto relay_2 $(PORT)")
+    field(DTYP, "stream")
+    field(SCAN, "Passive")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
+}
+
+record(bo, "$(PREFIX):Relay3") {
+    field(DESC, "Switches Relay 3")
+    field(OUT, "@VBC-BBB.proto relay_3 $(PORT)")
+    field(DTYP, "stream")
+    field(SCAN, "Passive")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
+}
+
+record(bo, "$(PREFIX):Relay4") {
+    field(DESC, "Switches Relay 4")
+    field(OUT, "@VBC-BBB.proto relay_4 $(PORT)")
+    field(DTYP, "stream")
+    field(SCAN, "Passive")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
+}
