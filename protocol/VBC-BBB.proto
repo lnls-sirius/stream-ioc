@@ -8,21 +8,28 @@
 #ReplyTimeout = 100;
 
 #==============================================================================
-
+# valves controls (Output GPIOs used to switch the relays)
+#==============================================================================
 relay_1 {
     out 0x01, "%(VAL)i";
 }
-
 relay_2 {
     out 0x02, "%(VAL)i";
 }
-
 relay_3 {
     out 0x03, "%(VAL)i";
 }
-
 relay_4 {
     out 0x04, "%(VAL)i";
 }
-
 #==============================================================================
+# VAT valve status (Inputs GPIOs used to read VAT valve status)
+#==============================================================================
+valve_open{
+    out 0x05;
+    in "%d";
+}
+valve_closed{
+    out 0x06;
+    in "%d";
+}

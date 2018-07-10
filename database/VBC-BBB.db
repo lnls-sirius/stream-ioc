@@ -3,6 +3,7 @@
 # Record definition for controlling valves (through BBB pins).
 # parameters:
 # PORT: Name of the serial port configured in asynDriver.
+# SCAN_RATE: Record scan rate (time interval between two consecutive valve status readings).
 
 record(bo, "$(PREFIX):Relay1") {
     field(DESC, "Switches Relay 1")
@@ -38,4 +39,22 @@ record(bo, "$(PREFIX):Relay4") {
     field(SCAN, "Passive")
     field(ZNAM, "Off")                          # Zero Name
     field(ONAM, "On")                           # One Name
+}
+
+record(bi, "$(PREFIX):ValveOpen") {
+    field(DESC, "Read OPEN VAT Valve status")
+    field(INP, "@VBC-BBB.proto valve_open $(PORT)")
+    field(DTYP, "stream")
+    field(SCAN, "$(SCAN_RATE)")
+    field(ZNAM, "Open")                         # Zero Name
+    field(ONAM, "Closed")                       # One Name
+}
+
+record(bi, "$(PREFIX):ValveClosed") {
+    field(DESC, "Read CLOSED VAT Valve status")
+    field(INP, "@VBC-BBB.proto valve_closed $(PORT)")
+    field(DTYP, "stream")
+    field(SCAN, "$(SCAN_RATE)")
+    field(ZNAM, "Open")                         # Zero Name
+    field(ONAM, "Closed")                       # One Name
 }
