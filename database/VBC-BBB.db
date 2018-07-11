@@ -9,7 +9,7 @@
 # Binary Output records: they are responsible for switching the relays
 #==============================================================================
 record(bo, "$(PREFIX):Relay1") {
-    field(DESC, "Switches Relay 1")
+    field(DESC, "Switch Relay 1")
     field(OUT, "@VBC-BBB.proto relay_1 $(PORT)")
     field(DTYP, "stream")
     field(SCAN, "Passive")
@@ -18,7 +18,7 @@ record(bo, "$(PREFIX):Relay1") {
 }
 #------------------------------------------------------------------------------
 record(bo, "$(PREFIX):Relay2") {
-    field(DESC, "Switches Relay 2")
+    field(DESC, "Switch Relay 2")
     field(OUT, "@VBC-BBB.proto relay_2 $(PORT)")
     field(DTYP, "stream")
     field(SCAN, "Passive")
@@ -27,7 +27,7 @@ record(bo, "$(PREFIX):Relay2") {
 }
 #------------------------------------------------------------------------------
 record(bo, "$(PREFIX):Relay3") {
-    field(DESC, "Switches Relay 3")
+    field(DESC, "Switch Relay 3")
     field(OUT, "@VBC-BBB.proto relay_3 $(PORT)")
     field(DTYP, "stream")
     field(SCAN, "Passive")
@@ -36,7 +36,7 @@ record(bo, "$(PREFIX):Relay3") {
 }
 #------------------------------------------------------------------------------
 record(bo, "$(PREFIX):Relay4") {
-    field(DESC, "Switches Relay 4")
+    field(DESC, "Switch Relay 4")
     field(OUT, "@VBC-BBB.proto relay_4 $(PORT)")
     field(DTYP, "stream")
     field(SCAN, "Passive")
@@ -51,8 +51,8 @@ record(bi, "$(PREFIX):ValveOpen") {
     field(INP, "@VBC-BBB.proto valve_open $(PORT)")
     field(DTYP, "stream")
     field(SCAN, "$(SCAN_RATE)")
-    field(ZNAM, "Open")                         # Zero Name
-    field(ONAM, "Closed")                       # One Name
+    field(ZNAM, "SW Open")                         # Zero Name
+    field(ONAM, "SW Closed")                       # One Name
 }
 #------------------------------------------------------------------------------
 record(bi, "$(PREFIX):ValveClosed") {
@@ -60,17 +60,26 @@ record(bi, "$(PREFIX):ValveClosed") {
     field(INP, "@VBC-BBB.proto valve_closed $(PORT)")
     field(DTYP, "stream")
     field(SCAN, "$(SCAN_RATE)")
-    field(ZNAM, "Open")                         # Zero Name
-    field(ONAM, "Closed")                       # One Name
+    field(ZNAM, "SW Open")                         # Zero Name
+    field(ONAM, "SW Closed")                       # One Name
 }
 #==============================================================================
 # Analog Input record: it is responsible for reading the pressure
 #==============================================================================
+record(ai, "$(PREFIX):Voltage") {
+    field(DESC, "Read the Voltage")
+    field(INP, "@VBC-BBB.proto voltage $(PORT)")
+    field(EGU, "V")
+    field(DTYP, "stream")
+    field(SCAN, "$(SCAN_RATE)")
+    field(PREC, "5")                            # Display Precision
+}
+#------------------------------------------------------------------------------
 record(ai, "$(PREFIX):Pressure") {
     field(DESC, "Read the pressure")
     field(INP, "@VBC-BBB.proto pressure $(PORT)")
     field(EGU, "Torr")
     field(DTYP, "stream")
-    field(SCAN, "$(SCAN_RATE)")
+    field(SCAN, "I/O Intr")
     field(PREC, "5")                            # Display Precision
 }
