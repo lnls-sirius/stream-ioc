@@ -31,6 +31,7 @@ logging.basicConfig(filename='app.log',level=logging.INFO)
 UDP_PORT = int(sys.argv[1])
 
 # Probe configuration
+sample = 14400
 PROBE_IP = sys.argv[2]
 PROBE_PORT = 1000
 
@@ -57,11 +58,15 @@ raw_data = []
 
 # Time series of calculated dose rates
 
-total_dose_rate = []         # Parameter 19
-gamma = []                   # Parameter 31
-total_neutron_rate = []      # Parameter 34
-high_energy_neutrons = []    # Parameter 33
+total_dose_rate = [0.0]*sample  # Parameter 19
+gamma = [0.0]*sample                   # Parameter 31
+total_neutron_rate = [0.0]*sample      # Parameter 34
+high_energy_neutrons = [0.0]*sample    # Parameter 33
 
+integralgamma = float(sum(gamma) / 3600)
+integralneutron = float(sum(total_neutron_rate) / 3600)
+integral = sum(total_dose_rate) / 3600
+deltat = 1.0
 
 # This function returns one of the 64 parameters of the probe, converting the byte stream into an
 # integer.
@@ -80,6 +85,11 @@ def dose_rate_value(date_and_time, raw_data, parameter):
     new_dose_rate = (raw_difference / time_difference) * 3600 * 1E-6
     return(new_dose_rate)
 
+def time_sec(date_and_time):
+
+    deltatime = (date_and_time[-1] - date_and_time[-2]).total_seconds()
+    return deltatime
+
 # Thread for reading data from the Berthold LB 6420 probe
 
 def scanThread():
@@ -92,7 +102,11 @@ def scanThread():
     global gamma
     global total_neutron_rate
     global high_energy_neutrons
+    global integral
     global sample
+    global deltat
+    global integralgamma
+    global integralneutron
 
     # This creates a TCP/IP socket for communication to the probe
 
@@ -112,7 +126,7 @@ def scanThread():
 
             answer = client_socket.recv(1024)
             answer = client_socket.recv(1024)
-            
+
 
             # If the answer has 512 bytes (the expected message length), the received data is added to
             # the time series and dose rate values are updated.
@@ -122,27 +136,29 @@ def scanThread():
                 date_and_time.append(datetime.datetime.utcnow())
 
                 new_raw_data = []
-            for parameter in range(0, 64):
-                new_raw_data.append(raw_value(answer, parameter))
-            raw_data.append(new_raw_data)
 
-            if (len(date_and_time) > MAXIMUM_AVERAGING_TIME + 1):
-                date_and_time = date_and_time[1:]
-                raw_data = raw_data[1:]
+                for parameter in range(0, 64):
+                    new_raw_data.append(raw_value(answer, parameter))
+                raw_data.append(new_raw_data)
 
-            if (len(date_and_time) >= 2):
+                if (len(date_and_time) > MAXIMUM_AVERAGING_TIME + 1):
 
-                total_dose_rate.append(dose_rate_value(date_and_time, raw_data, 19))
-                gamma.append(dose_rate_value(date_and_time, raw_data, 31))
-                total_neutron_rate.append(dose_rate_value(date_and_time, raw_data, 34))
-                high_energy_neutrons.append(dose_rate_value(date_and_time, raw_data, 33))
+                    date_and_time = date_and_time[1:]
+                    raw_data = raw_data[1:]
 
-                if (len(total_dose_rate) > MAXIMUM_AVERAGING_TIME):
+                if (len(date_and_time) >= 2):
 
-                    total_dose_rate = total_dose_rate[1:]
-                    gamma = gamma[1:]
-                    total_neutron_rate = total_neutron_rate[1:]
-                    high_energy_neutrons = high_energy_neutrons[1:]
+                    total_dose_rate.append(dose_rate_value(date_and_time, raw_data, 19))
+                    gamma.append(dose_rate_value(date_and_time, raw_data, 31))
+                    total_neutron_rate.append(dose_rate_value(date_and_time, raw_data, 34))
+                    high_energy_neutrons.append(dose_rate_value(date_and_time, raw_data, 33))
+
+
+                    if len(total_dose_rate) > sample:
+                        gamma = gamma[1:]
+                        total_neutron_rate = total_neutron_rate[1:]
+                        high_energy_neutrons = high_energy_neutrons[1:]
+                        total_dose_rate = total_dose_rate[1:]
 
             time.sleep(1)
 

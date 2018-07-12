@@ -1,4 +1,4 @@
-#!../bin/linux-arm/streamApp
+#!/opt/epics-R3.15.5/modules/StreamDevice-2.7.11/bin/linux-arm/streamApp
 
 # RAD1.cmd
 
@@ -7,11 +7,12 @@
 
 # Environment variables
 
-epicsEnvSet("EPICS_BASE", "/root/base-3.15.5")
-epicsEnvSet("ASYN", "/root/asyn4-33")
-epicsEnvSet("TOP", "/root/stream-ioc")
+epicsEnvSet ("STREAM_IOC", "/root/stream-ioc")
+epicsEnvSet("EPICS_BASE", "/opt/epics-R3.15.5/base")
+epicsEnvSet("ASYN", "/opt/epics-R3.15.5/modules/asyn4-33")
+epicsEnvSet("TOP", "/opt/epics-R3.15.5/modules/StreamDevice-2.7.11")
 epicsEnvSet("ARCH", "linux-arm")
-epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(TOP)/protocol")
+epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(STREAM_IOC)/protocol")
 
 # Database definition file
 
@@ -25,9 +26,11 @@ drvAsynIPPortConfigure("IPPort1", "127.0.0.1:17001 UDP")
 
 # Records of the Berthold LB 6420 probe
 
+cd ${STREAM_IOC}
 dbLoadRecords("database/Berthold-LB6420.db", "PORT = IPPort1, PREFIX = RAD:Berthold")
 
 # Effectively initializes the IOC
-
 cd iocBoot
 iocInit
+
+
