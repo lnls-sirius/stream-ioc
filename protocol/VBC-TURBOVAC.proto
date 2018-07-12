@@ -1,0 +1,48 @@
+# VBC-TURBOVAC.proto
+# Protocol for TURBOVAC pump.
+
+# Protocol doesnt have any terminator character
+Terminator = "";
+
+# The timeout involved in reading operations is 25 ms
+#ReadTimeout = 25;
+
+# The application should wait at most 100 ms for a board to answer
+#ReplyTimeout = 100;
+
+#==============================================================================
+
+on_off {
+    out 0x10, "%(VAL)i";
+    in "%*u, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";
+}
+
+status0 {
+    in "%*u, PZD1_1=%f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";
+}
+
+status1 {
+    in "%*u, PZD1_1=%*f, PZD1_2=%f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";
+}
+
+frequency {
+    in "%*u, PZD1_1=%*f, PZD1_2=%*f, PZD2=%f, PZD3=%*f, PZD4=%*f, PZD6=%*f";
+}
+
+temperature {
+    in "%*u, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%f, PZD4=%*f, PZD6=%*f";
+}
+
+current {
+    in "%*u, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%f, PZD6=%*f";
+}
+
+voltage {
+    in "%*u, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%f";
+}
+
+#==============================================================================
+
+getID {
+    out 0x11;
+}

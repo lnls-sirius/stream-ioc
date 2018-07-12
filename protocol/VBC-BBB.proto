@@ -2,27 +2,44 @@
 # Protocol for controlling the valves through BBB.
 
 # The timeout involved in reading operations is 25 ms
-#ReadTimeout = 25;
+ReadTimeout = 25;
 
 # The application should wait at most 100 ms for a board to answer
-#ReplyTimeout = 100;
+ReplyTimeout = 100;
 
 #==============================================================================
-
+# valves controls (Output GPIOs used to switch the relays)
+#==============================================================================
 relay_1 {
     out 0x01, "%(VAL)i";
 }
-
 relay_2 {
     out 0x02, "%(VAL)i";
 }
-
 relay_3 {
     out 0x03, "%(VAL)i";
 }
-
 relay_4 {
     out 0x04, "%(VAL)i";
 }
-
 #==============================================================================
+# VAT valve status (Inputs GPIOs used to read VAT valve status)
+#==============================================================================
+valve_open {
+    out 0x05;
+    in "%d";
+}
+valve_closed {
+    out 0x06;
+    in "%d";
+}
+#==============================================================================
+# Analog in correspondent to the pressure
+#==============================================================================
+voltage {
+    out 0x07;
+    in "voltage = %f, pressure = %*f";
+}
+pressure {
+    in "voltage = %*f, pressure = %f";
+}

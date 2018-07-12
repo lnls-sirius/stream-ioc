@@ -1,0 +1,89 @@
+# VBC-TURBOVAC.db
+
+# Record definition for controlling valves (through BBB pins).
+# parameters:
+# PORT: Name of the serial port configured in asynDriver.
+# SCAN_RATE: Record scan rate (time interval between two consecutive messages).
+
+#==============================================================================
+record(bo, "$(PREFIX):OnOff") {
+    field(DESC, "Turns pump On/Off")
+    field(OUT, "@VBC-TURBOVAC.proto on_off $(PORT)")
+    field(DTYP, "stream")
+    #field(SCAN, "Passive")
+    field(SCAN, "$(SCAN_RATE)")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
+}
+#==============================================================================
+record (ai, "$(PREFIX):Status0") {
+    field(DESC, "PZD1: USS Status Word (eight MSB)")
+    # bit 0: Ready for operation
+    # bit 1: No function
+    # bit 2: Operation enabled
+    # bit 3: Error condition (all components)
+    # bit 4: Accelerating
+    # bit 5: Decelerating
+    # bit 6: Switch-on lock
+    # bit 7: Temperature warning
+    field(DTYP, "stream")
+    field(INP, "@VBC-TURBOVAC.proto status0 $(PORT)")
+    field(SCAN, "I/O Intr")
+}
+record (ai, "$(PREFIX):Status1") {
+    field(DESC, "PZD1: USS Status Word (eight LSB)")
+    # bit 8: No function
+    # bit 9: Parameter channel enabled
+    # bit 10: Normal operation detained
+    # bit 11: Pump is turning
+    # bit 12: No function
+    # bit 13: Overload warning
+    # bit 14: Collective warning
+    # bit 15: Process channel enabled
+    field(DTYP, "stream")
+    field(INP, "@VBC-TURBOVAC.proto status1 $(PORT)")
+    field(SCAN, "I/O Intr")
+}
+#==============================================================================
+record (ai, "$(PREFIX):Frequency") {
+    field(DESC, "PZD2: Current stator frequency")
+    field(EGU, "Hz")
+    field(DTYP, "stream")
+    field(INP, "@VBC-TURBOVAC.proto frequency $(PORT)")
+    field(SCAN, "I/O Intr")
+}
+#------------------------------------------------------------------------------
+record (ai, "$(PREFIX):Temperature") {
+    field(DESC, "PZD3: Current frequency converter temperature")
+    field(EGU, "deg. C")
+    field(DTYP, "stream")
+    field(INP, "@VBC-TURBOVAC.proto temperature $(PORT)")
+    field(SCAN, "I/O Intr")
+}
+#------------------------------------------------------------------------------
+record (ai, "$(PREFIX):Current") {
+    field(DESC, "PZD4: Current motor current")
+    field(EGU, "A")
+    field(DTYP, "stream")
+    field(INP, "@VBC-TURBOVAC.proto current $(PORT)")
+    field(SCAN, "I/O Intr")
+    field(PREC, "1")                            # Display Precision
+}
+#------------------------------------------------------------------------------
+record (ai, "$(PREFIX):Voltage") {
+    field(DESC, "PZD6: Current intermediate circuit voltage")
+    field(EGU, "V")
+    field(DTYP, "stream")
+    field(INP, "@VBC-TURBOVAC.proto voltage $(PORT)")
+    field(SCAN, "I/O Intr")
+    field(PREC, "1")                            # Display Precision
+}
+#==============================================================================
+record(bo, "$(PREFIX):ID") {
+    field(DESC, "Reads pump ID")
+    field(OUT, "@VBC-TURBOVAC.proto getID $(PORT)")
+    field(DTYP, "stream")
+    field(SCAN, "Passive")
+    #field(SCAN, "$(SCAN_RATE)")
+}
+#==============================================================================
