@@ -63,11 +63,6 @@ gamma = [0.0]*sample                   # Parameter 31
 total_neutron_rate = [0.0]*sample      # Parameter 34
 high_energy_neutrons = [0.0]*sample    # Parameter 33
 
-integralgamma = float(sum(gamma) / 3600)
-integralneutron = float(sum(total_neutron_rate) / 3600)
-integral = sum(total_dose_rate) / 3600
-deltat = 1.0
-
 # This function returns one of the 64 parameters of the probe, converting the byte stream into an
 # integer.
 
@@ -102,11 +97,7 @@ def scanThread():
     global gamma
     global total_neutron_rate
     global high_energy_neutrons
-    global integral
     global sample
-    global deltat
-    global integralgamma
-    global integralneutron
 
     # This creates a TCP/IP socket for communication to the probe
 
