@@ -12,37 +12,56 @@ Terminator = "";
 
 #==============================================================================
 
-on_off {
-    out 0x10, "%(VAL)i";
-    in "%*u, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";
+task_telegram {
+    out 0x10,
+
+        # Header
+        "%(VBC:TURBOVAC:STX-SP)i,",
+        "%(VBC:TURBOVAC:LGE-SP)i,",
+        "%(VBC:TURBOVAC:ADR-SP)i,",
+
+        "%(VBC:TURBOVAC:PZD1-SP.FFVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.FTVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.TTVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.TVVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.ELVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.TEVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.NIVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.EIVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.SVVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.SXVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.FVVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.FRVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.THVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.TWVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.ONVL)i",
+        "%(VBC:TURBOVAC:PZD1-SP.ZRVL)i",
+
+        # PKW area
+        # the comma is used as separator from now on
+        "%(VBC:TURBOVAC:PNU-SP)i,",
+        "%(VBC:TURBOVAC:AK-SP)i,",
+        "%(VBC:TURBOVAC:IND-SP)i,",
+        "%(VBC:TURBOVAC:PWE-SP)i,",
+
+        # PZD area
+        "%(VBC:TURBOVAC:PZD2-SP)i";
+
+    in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";
 }
 
-status0 {
-    in "%*u, PZD1_1=%f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";
-}
-
-status1 {
-    in "%*u, PZD1_1=%*f, PZD1_2=%f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";
-}
-
-frequency {
-    in "%*u, PZD1_1=%*f, PZD1_2=%*f, PZD2=%f, PZD3=%*f, PZD4=%*f, PZD6=%*f";
-}
-
-temperature {
-    in "%*u, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%f, PZD4=%*f, PZD6=%*f";
-}
-
-current {
-    in "%*u, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%f, PZD6=%*f";
-}
-
-voltage {
-    in "%*u, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%f";
-}
+STX { in "STX=%f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";}
+LGE { in "STX=%*f, LGE=%f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";}
+ADR { in "STX=%*f, LGE=%*f, ADR=%f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";}
+PNU { in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";}
+AK  { in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";}
+IND { in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";}
+PWE { in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";}
+PZD1_1 { in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";}
+PZD1_0 { in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";}
+PZD2 { in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%f, PZD3=%*f, PZD4=%*f, PZD6=%*f";}
+PZD3 { in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%f, PZD4=%*f, PZD6=%*f";}
+PZD4 { in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%f, PZD6=%*f";}
+PZD6 { in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%f";}
 
 #==============================================================================
-
-getID {
-    out 0x11;
-}
