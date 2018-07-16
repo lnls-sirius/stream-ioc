@@ -8,6 +8,17 @@
 #==============================================================================
 # Header: CONTROL (STX, LGE, ADR)
 #==============================================================================
+record(bo, "$(PREFIX):OnOff") {
+    field(DESC, "Turns pump On/Off")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(DTYP, "stream")
+    field(SCAN, "$(SCAN_RATE)")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
+}
+#==============================================================================
+# Header: CONTROL (STX, LGE, ADR)
+#==============================================================================
 record (ao, "$(PREFIX):STX-SP") {
     field(DESC, "STX: Start byte")
     field(VAL, "2")
