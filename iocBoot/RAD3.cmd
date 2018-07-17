@@ -1,17 +1,20 @@
-#!../bin/linux-arm/streamApp
+#!/opt/epics-R3.15.5/modules/StreamDevice-2.7.11/bin/linux-arm/streamApp
 
-# RAD4.cmd
+# RAD3.cmd
 
 # This script is being used for the new ELSE Nuclear probes of LNLS Radiation Protection Group
 # (RAD).
 
 # Environment variables
 
-epicsEnvSet("EPICS_BASE", "/root/base-3.15.5")
-epicsEnvSet("ASYN", "/root/asyn4-33")
-epicsEnvSet("TOP", "/root/stream-ioc")
+epicsEnvSet("EPICS_CAS_INTF_ADDR_LIST", "10.0.38.23")
+
+epicsEnvSet("STREAM_IOC", "/root/stream-ioc")
+epicsEnvSet("EPICS_BASE", "/opt/epics-R3.15.5/base")
+epicsEnvSet("ASYN", "/opt/epics-R3.15.5/modules/asyn4-33")
+epicsEnvSet("TOP", "/opt/epics-R3.15.5/modules/StreamDevice-2.7.11")
 epicsEnvSet("ARCH", "linux-arm")
-epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(TOP)/protocol")
+epicsEnvSet("STREAM_PROTOCOL_PATH", "/root/stream-ioc/protocol")
 
 # Database definition file
 
@@ -21,15 +24,14 @@ streamApp_registerRecordDeviceDriver(pdbbase)
 
 # Port for the ELSE probes
 
-drvAsynIPPortConfigure("IPPort1", "127.0.0.1:17003 UDP")
+drvAsynIPPortConfigure("IPPort1", "192.168.0.100:10001")
+drvAsynIPPortConfigure("IPPort2", "192.168.0.200:10001")
 
-# Records of the ELSE probes
+# Records of the ELSE probe
 
-dbLoadRecords("database/ELSE-SATURN5702.db", "PORT = IPPort1, PREFIX = RAD:ELSE")
-
+cd ${STREAM_IOC}
+dbLoadRecords("database/ELSE-SATURN5702.db", "PORT1 = IPPort1, PORT2 = IPPort2, PREFIX = RAD:ELSE")
+ 
 # Effectively initializes the IOC
-
 cd iocBoot
 iocInit
-
-
