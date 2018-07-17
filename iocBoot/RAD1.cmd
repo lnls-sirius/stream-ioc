@@ -7,12 +7,12 @@
 
 # Environment variables
 
-epicsEnvSet ("STREAM_IOC", "/root/stream-ioc")
+epicsEnvSet("STREAM_IOC", "/root/stream-ioc")
 epicsEnvSet("EPICS_BASE", "/opt/epics-R3.15.5/base")
 epicsEnvSet("ASYN", "/opt/epics-R3.15.5/modules/asyn4-33")
 epicsEnvSet("TOP", "/opt/epics-R3.15.5/modules/StreamDevice-2.7.11")
 epicsEnvSet("ARCH", "linux-arm")
-epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(STREAM_IOC)/protocol")
+epicsEnvSet("STREAM_PROTOCOL_PATH", "$(STREAM_IOC)/protocol")
 
 # Database definition file
 

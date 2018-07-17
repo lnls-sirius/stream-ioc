@@ -20,18 +20,13 @@ import struct
 import sys
 import threading
 import time
-import logging
-
-# Log File for exceptions
-
-logging.basicConfig(filename='app.log',level=logging.INFO)
 
 # UDP server port
 
 UDP_PORT = int(sys.argv[1])
 
 # Probe configuration
-sample = 14400
+
 PROBE_IP = sys.argv[2]
 PROBE_PORT = 1000
 
@@ -58,16 +53,15 @@ raw_data = []
 
 # Time series of calculated dose rates
 
-total_dose_rate = [0.0]*sample  # Parameter 19
-gamma = [0.0]*sample                   # Parameter 31
-total_neutron_rate = [0.0]*sample      # Parameter 34
-high_energy_neutrons = [0.0]*sample    # Parameter 33
+total_dose_rate = []         # Parameter 19
+gamma = []                   # Parameter 31
+total_neutron_rate = []      # Parameter 34
+high_energy_neutrons = []    # Parameter 33
 
 # This function returns one of the 64 parameters of the probe, converting the byte stream into an
 # integer.
 
 def raw_value(stream, parameter):
-
     base_index = 8 * parameter
     return(struct.unpack(">q", stream[base_index:(base_index + 8)])[0])
 
@@ -78,12 +72,8 @@ def dose_rate_value(date_and_time, raw_data, parameter):
     time_difference = (date_and_time[-1] - date_and_time[-2]).total_seconds()
     raw_difference = raw_data[-1][parameter] - raw_data[-2][parameter]
     new_dose_rate = (raw_difference / time_difference) * 3600 * 1E-6
+
     return(new_dose_rate)
-
-def time_sec(date_and_time):
-
-    deltatime = (date_and_time[-1] - date_and_time[-2]).total_seconds()
-    return deltatime
 
 # Thread for reading data from the Berthold LB 6420 probe
 
@@ -93,11 +83,11 @@ def scanThread():
 
     global date_and_time
     global raw_data
+
     global total_dose_rate
     global gamma
     global total_neutron_rate
     global high_energy_neutrons
-    global sample
 
     # This creates a TCP/IP socket for communication to the probe
 
@@ -108,56 +98,44 @@ def scanThread():
 
     while (True):
 
-        try:
+        # A new set of data is required. Two "recv" calls are necessary because the probe sends two
+        # answer messages to the client in sequence. The second one contains the desired data.
 
-            # A new set of data is required. Two "recv" calls are necessary because the probe sends two
-            #answer messages to the client in sequence. The second one contains the desired data.
+        client_socket.send("\x0E\x04\x00\x00")
+        answer = client_socket.recv(1024)
+        answer = client_socket.recv(1024)
 
-            client_socket.send("\x0E\x04\x00\x00")
+        # If the answer has 512 bytes (the expected message length), the received data is added to
+        # the time series and dose rate values are updated.
 
-            answer = client_socket.recv(1024)
-            answer = client_socket.recv(1024)
+        if (len(answer) == 512):
 
+            date_and_time.append(datetime.datetime.utcnow())
 
-            # If the answer has 512 bytes (the expected message length), the received data is added to
-            # the time series and dose rate values are updated.
+            new_raw_data = []
+            for parameter in range(0, 64):
+                new_raw_data.append(raw_value(answer, parameter))
+            raw_data.append(new_raw_data)
 
-            if (len(answer) == 512):
+            if (len(date_and_time) > MAXIMUM_AVERAGING_TIME + 1):
+                date_and_time = date_and_time[1:]
+                raw_data = raw_data[1:]
 
-                date_and_time.append(datetime.datetime.utcnow())
+            if (len(date_and_time) >= 2):
 
-                new_raw_data = []
+                total_dose_rate.append(dose_rate_value(date_and_time, raw_data, 19))
+                gamma.append(dose_rate_value(date_and_time, raw_data, 31))
+                total_neutron_rate.append(dose_rate_value(date_and_time, raw_data, 34))
+                high_energy_neutrons.append(dose_rate_value(date_and_time, raw_data, 33))
 
-                for parameter in range(0, 64):
-                    new_raw_data.append(raw_value(answer, parameter))
-                raw_data.append(new_raw_data)
+                if (len(total_dose_rate) > MAXIMUM_AVERAGING_TIME):
 
-                if (len(date_and_time) > MAXIMUM_AVERAGING_TIME + 1):
+                    total_dose_rate = total_dose_rate[1:]
+                    gamma = gamma[1:]
+                    total_neutron_rate = total_neutron_rate[1:]
+                    high_energy_neutrons = high_energy_neutrons[1:]
 
-                    date_and_time = date_and_time[1:]
-                    raw_data = raw_data[1:]
-
-                if (len(date_and_time) >= 2):
-
-                    total_dose_rate.append(dose_rate_value(date_and_time, raw_data, 19))
-                    gamma.append(dose_rate_value(date_and_time, raw_data, 31))
-                    total_neutron_rate.append(dose_rate_value(date_and_time, raw_data, 34))
-                    high_energy_neutrons.append(dose_rate_value(date_and_time, raw_data, 33))
-
-
-                    if len(total_dose_rate) > sample:
-                        gamma = gamma[1:]
-                        total_neutron_rate = total_neutron_rate[1:]
-                        high_energy_neutrons = high_energy_neutrons[1:]
-                        total_dose_rate = total_dose_rate[1:]
-
-            time.sleep(1)
-
-        except Exception as e:
-
-            print(e)
-            logging.error("Error occurred" + str(e))
-            pass
+        time.sleep(1)
 
 # This launches the auxiliary thread of the program
 
@@ -192,7 +170,7 @@ while (True):
         if (len(total_dose_rate) < MAXIMUM_AVERAGING_TIME):
             answer = "INITIALIZING\n"
             udp_server_socket.sendto(answer, address)
-            continue
+            continue            
 
         if ((data[:14] == "AVERAGING_TIME") and (data[-1] == "\n")):
             if (len(data[:-1].split(" ")) == 2):
@@ -213,9 +191,6 @@ while (True):
 
         if (data == "AVERAGING_TIME?\n"):
             answer = str(AVERAGING_TIME)
-        elif (data == "TOTAL_DOSE_RATE?\n"):
-            dose_rate = math.fsum(total_dose_rate[-AVERAGING_TIME:]) / AVERAGING_TIME
-            answer = "{:.10f}".format(dose_rate)
         elif (data == "GAMMA?\n"):
             dose_rate = math.fsum(gamma[-AVERAGING_TIME:]) / AVERAGING_TIME
             answer = "{:.10f}".format(dose_rate)
