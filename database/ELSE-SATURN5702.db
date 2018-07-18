@@ -15,11 +15,12 @@ record(ai, "$(PREFIX):Gamma") {
     field(DESC, "Gamma")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@ELSE-SATURN5702.proto getGamma $(PORT)")
+    field(INP, "@ELSE-SATURN5702.proto getValue $(PORT1)")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
     field(MDEL, "-1")
+    field(FLNK, "$(PREFIX):Neutron")
 }
 
 # Neutron
@@ -28,25 +29,21 @@ record(ai, "$(PREFIX):Neutron") {
     field(DESC, "High energy neutrons")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@ELSE-SATURN5702.proto getNeutron $(PORT)")
-    field(PINI, "YES")
+    field(INP, "@ELSE-SATURN5702.proto getValue $(PORT2)")
     field(PREC, "3")
-    field(SCAN, "1 second")
     field(MDEL, "-1")
+    field(FLNK, "$(PREFIX):TotalDoseRate")    
 }
 
 # Total dose rate
 
-record(ai, "$(PREFIX):TotalDoseRate") {
+record(calc, "$(PREFIX):TotalDoseRate") {
     field(DESC, "Total dose rate")
-    field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@ELSE-SATURN5702.proto getTotalDoseRate $(PORT)")
-    field(PINI, "YES")
+    field(INPA, "$(PREFIX):Gamma NPP MSS")
+    field(INPB, "$(PREFIX):Neutron NPP MSS")
+    field(CALC, "A + B")
     field(PREC, "3")
-    field(SCAN, "1 second")
     field(MDEL, "-1")
 }
-
-
 

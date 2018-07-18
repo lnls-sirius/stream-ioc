@@ -42,6 +42,7 @@ record(ai, "$(PREFIX):Gamma") {
     field(PREC, "3")
     field(SCAN, "1 second")
     field(MDEL, "-1")
+    field(FLNK, "$(PREFIX):TotalNeutronRate")
 }
 
 # High energy neutrons
@@ -59,14 +60,13 @@ record(ai, "$(PREFIX):HighEnergyNeutrons") {
 
 # Total dose rate
 
-record(ai, "$(PREFIX):TotalDoseRate") {
+record(calc, "$(PREFIX):TotalDoseRate") {
     field(DESC, "Total dose rate")
-    field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INP, "@Berthold-LB6420.proto getTotalDoseRate $(PORT)")
-    field(PINI, "YES")
+    field(INPA, "$(PREFIX):Gamma NPP MSS")
+    field(INPB, "$(PREFIX):TotalNeutronRate NPP MSS")
+    field(CALC, "A + B")
     field(PREC, "3")
-    field(SCAN, "1 second")
     field(MDEL, "-1")
 }
 
@@ -79,7 +79,7 @@ record(ai, "$(PREFIX):TotalNeutronRate") {
     field(INP, "@Berthold-LB6420.proto getTotalNeutronRate $(PORT)")
     field(PINI, "YES")
     field(PREC, "3")
-    field(SCAN, "1 second")
     field(MDEL, "-1")
+    field(FLNK, "$(PREFIX):TotalDoseRate")
 }
 

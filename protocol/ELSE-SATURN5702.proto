@@ -4,26 +4,17 @@
 
 # Protocol terminator character
 
-Terminator = LF;
+Terminator = 0x03;
+STX = 0x02;
+CS = %03<xor>;
+MSG = 01001;
+MSGA = 01009;
 
-# Gamma
+# Value
 
-getGamma {
-    out "RAD_E_Gamma?";
-    in "%f";
+getValue {
+    out $STX, "\${MSG}MI\${CS}";
+    in $STX, "\${MSGA}MI%*c%!7f\${CS}";
 }
 
-# Neutron
-
-getNeutron {
-    out "RAD_E_Neutron?";
-    in "%f";
-}
-
-# Total dose rate
-
-getTotalDoseRate {
-    out "RAD_E_Total?";
-    in "%f";
-}
 

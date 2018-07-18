@@ -37,13 +37,6 @@ getHighEnergyNeutrons {
     in "%f";
 }
 
-# Total dose rate
-
-getTotalDoseRate {
-    out "TOTAL_DOSE_RATE?";
-    in "%f";
-}
-
 # Total neutron rate
 
 getTotalNeutronRate {
