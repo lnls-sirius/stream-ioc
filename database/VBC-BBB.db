@@ -64,22 +64,58 @@ record(bi, "$(PREFIX):ValveClosed") {
     field(ONAM, "SW Closed")                       # One Name
 }
 #==============================================================================
-# Analog Input record: it is responsible for reading the pressure
+# Analog Input record: it is responsible for reading the pressure (and voltage)
 #==============================================================================
+record(ai, "$(PREFIX):ADC") {
+    field(DESC, "Read the ADC code")
+    field(INP, "@VBC-BBB.proto adc $(PORT)")
+    field(EGU, "LSB")
+    field(DTYP, "stream")
+    field(SCAN, "$(SCAN_RATE)")
+    field(PREC, "0")                            # Display Precision
+}
+#------------------------------------------------------------------------------
 record(ai, "$(PREFIX):Voltage") {
-    field(DESC, "Read the Voltage")
+    field(DESC, "Read the voltage in ADC")
     field(INP, "@VBC-BBB.proto voltage $(PORT)")
     field(EGU, "V")
     field(DTYP, "stream")
-    field(SCAN, "$(SCAN_RATE)")
+    field(SCAN, "I/O Intr")
     field(PREC, "5")                            # Display Precision
 }
 #------------------------------------------------------------------------------
-record(ai, "$(PREFIX):Pressure") {
-    field(DESC, "Read the pressure")
-    field(INP, "@VBC-BBB.proto pressure $(PORT)")
-    field(EGU, "Torr")
+record(ai, "$(PREFIX):EquipmentVoltage") {
+    field(DESC, "Read the equipment voltage")
+    field(INP, "@VBC-BBB.proto equipment_voltage $(PORT)")
+    field(EGU, "V")
     field(DTYP, "stream")
     field(SCAN, "I/O Intr")
     field(PREC, "5")                            # Display Precision
+}
+#==============================================================================
+record(ai, "$(PREFIX):Torr") {
+    field(DESC, "Read the pressure in Torr")
+    field(INP, "@VBC-BBB.proto torr $(PORT)")
+    field(EGU, "Torr")
+    field(DTYP, "stream")
+    field(SCAN, "I/O Intr")
+    field(PREC, "11")                            # Display Precision
+}
+#------------------------------------------------------------------------------
+record(ai, "$(PREFIX):mbar") {
+    field(DESC, "Read the pressure in mbar")
+    field(INP, "@VBC-BBB.proto mbar $(PORT)")
+    field(EGU, "mbar")
+    field(DTYP, "stream")
+    field(SCAN, "I/O Intr")
+    field(PREC, "11")                            # Display Precision
+}
+#------------------------------------------------------------------------------
+record(ai, "$(PREFIX):Pascal") {
+    field(DESC, "Read the pressure in Pa")
+    field(INP, "@VBC-BBB.proto pascal $(PORT)")
+    field(EGU, "Pa")
+    field(DTYP, "stream")
+    field(SCAN, "I/O Intr")
+    field(PREC, "11")                            # Display Precision
 }

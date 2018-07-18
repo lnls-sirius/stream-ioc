@@ -6,17 +6,19 @@
 #=============================================================================
 # Environment variables
 #=============================================================================
-epicsEnvSet "EPICS_CA_SERVER_PORT", "5064"
+#epicsEnvSet "EPICS_CA_SERVER_PORT", "5064"
 #epicsEnvSet("EPICS_BASE", "/opt/epics-R3.15.5/base")
-epicsEnvSet("EPICS_BASE", "/opt/base-3.15.5")
-epicsEnvSet("ASYN", "/opt/asyn4-33")
 #epicsEnvSet("TOP", "/home/lnls-136/rafael/RAFAEL/git_CNPEM/stream-ioc")
 #epicsEnvSet("TOP", "/opt/epics-R3.15.5/modules/StreamDevice-2.7.11")
-epicsEnvSet("TOP", "/root/stream-ioc")
 #epicsEnvSet("ARCH", "linux-x86_64")
+#epicsEnvSet ("STREAM_PROTOCOL_PATH", "/home/lnls-136/rafael/RAFAEL/git_CNPEM/stream-ioc/protocol")
+
+epicsEnvSet "EPICS_CA_SERVER_PORT", "5064"
+epicsEnvSet("EPICS_BASE", "/opt/base-3.15.5")
+epicsEnvSet("ASYN", "/opt/asyn4-33")
+epicsEnvSet("TOP", "/root/stream-ioc")
 epicsEnvSet("ARCH", "linux-arm")
 epicsEnvSet ("STREAM_PROTOCOL_PATH", "$(TOP)/protocol")
-#epicsEnvSet ("STREAM_PROTOCOL_PATH", "/home/lnls-136/rafael/RAFAEL/git_CNPEM/stream-ioc/protocol")
 #=============================================================================
 # Database definition file
 #=============================================================================

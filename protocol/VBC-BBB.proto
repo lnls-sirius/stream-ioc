@@ -36,10 +36,22 @@ valve_closed {
 #==============================================================================
 # Analog in correspondent to the pressure
 #==============================================================================
-voltage {
+adc {
     out 0x07;
-    in "voltage = %f, pressure = %*f";
+    in "adc = %f, voltage = %*f, equipment = %*f, torr = %*f, mbar = %*f, pascal = %*f";
 }
-pressure {
-    in "voltage = %*f, pressure = %f";
+voltage {
+    in "adc = %*f, voltage = %f, equipment = %*f, torr = %*f, mbar = %*f, pascal = %*f";
+}
+equipment_voltage {
+    in "adc = %*f, voltage = %*f, equipment = %f, torr = %*f, mbar = %*f, pascal = %*f";
+}
+torr {
+    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %f, mbar = %*f, pascal = %*f";
+}
+mbar {
+    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %*f, mbar = %f, pascal = %*f";
+}
+pascal {
+    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %*f, mbar = %*f, pascal = %f";
 }
