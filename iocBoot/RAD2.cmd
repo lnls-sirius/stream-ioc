@@ -7,7 +7,7 @@
 
 # Environment variables
 
-epicsEnvSet("EPICS_CAS_INTF_ADDR_LIST", "10.0.38.23") 
+#epicsEnvSet("EPICS_CAS_INTF_ADDR_LIST", "10.0.38.24") 
 
 epicsEnvSet("STREAM_IOC", "/root/stream-ioc")
 epicsEnvSet("EPICS_BASE", "/opt/epics-R3.15.5/base")

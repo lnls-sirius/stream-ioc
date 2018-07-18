@@ -4,26 +4,21 @@
 
 # Protocol terminator character
 
-Terminator = LF;
+Terminator = 0x03;
+BEL = 0x07;
+ETX = 0x03;
+CS = %0<sum>;
 
 # Gamma
 
 getGamma {
-    out "RAD_G?";
-    in "%f";
+    out $BEL, "01RM1\${CS}";
+    in $BEL, "01RM %f  %*4c  %*4c \${CS}";
 }
 
 # Neutron
 
 getNeutron {
-    out "RAD_N?";
-    in "%f";
+    out $BEL, "01RM2\${CS}";
+    in $BEL, "01RM %f  %*4c  %*4c \${CS}";
 }
-
-# Total dose rate
-
-getTotalDoseRate {
-    out "RAD_T?";
-    in "%f";
-}
-
