@@ -51,8 +51,8 @@ record(bi, "$(PREFIX):ValveOpen") {
     field(INP, "@VBC-BBB.proto valve_open $(PORT)")
     field(DTYP, "stream")
     field(SCAN, "$(SCAN_RATE)")
-    field(ZNAM, "SW Open")                         # Zero Name
-    field(ONAM, "SW Closed")                       # One Name
+    field(ZNAM, "SW con.")                     # Zero Name
+    field(ONAM, "SW discon.")                  # One Name
 }
 #------------------------------------------------------------------------------
 record(bi, "$(PREFIX):ValveClosed") {
@@ -60,8 +60,8 @@ record(bi, "$(PREFIX):ValveClosed") {
     field(INP, "@VBC-BBB.proto valve_closed $(PORT)")
     field(DTYP, "stream")
     field(SCAN, "$(SCAN_RATE)")
-    field(ZNAM, "SW Open")                         # Zero Name
-    field(ONAM, "SW Closed")                       # One Name
+    field(ZNAM, "SW con.")                     # Zero Name
+    field(ONAM, "SW discon.")                  # One Name
 }
 #==============================================================================
 # Analog Input record: it is responsible for reading the pressure (and voltage)
