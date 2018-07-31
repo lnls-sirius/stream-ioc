@@ -68,7 +68,7 @@ record(bi, "$(PREFIX):ValveClosed") {
 #==============================================================================
 record(ai, "$(PREFIX):ADC") {
     field(DESC, "Read the ADC code")
-    field(INP, "@VBC-BBB.proto adc $(PORT)")
+    field(INP, "@VBC-BBB.proto adc($(PREFIX)) $(PORT)")
     field(EGU, "LSB")
     field(DTYP, "stream")
     field(SCAN, "$(SCAN_RATE)")
@@ -94,28 +94,68 @@ record(ai, "$(PREFIX):EquipmentVoltage") {
 }
 #==============================================================================
 record(ai, "$(PREFIX):Torr") {
-    field(DESC, "Read the pressure in Torr")
+    field(DESC, "Pressure value in Torr")
     field(INP, "@VBC-BBB.proto torr $(PORT)")
     field(EGU, "Torr")
     field(DTYP, "stream")
     field(SCAN, "I/O Intr")
     field(PREC, "11")                            # Display Precision
 }
+record(ai, "$(PREFIX):TorrBase") {
+    field(DESC, "Torr power of ten base value")
+    field(INP, "@VBC-BBB.proto torr_base $(PORT)")
+    field(EGU, "Torr")
+    field(DTYP, "stream")
+    field(SCAN, "I/O Intr")
+    field(PREC, "2")                            # Display Precision
+}
+record(ai, "$(PREFIX):TorrExp") {
+    field(DESC, "Torr power of ten exponent value")
+    field(INP, "@VBC-BBB.proto torr_exp $(PORT)")
+    field(DTYP, "stream")
+    field(SCAN, "I/O Intr")
+    field(PREC, "0")                            # Display Precision
+}
 #------------------------------------------------------------------------------
 record(ai, "$(PREFIX):mbar") {
-    field(DESC, "Read the pressure in mbar")
+    field(DESC, "Pressure value in mbar")
     field(INP, "@VBC-BBB.proto mbar $(PORT)")
     field(EGU, "mbar")
     field(DTYP, "stream")
     field(SCAN, "I/O Intr")
     field(PREC, "11")                            # Display Precision
 }
+record(ai, "$(PREFIX):mbarBase") {
+    field(DESC, "mbar power of ten base value")
+    field(INP, "@VBC-BBB.proto mbar_base $(PORT)")
+    field(EGU, "mbar")
+    field(DTYP, "stream")
+    field(SCAN, "I/O Intr")
+    field(PREC, "2")                            # Display Precision
+}
+record(ai, "$(PREFIX):mbarExp") {
+    field(DESC, "mbar power of ten exponent value")
+    field(INP, "@VBC-BBB.proto mbar_exp $(PORT)")
+    field(FLNK, "$(PREFIX):PascalExp")
+    field(DTYP, "stream")
+    field(SCAN, "I/O Intr")
+    field(PREC, "0")                            # Display Precision
+}
 #------------------------------------------------------------------------------
 record(ai, "$(PREFIX):Pascal") {
-    field(DESC, "Read the pressure in Pa")
+    field(DESC, "Pressure value in Pascal")
     field(INP, "@VBC-BBB.proto pascal $(PORT)")
     field(EGU, "Pa")
     field(DTYP, "stream")
     field(SCAN, "I/O Intr")
     field(PREC, "11")                            # Display Precision
 }
+record(calc, "$(PREFIX):PascalExp") {
+    field(DESC, "Pascal power of ten exponent value")
+    field(INPA, "VBC:BBB:mbarExp.VAL")
+    field(INPB, "2")
+    field(CALC, "A + B")
+    field(PREC, "0")                            # Display Precision
+    field(MDEL, "-1")
+}
+#==============================================================================

@@ -38,20 +38,32 @@ valve_closed {
 #==============================================================================
 adc {
     out 0x07;
-    in "adc = %f, voltage = %*f, equipment = %*f, torr = %*f, mbar = %*f, pascal = %*f";
+    in "adc = %f, voltage = %*f, equipment = %*f, torr = %*f, torr_base = %*f, torr_exp = %*f, mbar = %*f, mbar_base = %*f, mbar_exp = %*f, pascal = %*f";
 }
 voltage {
-    in "adc = %*f, voltage = %f, equipment = %*f, torr = %*f, mbar = %*f, pascal = %*f";
+    in "adc = %*f, voltage = %f, equipment = %*f, torr = %*f, torr_base = %*f, torr_exp = %*f, mbar = %*f, mbar_base = %*f, mbar_exp = %*f, pascal = %*f";
 }
 equipment_voltage {
-    in "adc = %*f, voltage = %*f, equipment = %f, torr = %*f, mbar = %*f, pascal = %*f";
+    in "adc = %*f, voltage = %*f, equipment = %f, torr = %*f, torr_base = %*f, torr_exp = %*f, mbar = %*f, mbar_base = %*f, mbar_exp = %*f, pascal = %*f";
 }
 torr {
-    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %f, mbar = %*f, pascal = %*f";
+    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %f, torr_base = %*f, torr_exp = %*f, mbar = %*f, mbar_base = %*f, mbar_exp = %*f, pascal = %*f";
+}
+torr_base {
+    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %*f, torr_base = %f, torr_exp = %*f, mbar = %*f, mbar_base = %*f, mbar_exp = %*f, pascal = %*f";
+}
+torr_exp {
+    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %*f, torr_base = %*f, torr_exp = %f, mbar = %*f, mbar_base = %*f, mbar_exp = %*f, pascal = %*f";
 }
 mbar {
-    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %*f, mbar = %f, pascal = %*f";
+    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %*f, torr_base = %*f, torr_exp = %*f, mbar = %f, mbar_base = %*f, mbar_exp = %*f, pascal = %*f";
+}
+mbar_base {
+    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %*f, torr_base = %*f, torr_exp = %*f, mbar = %*f, mbar_base = %f, mbar_exp = %*f, pascal = %*f";
+}
+mbar_exp {
+    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %*f, torr_base = %*f, torr_exp = %*f, mbar = %*f, mbar_base = %*f, mbar_exp = %f, pascal = %*f";
 }
 pascal {
-    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %*f, mbar = %*f, pascal = %f";
+    in "adc = %*f, voltage = %*f, equipment = %*f, torr = %*f, torr_base = %*f, torr_exp = %*f, mbar = %*f, mbar_base = %*f, mbar_exp = %*f, pascal = %f";
 }

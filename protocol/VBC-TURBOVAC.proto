@@ -16,36 +16,36 @@ task_telegram {
     out 0x10,
 
         # Header
-        "%(VBC:TURBOVAC:STX-SP)i,",
-        "%(VBC:TURBOVAC:LGE-SP)i,",
-        "%(VBC:TURBOVAC:ADR-SP)i,",
+        "%(\$1:STX-SP)i,",
+        "%(\$1:LGE-SP)i,",
+        "%(\$1:ADR-SP)i,",
 
-        "%(VBC:TURBOVAC:PZD1-SP.FFVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.FTVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.TTVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.TVVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.ELVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.TEVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.NIVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.EIVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.SVVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.SXVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.FVVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.FRVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.THVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.TWVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.ONVL)i",
-        "%(VBC:TURBOVAC:PZD1-SP.ZRVL)i",
+        "%(\$1:PZD1-SP.FFVL)i",
+        "%(\$1:PZD1-SP.FTVL)i",
+        "%(\$1:PZD1-SP.TTVL)i",
+        "%(\$1:PZD1-SP.TVVL)i",
+        "%(\$1:PZD1-SP.ELVL)i",
+        "%(\$1:PZD1-SP.TEVL)i",
+        "%(\$1:PZD1-SP.NIVL)i",
+        "%(\$1:PZD1-SP.EIVL)i",
+        "%(\$1:PZD1-SP.SVVL)i",
+        "%(\$1:PZD1-SP.SXVL)i",
+        "%(\$1:PZD1-SP.FVVL)i",
+        "%(\$1:PZD1-SP.FRVL)i",
+        "%(\$1:PZD1-SP.THVL)i",
+        "%(\$1:PZD1-SP.TWVL)i",
+        "%(\$1:PZD1-SP.ONVL)i",
+        "%(\$1:PZD1-SP.ZRVL)i",
 
         # PKW area
         # the comma is used as separator from now on
-        "%(VBC:TURBOVAC:PNU-SP)i,",
-        "%(VBC:TURBOVAC:AK-SP)i,",
-        "%(VBC:TURBOVAC:IND-SP)i,",
-        "%(VBC:TURBOVAC:PWE-SP)i,",
+        "%(\$1:PNU-SP)i,",
+        "%(\$1:AK-SP)i,",
+        "%(\$1:IND-SP)i,",
+        "%(\$1:PWE-SP)i,",
 
         # PZD area
-        "%(VBC:TURBOVAC:PZD2-SP)i";
+        "%(\$1:PZD2-SP)i";
 
     in "STX=%*f, LGE=%*f, ADR=%*f, PNU=%*f, AK=%*f, IND=%*f, PWE=%*f, PZD1_1=%*f, PZD1_2=%*f, PZD2=%*f, PZD3=%*f, PZD4=%*f, PZD6=%*f";
 }

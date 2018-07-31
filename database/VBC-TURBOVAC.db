@@ -8,36 +8,25 @@
 #==============================================================================
 # Header: CONTROL (STX, LGE, ADR)
 #==============================================================================
-record(bo, "$(PREFIX):OnOff") {
-    field(DESC, "Turns pump On/Off")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
-    field(DTYP, "stream")
-    field(SCAN, "$(SCAN_RATE)")
-    field(ZNAM, "Off")                          # Zero Name
-    field(ONAM, "On")                           # One Name
-}
-#==============================================================================
-# Header: CONTROL (STX, LGE, ADR)
-#==============================================================================
 record (ao, "$(PREFIX):STX-SP") {
     field(DESC, "STX: Start byte")
     field(VAL, "2")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
-    field(SCAN, "Passive")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+    field(SCAN, "$(SCAN_RATE)")
 }
 record (ao, "$(PREFIX):LGE-SP") {
     field(DESC, "LGE: Length of the payload")
     field(VAL, "22")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):ADR-SP") {
     field(DESC, "ADR: Frequency converter address")
     field(VAL, "0")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 #==============================================================================
@@ -66,30 +55,30 @@ record (ai, "$(PREFIX):ADR-RB") {
 #==============================================================================
 record (ao, "$(PREFIX):PNU-SP") {
     field(DESC, "PNU: Parameter number")
-    field(VAL, "1")
+    field(VAL, "134")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):AK-SP") {
     field(DESC, "AK: Type of parameter access")
-    field(VAL, "1")
+    field(VAL, "7")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):IND-SP") {
     field(DESC, "IND: Parameter index")
-    field(VAL, "0")
+    field(VAL, "2")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):PWE-SP") {
     field(DESC, "PWE: Parameter value")
-    field(VAL, "0")
+    field(VAL, "18")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 #==============================================================================
@@ -124,17 +113,25 @@ record (ai, "$(PREFIX):PWE-RB") {
 #==============================================================================
 record (mbbo, "$(PREFIX):PZD1-SP") {
     field(DESC, "PZD1: USS Control Word")
-    # bit 0: Start/Stop
-    # bit 1: Not assigned
-    # bit 2: Not assigned
-    # bit 3: Not assigned
-    # bit 4: Not assigned
-    # bit 5: 24 VDC output X201
-    # bit 6: Enable main setpoint PZD2
-    # bit 7: Reset error
-    #field(ZRVL, "")
+    # bit  0: Start/Stop
+    # bit  1: Not assigned
+    # bit  2: Not assigned
+    # bit  3: Not assigned
+    # bit  4: Not assigned
+    # bit  5: 24 VDC output X201
+    # bit  6: Enable main setpoint PZD2
+    # bit  7: Reset error
+    # bit  8: Enable standby function
+    # bit  9: Not assigned
+    # bit 10: Enable process data (Bit 0, 5, 6, 7, 8, 13, 14, 15)
+    field(TEVL, "1")
+    # bit 11: Error operation relay X1
+    # bit 12: Normal operation relay X1
+    # bit 13: Warning relay X1
+    # bit 14: 24 VDC output X202
+    # bit 15: 24 VDC output X203
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 #==============================================================================
@@ -176,28 +173,28 @@ record (ao, "$(PREFIX):PZD2-SP") {
     field(VAL, "1200")
     field(EGU, "Hz")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):PZD3-SP") {
     field(DESC, "PZD3: Frequency converter temperature")
     field(EGU, "deg. C")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):PZD4-SP") {
     field(DESC, "PZD4: Current motor current")
     field(EGU, "A")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):PZD6-SP") {
     field(DESC, "PZD6: intermediate circuit voltage")
     field(EGU, "V")
     field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram $(PORT)")
+    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
 }
 #==============================================================================

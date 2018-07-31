@@ -16,6 +16,7 @@ record(bo, "$(PREFIX):OnOff") {
 record(ao, "$(PREFIX):SpeedRPM") {
     field(DESC, "Set pump speed")
     field(OUT, "@VBC-ACP.proto set_speed_rpm $(PORT)")
+    field(VAL, "6000")
     field(EGU, "rpm")
     field(DTYP, "stream")                       # Device Type
     field(SCAN, "Passive")                      # Scanning Rate
@@ -24,6 +25,7 @@ record(ao, "$(PREFIX):SpeedRPM") {
 record(ao, "$(PREFIX):SpeedHz") {
     field(DESC, "Set pump speed")
     field(OUT, "@VBC-ACP.proto set_speed_hz $(PORT)")
+    field(VAL, "100")
     field(EGU, "Hz")
     field(DTYP, "stream")                       # Device Type
     field(SCAN, "Passive")                      # Scanning Rate
