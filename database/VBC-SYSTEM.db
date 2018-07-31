@@ -1,0 +1,69 @@
+# VBC-SYSTEM.db
+
+# Record definition for other PVs related to the whole system instead of an individual device
+# parameters:
+# PORT: Name of the serial port configured in asynDriver.
+# SCAN_RATE: Record scan rate (time interval between two consecutive valve status readings).
+
+#==============================================================================
+# On/Off IOC Status
+#==============================================================================
+record(bo, "$(PREFIX):OnOff") {
+    field(DESC, "IOC On/Off Status")
+    field(VAL, "1")
+    field(SCAN, "Passive")
+    field(ZNAM, "Off")                          # Zero Name
+    field(ONAM, "On")                           # One Name
+}
+#==============================================================================
+# Car location label
+#==============================================================================
+record(stringout, "$(PREFIX):Location") {
+    field(DESC, "Car Location")
+    field(VAL, "Car Location")
+}
+#==============================================================================
+# Pressure value used in Stage 4 during ON Process (power of ten representation)
+#==============================================================================
+record(ao, "$(PREFIX):OnPressureBase") {
+    field(DESC, "Torr pressure base value (Stage 4 ON)")
+    field(VAL, "5")
+    field(EGU, "Torr")
+    field(SCAN, "Passive")
+    field(PREC, "2")                            # Display Precision
+}
+#------------------------------------------------------------------------------
+record(ao, "$(PREFIX):OnPressureExp") {
+    field(DESC, "Torr exponent value (Stage 4 ON)")
+    field(VAL, "-2")
+    field(SCAN, "Passive")
+    field(PREC, "0")                            # Display Precision
+}
+#==============================================================================
+# Frequency value used in Stage 3 during OFF Process (power of ten representation)
+#==============================================================================
+record(ao, "$(PREFIX):OffFrequency") {
+    field(DESC, "Frequency value (Stage 3 OFF)")
+    field(VAL, "600")
+    field(EGU, "Hz")
+    field(SCAN, "Passive")
+    field(PREC, "0")                            # Display Precision
+}
+#==============================================================================
+# Pressure value used in Stage 5 during OFF Process (power of ten representation)
+#==============================================================================
+record(ao, "$(PREFIX):OffPressureBase") {
+    field(DESC, "Torr pressure base value (Stage 5 OFF)")
+    field(VAL, "7.6")
+    field(EGU, "Torr")
+    field(SCAN, "Passive")
+    field(PREC, "2")                            # Display Precision
+}
+#------------------------------------------------------------------------------
+record(ao, "$(PREFIX):OffPressureExp") {
+    field(DESC, "Torr exponent value (Stage 5 OFF)")
+    field(VAL, "2")
+    field(SCAN, "Passive")
+    field(PREC, "0")                            # Display Precision
+}
+#==============================================================================
