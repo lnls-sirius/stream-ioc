@@ -8,7 +8,7 @@ ReadTimeout = 25;
 ReplyTimeout = 100;
 
 #==============================================================================
-# valves controls (Output GPIOs used to switch the relays)
+# valves controls ("Output" GPIOs used to switch the relays)
 #==============================================================================
 relay_1 {
     out 0x01, "%(VAL)i";
@@ -21,6 +21,9 @@ relay_3 {
 }
 relay_4 {
     out 0x04, "%(VAL)i";
+}
+dummy {
+    out 222;
 }
 #==============================================================================
 # VAT valve status (Inputs GPIOs used to read VAT valve status)

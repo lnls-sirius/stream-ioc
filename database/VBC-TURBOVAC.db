@@ -76,7 +76,7 @@ record (ao, "$(PREFIX):IND-SP") {
 }
 record (ao, "$(PREFIX):PWE-SP") {
     field(DESC, "PWE: Parameter value")
-    field(VAL, "18")
+    field(VAL, "36")
     field(DTYP, "stream")
     field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
@@ -120,7 +120,7 @@ record (mbbo, "$(PREFIX):PZD1-SP") {
     # bit  4: Not assigned
     # bit  5: 24 VDC output X201
     # bit  6: Enable main setpoint PZD2
-    # bit  7: Reset error
+    # bit  7: Reset error (all components)
     # bit  8: Enable standby function
     # bit  9: Not assigned
     # bit 10: Enable process data (Bit 0, 5, 6, 7, 8, 13, 14, 15)
@@ -133,6 +133,20 @@ record (mbbo, "$(PREFIX):PZD1-SP") {
     field(DTYP, "stream")
     field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
     field(SCAN, "Passive")
+}
+record(bo, "$(PREFIX):VentingValve-SW") {
+    field(DESC, "TURBOVAC Venting Valve status")
+    field(OUT, "@VBC-TURBOVAC.proto venting_valve($(PREFIX)) $(PORT)")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
+    field(ZNAM, "Closed")                          # Zero Name
+    field(ONAM, "Open")                           # One Name
+}
+record(bo, "$(PREFIX):VentingValve-UI") {
+    field(DESC, "Displays Venting Valve status in UI")
+    field(OUT, "@VBC-TURBOVAC.proto dummy $(PORT)")
+    field(SCAN, "Passive")
+    field(DTYP, "stream")
 }
 #==============================================================================
 # PZD area: STATUS (PZD1)
@@ -165,6 +179,7 @@ record (ai, "$(PREFIX):PZD1-RB1") {
     field(INP, "@VBC-TURBOVAC.proto PZD1_1 $(PORT)")
     field(SCAN, "I/O Intr")
 }
+
 #==============================================================================
 # PZD area: CONTROL (PZD2, PZD3, PZD4, PZD6)
 #==============================================================================
