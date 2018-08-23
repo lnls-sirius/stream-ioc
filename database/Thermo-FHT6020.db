@@ -10,7 +10,7 @@
 
 # Gamma
 
-record(ai, "$(PREFIX):Gamma") {
+record(ai, "$(PREFIX):Gamma-T") {
     field(DESC, "Gamma")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
@@ -19,29 +19,28 @@ record(ai, "$(PREFIX):Gamma") {
     field(PREC, "3")
     field(SCAN, "1 second")
     field(MDEL, "-1")
-    field(FLNK, "$(PREFIX):Neutron")
+    field(FLNK, "$(PREFIX):Neutron-T")
 }
 
 # Neutron
 
-record(ai, "$(PREFIX):Neutron") {
-    field(DESC, "High energy neutrons")
+record(ai, "$(PREFIX):Neutron-T") {
+    field(DESC, "Neutron")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
     field(INP, "@Thermo-FHT6020.proto getNeutron $(PORT)")
-    field(PINI, "YES")
     field(PREC, "3")
     field(MDEL, "-1")
-    field(FLNK, "$(PREFIX):TotalDoseRate")
+    field(FLNK, "$(PREFIX):TotalDoseRate-T")
 }
 
 # Total dose rate
 
-record(calc, "$(PREFIX):TotalDoseRate") {
+record(calc, "$(PREFIX):TotalDoseRate-T") {
     field(DESC, "Total dose rate")
     field(EGU, "uSv/h")
-    field(INPA, "$(PREFIX):Gamma NPP MSS")
-    field(INPB, "$(PREFIX):Neutron NPP MSS")
+    field(INPA, "$(PREFIX):Gamma-T NPP MSS")
+    field(INPB, "$(PREFIX):Neutron-T NPP MSS")
     field(CALC, "A + B")
     field(PREC, "3")
     field(MDEL, "-1")
