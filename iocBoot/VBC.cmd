@@ -38,8 +38,8 @@ drvAsynIPPortConfigure("socket_vbc", "unix:///tmp/socket_vbc")
 cd ${TOP}
 dbLoadRecords("database/VBC-ACP.db", "PORT = socket_vbc, SCAN_RATE = 1 second, PREFIX = VBC1:ACP")
 dbLoadRecords("database/VBC-TURBOVAC.db", "PORT = socket_vbc, SCAN_RATE = 1 second, PREFIX = VBC1:TURBOVAC")
-dbLoadRecords("database/VBC-BBB.db", "PORT = socket_vbc, SCAN_RATE = .1 second, PREFIX = VBC1:BBB")
-dbLoadRecords("database/VBC-SYSTEM.db", "PORT = socket_vbc, SCAN_RATE = .1 second, PREFIX = VBC1:SYSTEM")
+dbLoadRecords("database/VBC-BBB.db", "PORT = socket_vbc, SCAN_RATE = 1 second, PREFIX = VBC1:BBB")
+dbLoadRecords("database/VBC-SYSTEM.db", "PORT = socket_vbc, SCAN_RATE = 1 second, PREFIX = VBC1:SYSTEM")
 #=============================================================================
 # Effectively initializes the IOC
 cd iocBoot

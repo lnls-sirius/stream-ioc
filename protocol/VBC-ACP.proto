@@ -11,15 +11,15 @@ ReplyTimeout = 100;
 
 on_off {
     out 0x0B, "%(VAL)i";
-    #in "#000,ok\r";
+    in "#000,ok";
 }
 
 set_speed_rpm {
     out 0x0C, "%(VAL)i";
-    #in "#000,ok\r";
+    in "#000,ok";
 }
 
 set_speed_hz {
     out 0x0D, "%(VAL)i";
-    #in "#000,ok\r";
+    in "#000,ok";
 }

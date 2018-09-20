@@ -11,23 +11,23 @@
 record (ao, "$(PREFIX):STX-SP") {
     field(DESC, "STX: Start byte")
     field(VAL, "2")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "$(SCAN_RATE)")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):LGE-SP") {
     field(DESC, "LGE: Length of the payload")
     field(VAL, "22")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):ADR-SP") {
     field(DESC, "ADR: Frequency converter address")
     field(VAL, "0")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 #==============================================================================
 # Header: STATUS (STX, LGE, ADR)
@@ -35,20 +35,20 @@ record (ao, "$(PREFIX):ADR-SP") {
 record (ai, "$(PREFIX):STX-RB") {
     field(DESC, "STX: Start byte")
     field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto STX $(PORT)")
-    field(SCAN, "I/O Intr")
+    field(INP, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+    field(SCAN, "$(SCAN_RATE)")
 }
 record (ai, "$(PREFIX):LGE-RB") {
     field(DESC, "LGE: Length of the payload")
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto LGE $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto LGE $(PORT)")
+#    field(SCAN, "I/O Intr")
 }
 record (ai, "$(PREFIX):ADR-RB") {
     field(DESC, "ADR: Frequency converter address")
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto ADR $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto ADR $(PORT)")
+#    field(SCAN, "I/O Intr")
 }
 #==============================================================================
 # PKW area: CONTROL (PKE, AK, IND)
@@ -56,57 +56,57 @@ record (ai, "$(PREFIX):ADR-RB") {
 record (ao, "$(PREFIX):PNU-SP") {
     field(DESC, "PNU: Parameter number")
     field(VAL, "134")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):AK-SP") {
     field(DESC, "AK: Type of parameter access")
     field(VAL, "7")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):IND-SP") {
     field(DESC, "IND: Parameter index")
     field(VAL, "2")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):PWE-SP") {
     field(DESC, "PWE: Parameter value")
     field(VAL, "36")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 #==============================================================================
 # PKW area: STATUS (PKE, AK, IND)
 #==============================================================================
 record (ai, "$(PREFIX):PNU-RB") {
     field(DESC, "PNU: Parameter number")
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto PNU $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto PNU $(PORT)")
+#    field(SCAN, "I/O Intr")
 }
 record (ai, "$(PREFIX):AK-RB") {
     field(DESC, "AK: Type of parameter access")
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto AK $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto AK $(PORT)")
+#    field(SCAN, "I/O Intr")
 }
 record (ai, "$(PREFIX):IND-RB") {
     field(DESC, "IND: Parameter index")
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto IND $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto IND $(PORT)")
+#    field(SCAN, "I/O Intr")
 }
 record (ai, "$(PREFIX):PWE-RB") {
     field(DESC, "PWE: Parameter value")
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto PWE $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto PWE $(PORT)")
+#    field(SCAN, "I/O Intr")
 }
 #==============================================================================
 # PZD area: CONTROL (PZD1)
@@ -130,9 +130,9 @@ record (mbbo, "$(PREFIX):PZD1-SP") {
     # bit 13: Warning relay X1
     # bit 14: 24 VDC output X202
     # bit 15: 24 VDC output X203
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 record(bo, "$(PREFIX):VentingValve-SW") {
     field(DESC, "TURBOVAC Venting Valve status")
@@ -144,9 +144,7 @@ record(bo, "$(PREFIX):VentingValve-SW") {
 }
 record(bo, "$(PREFIX):VentingValve-UI") {
     field(DESC, "Displays Venting Valve status in UI")
-    field(OUT, "@VBC-TURBOVAC.proto dummy $(PORT)")
     field(SCAN, "Passive")
-    field(DTYP, "stream")
 }
 #==============================================================================
 # PZD area: STATUS (PZD1)
@@ -161,9 +159,9 @@ record (ai, "$(PREFIX):PZD1-RB0") {
     # bit 5: Decelerating
     # bit 6: Switch-on lock
     # bit 7: Temperature warning
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto PZD1_0 $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto PZD1_0 $(PORT)")
+#    field(SCAN, "I/O Intr")
 }
 record (ai, "$(PREFIX):PZD1-RB1") {
     field(DESC, "PZD1: USS Status Byte (MSB)")
@@ -175,9 +173,9 @@ record (ai, "$(PREFIX):PZD1-RB1") {
     # bit 13: Overload warning
     # bit 14: Collective warning
     # bit 15: Process channel enabled
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto PZD1_1 $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto PZD1_1 $(PORT)")
+#    field(SCAN, "I/O Intr")
 }
 
 #==============================================================================
@@ -187,30 +185,30 @@ record (ao, "$(PREFIX):PZD2-SP") {
     field(DESC, "PZD2: Set pump frequency")
     field(VAL, "1200")
     field(EGU, "Hz")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):PZD3-SP") {
     field(DESC, "PZD3: Frequency converter temperature")
     field(EGU, "deg. C")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):PZD4-SP") {
     field(DESC, "PZD4: Current motor current")
     field(EGU, "A")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 record (ao, "$(PREFIX):PZD6-SP") {
     field(DESC, "PZD6: intermediate circuit voltage")
     field(EGU, "V")
-    field(DTYP, "stream")
-    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
-    field(SCAN, "Passive")
+#    field(DTYP, "stream")
+#    field(OUT, "@VBC-TURBOVAC.proto task_telegram($(PREFIX)) $(PORT)")
+#    field(SCAN, "Passive")
 }
 #==============================================================================
 # PZD area: STATUS (PZD2, PZD3, PZD4, PZD6)
@@ -218,34 +216,34 @@ record (ao, "$(PREFIX):PZD6-SP") {
 record (ai, "$(PREFIX):PZD2-RB") {
     field(DESC, "PZD2: Current stator frequency")
     field(EGU, "Hz")
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto PZD2 $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto PZD2 $(PORT)")
+#    field(SCAN, "I/O Intr")
 }
 #------------------------------------------------------------------------------
 record (ai, "$(PREFIX):PZD3-RB") {
     field(DESC, "PZD3: Frequency converter temperature")
     field(EGU, "deg. C")
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto PZD3 $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto PZD3 $(PORT)")
+#    field(SCAN, "I/O Intr")
 }
 #------------------------------------------------------------------------------
 record (ai, "$(PREFIX):PZD4-RB") {
     field(DESC, "PZD4: Current motor current")
     field(EGU, "A")
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto PZD4 $(PORT)")
-    field(SCAN, "I/O Intr")
-    field(PREC, "1")                            # Display Precision
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto PZD4 $(PORT)")
+#    field(SCAN, "I/O Intr")
+#    field(PREC, "1")                            # Display Precision
 }
 #------------------------------------------------------------------------------
 record (ai, "$(PREFIX):PZD6-RB") {
     field(DESC, "PZD6: intermediate circuit voltage")
     field(EGU, "V")
-    field(DTYP, "stream")
-    field(INP, "@VBC-TURBOVAC.proto PZD6 $(PORT)")
-    field(SCAN, "I/O Intr")
+#    field(DTYP, "stream")
+#    field(INP, "@VBC-TURBOVAC.proto PZD6 $(PORT)")
+#    field(SCAN, "I/O Intr")
     field(PREC, "1")                            # Display Precision
 }
 #==============================================================================
