@@ -18,7 +18,9 @@ record(bo, "$(PREFIX):Relay1-SW") {
 }
 record(bi, "$(PREFIX):Relay1-UI") {
     field(DESC, "Displays Relay 1 status in UI")
-    field(SCAN, "Passive")
+#    field(SCAN, "Passive")
+    field(DTYP, "stream")
+    field(SCAN, "$(SCAN_RATE)")
 }
 #------------------------------------------------------------------------------
 record(bo, "$(PREFIX):Relay2-SW") {
@@ -31,7 +33,9 @@ record(bo, "$(PREFIX):Relay2-SW") {
 }
 record(bi, "$(PREFIX):Relay2-UI") {
     field(DESC, "Displays Relay 2 status in UI")
-    field(SCAN, "Passive")
+#    field(SCAN, "Passive")
+    field(DTYP, "stream")
+    field(SCAN, "$(SCAN_RATE)")
 }
 #------------------------------------------------------------------------------
 record(bo, "$(PREFIX):Relay3-SW") {
@@ -44,7 +48,9 @@ record(bo, "$(PREFIX):Relay3-SW") {
 }
 record(bi, "$(PREFIX):Relay3-UI") {
     field(DESC, "Displays Relay 3 status in UI")
-    field(SCAN, "Passive")
+#    field(SCAN, "Passive")
+    field(DTYP, "stream")
+    field(SCAN, "$(SCAN_RATE)")
 }
 #------------------------------------------------------------------------------
 record(bo, "$(PREFIX):Relay4-SW") {
@@ -57,7 +63,9 @@ record(bo, "$(PREFIX):Relay4-SW") {
 }
 record(bi, "$(PREFIX):Relay4-UI") {
     field(DESC, "Displays Relay 4 status in UI")
-    field(SCAN, "Passive")
+    #field(SCAN, "Passive")
+    field(DTYP, "stream")
+    field(SCAN, "$(SCAN_RATE)")
 }
 #==============================================================================
 # Binary Input records: they are responsible for reading the VAT valve status
