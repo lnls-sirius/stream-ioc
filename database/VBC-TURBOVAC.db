@@ -235,7 +235,7 @@ record (ai, "$(PREFIX):PZD4-RB") {
 #    field(DTYP, "stream")
 #    field(INP, "@VBC-TURBOVAC.proto PZD4 $(PORT)")
 #    field(SCAN, "I/O Intr")
-#    field(PREC, "1")                            # Display Precision
+    field(PREC, "1")                            # Display Precision
 }
 #------------------------------------------------------------------------------
 record (ai, "$(PREFIX):PZD6-RB") {
