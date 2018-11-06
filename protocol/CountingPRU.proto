@@ -1,0 +1,35 @@
+# CountingPRU.proto
+# Protocol for CountingPRU boards, based on BSMP communication protocol.
+# The BSMP protocol doesn't have any terminator character
+
+Terminator = "";
+
+# An outcoming message should wait at most 10 s to be sent
+LockTimeout = 10000;
+
+
+# The timeout involved in reading operations is 25 ms (in practice, it indicates the end of received
+# message).
+ReadTimeout = 25;
+
+
+# The application should wait at most 100 ms for a board to answer
+ReplyTimeout = 100;
+
+
+# Routine for Counting reading (implements BSMP protocol) - Channels 1 to 8
+getCounting {
+    out 0x01, 0x10, 0x00, 0x01, $1, "%<nsum>";
+    in 0x00, 0x11, 0x00, 0x05, $1, "%04r%<nsum>";
+}
+
+
+# Routine for TimeBase parameter
+setTimeBase {
+    out 0x01, 0x20, 0x00, 0x03, 0x00, "%02r%<nsum>";
+    in 0x00, 0xe0, 0x00, 0x00, "%<nsum>";
+    @init {
+        out 0x01, 0x10, 0x00, 0x01, 0x00, "%<nsum>";
+        in 0x00, 0x11, 0x00, 0x03, 0x00, "%02r%<nsum>";
+    }
+}

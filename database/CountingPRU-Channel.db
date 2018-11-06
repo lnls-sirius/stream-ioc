@@ -1,0 +1,17 @@
+# CountingPRU-Channel.db
+# Record definition for one counting channel.
+#
+# RECORD_NAME - Name of record.
+# DESCRIPTION - EPICS record description.
+# CHANNEL - Channel in CountingPRU board where the sensor is connected to (from 1 to 8).
+# PORT - Name of the serial port configured in asynDriver.
+# SCAN_RATE - Record scan rate (time interval between two consecutive readings).
+
+record(longin, "$(RECORD_NAME)") {
+    field(DESC, "$(DESCRIPTION)")
+    field(DTYP, "stream")
+    field(EGU, "counting")
+    field(INP, "@CountingPRU.proto getCounting($(CHANNEL)) $(PORT)")
+    field(PINI, "YES")
+    field(SCAN, "$(SCAN_RATE)")
+}
