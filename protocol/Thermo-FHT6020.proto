@@ -8,6 +8,10 @@ Terminator = 0x03;
 BEL = 0x07;
 ETX = 0x03;
 CS = %0<sum>;
+LockTimeout = 10000;
+WriteTimeout = 200;
+ReplyTimeout = 2000;
+ReadTimeout = 200;
 
 # Gamma
 
