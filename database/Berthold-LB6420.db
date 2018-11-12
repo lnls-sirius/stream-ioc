@@ -1,6 +1,6 @@
 # Berthold-LB6420.db
 
-# Record definition file for one Berthold Technologies LB 6420 radiation probe.
+# Record definition file for one Berthold Technologies LB 6420 radiation probe
 
 # Each record defined below has the following parameters:
 #
@@ -10,76 +10,71 @@
 
 # Averaging time configuration for simple moving average of all probe parameters (readback)
 
-record(longin, "$(PREFIX):AveragingTime-RB") {
+record(longin, "$(PREFIX):AveragingTime-RB-T") {
     field(DESC, "Averaging time readback")
     field(DTYP, "stream")
     field(EGU, "s")
     field(INP, "@Berthold-LB6420.proto getAveragingTime $(PORT)")
-    field(PINI, "YES")
-    field(SCAN, "1 second")
 }
 
 # Averaging time configuration for simple moving average of all probe parameters (setpoint)
 
-record(longout, "$(PREFIX):AveragingTime-SP") {
+record(longout, "$(PREFIX):AveragingTime-SP-T") {
     field(DESC, "Averaging time setpoint")
     field(DRVH, "120")
     field(DRVL, "1")
     field(DTYP, "stream")
     field(EGU, "s")
+    field(FLNK, "$(PREFIX):AveragingTime-RB-T")
     field(OUT, "@Berthold-LB6420.proto setAveragingTime $(PORT)")
     field(PINI, "YES")
 }
 
 # Gamma
 
-record(ai, "$(PREFIX):Gamma") {
+record(ai, "$(PREFIX):Gamma-T") {
     field(DESC, "Gamma")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
+    field(FLNK, "$(PREFIX):TotalNeutronRate-T")
     field(INP, "@Berthold-LB6420.proto getGamma $(PORT)")
+    field(MDEL, "-1")
     field(PINI, "YES")
     field(PREC, "3")
     field(SCAN, "1 second")
-    field(MDEL, "-1")
-    field(FLNK, "$(PREFIX):TotalNeutronRate")
 }
 
 # High energy neutrons
 
-record(ai, "$(PREFIX):HighEnergyNeutrons") {
+record(ai, "$(PREFIX):HighEnergyNeutrons-T") {
     field(DESC, "High energy neutrons")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
+    field(FLNK, "$(PREFIX):TotalDoseRate-T")
     field(INP, "@Berthold-LB6420.proto getHighEnergyNeutrons $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
-    field(SCAN, "1 second")
     field(MDEL, "-1")
+    field(PREC, "3")
 }
 
 # Total dose rate
 
-record(calc, "$(PREFIX):TotalDoseRate") {
+record(ai, "$(PREFIX):TotalDoseRate-T") {
     field(DESC, "Total dose rate")
+    field(DTYP, "stream")
     field(EGU, "uSv/h")
-    field(INPA, "$(PREFIX):Gamma NPP MSS")
-    field(INPB, "$(PREFIX):TotalNeutronRate NPP MSS")
-    field(CALC, "A + B")
-    field(PREC, "3")
+    field(INP, "@Berthold-LB6420.proto getTotalDoseRate $(PORT)")
     field(MDEL, "-1")
+    field(PREC, "3")
 }
 
 # Total neutron rate
 
-record(ai, "$(PREFIX):TotalNeutronRate") {
+record(ai, "$(PREFIX):TotalNeutronRate-T") {
     field(DESC, "Total neutron rate")
     field(DTYP, "stream")
     field(EGU, "uSv/h")
+    field(FLNK, "$(PREFIX):HighEnergyNeutrons-T")
     field(INP, "@Berthold-LB6420.proto getTotalNeutronRate $(PORT)")
-    field(PINI, "YES")
-    field(PREC, "3")
     field(MDEL, "-1")
-    field(FLNK, "$(PREFIX):TotalDoseRate")
+    field(PREC, "3")
 }
-

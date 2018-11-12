@@ -1,0 +1,13 @@
+# CountingPRU-Device.db
+# Records related to the configuration of a CountingPRU board.
+#
+# PREFIX - Prefix name for all PVs associated with the device.
+# PORT - Name of the IPPort configured in asynDriver.
+
+record(longout, "$(PREFIX):TimeBase") {
+    field(DESC, "TimeBase for CountingPRU")
+    field(DRVL, "0")
+    field(DTYP, "stream")
+    field(OUT, "@CountingPRU.proto setTimeBase() $(PORT)")
+    field(PINI, "YES")
+}

@@ -6,8 +6,11 @@
 # UDP/IP server for communication between the EPICS IOC and a Berthold LB 6420 environment radiation
 # monitoring system.
 
-# This Python program should be executed with two parameters. The first is the port of the UDP
-# server. The other is the IP address of the Berthold LB 6420 probe.
+# This Python program should be executed with two arguments. The first is the port of the UDP
+# server. The other is the IP address of the Berthold LB 6420 probe. After launching this program,
+# the user should wait at least 120 s before running the EPICS IOC.
+
+# Tested with Python 2.7.13
 
 # Necessary Python modules
 
@@ -34,7 +37,7 @@ PROBE_PORT = 1000
 
 MAXIMUM_AVERAGING_TIME = 120
 
-# Averaging time configuration for simple moving average (s). If there is a configuration file, this
+# Averaging time configuration for simple moving average. If there is a configuration file, this
 # parameter is loaded from it. Otherwise, it is set to MAXIMUM_AVERAGING_TIME and stored in a new
 # configuration file.
 
@@ -93,22 +96,30 @@ def scanThread():
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     client_socket.connect((PROBE_IP, PROBE_PORT))
+    client_socket.settimeout(0.5)
 
     # Loop
 
     while (True):
 
-        # A new set of data is required. Two "recv" calls are necessary because the probe sends two
-        # answer messages to the client in sequence. The second one contains the desired data.
+        # A new set of data is required
 
         client_socket.send("\x0E\x04\x00\x00")
-        answer = client_socket.recv(1024)
-        answer = client_socket.recv(1024)
+        answer = ""
+        try:
+            while (True):
+                answer += client_socket.recv(1024)
+                if (len(answer) == 524):
+                    break
+        except (socket.timeout):
+            pass
 
-        # If the answer has 512 bytes (the expected message length), the received data is added to
-        # the time series and dose rate values are updated.
+        # If the answer has 524 bytes (the expected message length), received data is added to the
+        # time series and dose rate values are updated.
 
-        if (len(answer) == 512):
+        if (len(answer) == 524):
+
+            answer = answer[12:]
 
             date_and_time.append(datetime.datetime.utcnow())
 
@@ -170,7 +181,7 @@ while (True):
         if (len(total_dose_rate) < MAXIMUM_AVERAGING_TIME):
             answer = "INITIALIZING\n"
             udp_server_socket.sendto(answer, address)
-            continue            
+            continue
 
         if ((data[:14] == "AVERAGING_TIME") and (data[-1] == "\n")):
             if (len(data[:-1].split(" ")) == 2):
@@ -191,6 +202,9 @@ while (True):
 
         if (data == "AVERAGING_TIME?\n"):
             answer = str(AVERAGING_TIME)
+        elif (data == "TOTAL_DOSE_RATE?\n"):
+            dose_rate = math.fsum(total_dose_rate[-AVERAGING_TIME:]) / AVERAGING_TIME
+            answer = "{:.10f}".format(dose_rate)
         elif (data == "GAMMA?\n"):
             dose_rate = math.fsum(gamma[-AVERAGING_TIME:]) / AVERAGING_TIME
             answer = "{:.10f}".format(dose_rate)

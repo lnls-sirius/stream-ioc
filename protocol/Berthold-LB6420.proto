@@ -1,6 +1,6 @@
 # Berthold-LB6420.proto
 
-# Communication protocol for Berthold LB 6420 radiation probes
+# Communication protocol for the Berthold LB 6420 radiation probe
 
 # Protocol terminator character
 
@@ -11,16 +11,6 @@ Terminator = LF;
 getAveragingTime {
     out "AVERAGING_TIME?";
     in "%u";
-}
-
-# Averaging time (setpoint)
-
-setAveragingTime {
-    out "AVERAGING_TIME %u";
-    in "OK";
-    @init {
-        getAveragingTime;
-    }
 }
 
 # Gamma
@@ -37,6 +27,13 @@ getHighEnergyNeutrons {
     in "%f";
 }
 
+# Total dose rate
+
+getTotalDoseRate {
+    out "TOTAL_DOSE_RATE?";
+    in "%f";
+}
+
 # Total neutron rate
 
 getTotalNeutronRate {
@@ -44,3 +41,12 @@ getTotalNeutronRate {
     in "%f";
 }
 
+# Averaging time (setpoint)
+
+setAveragingTime {
+    out "AVERAGING_TIME %u";
+    in "OK";
+    @init {
+        getAveragingTime;
+    }
+}
