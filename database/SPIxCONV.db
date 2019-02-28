@@ -84,8 +84,8 @@ record(bi, "$(PREFIX):CtrlMode-Mon") {
     field(DTYP, "stream")                       # Device Type
     field(PINI, "YES")                          # Process at Initialization
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
-    field(ZNAM, "Local")                        # One Name
-    field(ONAM, "Remote")                       # Zero Name
+    field(ZNAM, "Remote")                       # One Name
+    field(ONAM, "Local")                        # Zero Name
 }
 #***************************************
 #   INTERLOCKS (7 INPUTS)
@@ -318,7 +318,7 @@ record(stringout, "$(PREFIX):Intlk8Label-Cte") {
     field(VAL, "Switch Overcurrent")
 }
 #------------------------------------------------------------------------------
-record(bi, "$(PREFIX):PwrState-Mon") {
+record(bi, "$(PREFIX):PwrState-Sts") {
     field(DESC, "Read power supply status")
     field(INP, "@SPIxCONV.proto read_portB_digital_input_bit($(SPIxCONV_ADDRESS),7) socket_spixconv")
     field(DTYP, "stream")                       # Device Type
