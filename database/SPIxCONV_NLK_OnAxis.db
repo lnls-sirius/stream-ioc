@@ -47,7 +47,7 @@ record(ai, "$(PREFIX):Voltage-RB") {
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
 }
 #==============================================================================
-#   ANALOG IN
+#   ANALOG IN (max of last 10 values)
 #==============================================================================
 # measure according to the high voltage supply range
 record(ai, "$(PREFIX):Voltage-Mon") {
@@ -68,8 +68,30 @@ record(ai, "$(PREFIX):Voltage-Mon") {
     field(PINI, "YES")                          # Process at Initialization
     field(PREC, "1")                            # Display Precision
     field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
-    field(SMOO, "0.5")                          # Smoothing factor from 0 to 1 (0: no smoothing; 1: value never change)
 }
+#==============================================================================
+#   ANALOG IN (raw value)
+#==============================================================================
+## measure according to the high voltage supply range
+#record(ai, "$(PREFIX):Voltage-Mon-Raw") {
+#    field(DESC, "analog in parameter")          # Description
+#    field(DTYP, "stream")                       # Device Type
+#    field(EGU,  "Volt")                         # Engineering Units
+#    # DAC and ADC calibration (applied to raw value):
+#    # calibration is already done when requesting a read/write command!
+#    #   --> functions dac.write() and adc.read()
+#    # adjust conversion from binary code to voltage:
+#    field(ASLO, "0.00007629423635191479459684") # Calibration Slope
+#    field(AOFF, "-10.0")                        # Calibration Offset
+#    # adjust conversion to voltage power supply range:
+#    field(ESLO, "$(VOLTAGE_FACTOR)")            # Conversion Slope
+#    field(EOFF, "0.0")                          # Conversion Offset
+#    field(INP,  "@SPIxCONV.proto read_analog_input_raw($(SPIxCONV_ADDRESS)) socket_spixconv")
+#    field(LINR, "LINEAR")                       # Type of Conversion
+#    field(PINI, "YES")                          # Process at Initialization
+#    field(PREC, "1")                            # Display Precision
+#    field(SCAN, "$(SCAN_RATE)")                 # Scanning Rate
+#}
 #==============================================================================
 #   DIGITAL PORT A
 #==============================================================================
