@@ -8,7 +8,7 @@ Terminator = "";
 LockTimeout = 10000;
 
 # The timeout involved in reading operations is 25 ms
-ReadTimeout = 25;
+ReadTimeout = 5;
 
 # The application should wait at most 100 ms for a board to answer
 ReplyTimeout = 100;
